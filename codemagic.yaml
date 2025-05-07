@@ -1,0 +1,51 @@
+# Определение рабочих процессов CI/CD
+workflows:
+  # Идентификатор рабочего процесса
+  ios-workflow:
+    # Отображаемое имя рабочего процесса в интерфейсе Codemagic
+    name: iOS Workflow
+    # Максимальная длительность сборки в минутах
+    max_build_duration: 120
+    # Тип виртуальной машины для сборки (mac_mini_m1 — Mac Mini с чипом M1)
+    instance_type: mac_mini_m1
+        # Настройки окружения для сборки
+    environment:
+      # Настройки подписи кода для iOS
+      ios_signing:
+        # Тип распространения (app_store — для публикации в App Store)
+        distribution_type: app_store
+        # Уникальный идентификатор приложения (Bundle ID), указанный в Xcode
+        bundle_identifier: com.example.yourapp
+      # Версия Xcode, используемая для сборки (latest — последняя доступная)
+      xcode: 18.4
+      # Версия CocoaPods (default — использует установленную по умолчанию)
+      cocoapods: default
+    # Список скриптов, выполняемых во время сборки
+    scripts:
+      # Скрипт для установки зависимостей
+      - name: Install dependencies
+        script: |
+          # Установка CocoaPods зависимостей, указанных в Podfile
+          pod install
+      # Скрипт для сборки и тестирования приложения
+      - name: Build and test
+        script: |
+          # Команда xcodebuild для очистки, сборки и тестирования проекта
+          # -workspace: указывает файл рабочего пространства Xcode
+          # -scheme: схема сборки, определенная в Xcode
+          # -sdk: используемый SDK (iphonesimulator для симулятора)
+          # -destination: целевой симулятор (iPhone 14 с последней версией iOS)
+          xcodebuild -workspace YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' clean build test
+    # Артефакты, которые будут сохранены после сборки
+    artifacts:
+      # IPA-файлы, сгенерированные для iOS
+      - build/ios/ipa/*.ipa
+      # Скомпилированные приложения из папки DerivedData
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+    # Настройки публикации результатов сборки
+    publishing:
+      # Отправка уведомлений по email
+      email:
+        # Список email-адресов, которые получат уведомления о статусе сборки
+        recipients:
+          - maximSvid@gmail.com

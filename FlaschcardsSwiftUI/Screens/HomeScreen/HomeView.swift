@@ -9,7 +9,48 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            VStack(alignment: .leading, spacing: 0) {
+                Divider()
+               FlaschcardsInfo()
+                Spacer()
+                ButtonStart()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .background(Color.blue.opacity(0.03))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        //action
+                    }) {
+                        Image(systemName: "paintpalette")
+                            .foregroundStyle(.gray)
+                    }
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    
+                    Button(action: {
+                        //action
+                        
+                    }) {
+                        Image(systemName: "folder")
+                            .foregroundStyle(.gray)
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        //action
+                    }) {
+                        Image(systemName: "chart.bar")
+                            .foregroundStyle(.gray)
+                    }
+                }
+            }
+            .toolbarBackground(Color.white, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+        }
     }
 }
 

@@ -11,7 +11,8 @@ import SwiftUI
 struct FlaschcardsSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+//            HomeView()
+            TabNavigation()
         }
     }
 }
