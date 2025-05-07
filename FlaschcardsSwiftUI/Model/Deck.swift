@@ -4,6 +4,8 @@
 //
 //  Created by Maxim Svidrak on 07.05.25.
 //
+import SwiftUI
+import SwiftData
 
 class Deck {
     let id: UUID
