@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+let emptyAction: () -> Void = {
+    // Do nothing
+    print("Empty action executed")
+}
+
 struct HomeView: View {
     var body: some View {
         NavigationView {
@@ -14,7 +19,8 @@ struct HomeView: View {
                 Divider()
                FlaschcardsInfo()
                 Spacer()
-                ButtonStart()
+//                ButtonStart()
+                MainButton(action: emptyAction, title: "Start")
             }
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.blue.opacity(0.03))

@@ -15,11 +15,12 @@ struct NewDeckSheet: View {
             Button(action: {
                 showingModal = true
             }) {
-                Image(systemName: "folder.badge.plus")
+                Text("New Deck")
                     .foregroundStyle(.gray)
             }
         }
         if showingModal {
+
             VStack {
                 Text("Choose a deck")
                     .font(.headline)
@@ -45,10 +46,8 @@ struct NewDeckSheet: View {
                 RoundedRectangle(cornerRadius: 3)
                     .stroke(.gray, lineWidth: 1)
             )
-//            .transition(.move(edge: .top))
         }
     }
-//        .animation(.easeInOut, value: showingModal)
 }
 
 #Preview {
