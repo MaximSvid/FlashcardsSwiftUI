@@ -8,45 +8,35 @@
 import SwiftUI
 
 struct NewDeckSheet: View {
-    @State private var showingModal = false // um ViewModel umwandeln
+    //    @State private var showingModal = false  um ViewModel umwandeln
+    @EnvironmentObject private var deckViewModel: DeckViewModel
     
     var body: some View {
-        ZStack {
+        VStack {
+                        
+            Text("Choose a deck")
+                .font(.headline)
+                .padding(.top)
+            
+            List {
+                ListNewDeck()
+                ListNewDeck()
+                ListNewDeck()
+                ListNewDeck()
+            }
+            .listStyle(.plain)
+            
+            Divider()
             Button(action: {
-                showingModal = true
+                deckViewModel.newDeckSheetIsPresented = false
             }) {
-                Text("New Deck")
-                    .foregroundStyle(.gray)
-            }
-        }
-        if showingModal {
-
-            VStack {
-                Text("Choose a deck")
+                Text("New Deck +")
                     .font(.headline)
-                
-                List {
-                    ListNewDeck()
-                }
-                .listStyle(.plain)
-                
-                Divider()
-                Button(action: {
-                    showingModal = false
-                }) {
-                    Text("New Deck +")
-                        .font(.headline)
-                        .buttonStyle(.borderedProminent)
-                        .foregroundStyle(.green)
-                }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundStyle(.green)
             }
-            .padding()
-            .frame(maxWidth: 250, maxHeight: 300)
-            .overlay(
-                RoundedRectangle(cornerRadius: 3)
-                    .stroke(.gray, lineWidth: 1)
-            )
         }
+        .padding()
     }
 }
 

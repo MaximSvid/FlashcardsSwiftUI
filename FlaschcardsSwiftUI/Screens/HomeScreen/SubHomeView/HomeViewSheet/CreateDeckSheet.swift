@@ -7,19 +7,20 @@
 
 import SwiftUI
 
-let emptyAction2: () -> Void = {
-    // Do nothing
-    print("Empty action executed")
-}
+
 
 
 struct CreateDeckSheet: View {
-    @State private var isShowingSheet: Bool = false
+    @EnvironmentObject private var deckViewModel: DeckViewModel
     var body: some View {
         VStack {
-//            TextField
+            Text("Create a new deck")
+                .font(.headline)
+                .padding(.top)
+
+            CustomTextField(placeholder: "Enter a deck name", text: deckViewModel.deckName)
             
-            MainButton(action: emptyAction2, title: "Create new deck")
+            MainButton(action: {}, title: "Create new deck")
         }
     }
 }

@@ -7,20 +7,16 @@
 
 import SwiftUI
 
-let emptyAction: () -> Void = {
-    // Do nothing
-    print("Empty action executed")
-}
-
 struct HomeView: View {
+    @StateObject private var deckViewModel = DeckViewModel()
+    
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 Divider()
-               FlaschcardsInfo()
+                FlaschcardsInfo()
                 Spacer()
-//                ButtonStart()
-                MainButton(action: emptyAction, title: "Start")
+                MainButton(action: {}, title: "Start")
             }
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.blue.opacity(0.03))
@@ -35,14 +31,12 @@ struct HomeView: View {
                 }
                 
                 ToolbarItem(placement: .principal) {
-                    NewDeckSheet()
-//                    Button(action: {
-//                        //action
-//                        
-//                    }) {
-//                        Image(systemName: "folder")
-//                            .foregroundStyle(.gray)
-//                    }
+                    Button(action: {
+                        deckViewModel.newDeckSheetIsPresented = true
+                    }) {
+                        Text("New Deck")
+                            .foregroundStyle(.gray)
+                    }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -56,10 +50,18 @@ struct HomeView: View {
             }
             .toolbarBackground(Color.white, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
+            .environmentObject(deckViewModel)
+            .sheet(isPresented: $deckViewModel.newDeckSheetIsPresented) {
+                NewDeckSheet()
+                //                    .environmentObject(deckViewModel)
+                    .presentationDetents([.fraction(0.7)])
+                    .presentationDragIndicator(.visible)
+            }
         }
     }
 }
 
 #Preview {
     HomeView()
+        .environmentObject(DeckViewModel())
 }
