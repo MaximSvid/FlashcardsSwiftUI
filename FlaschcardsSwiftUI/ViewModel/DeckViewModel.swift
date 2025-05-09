@@ -9,5 +9,6 @@ import SwiftUI
 class DeckViewModel: ObservableObject {
     @Published var newDeckSheetIsPresented: Bool = false
     @Published var deckName: String = ""
+//    @Published var createNewDeckSheetIsPresented: Bool = false
     
 }

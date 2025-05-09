@@ -12,31 +12,34 @@ struct NewDeckSheet: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     
     var body: some View {
-        VStack {
-                        
-            Text("Choose a deck")
-                .font(.headline)
-                .padding(.top)
-            
-            List {
-                ListNewDeck()
-                ListNewDeck()
-                ListNewDeck()
-                ListNewDeck()
-            }
-            .listStyle(.plain)
-            
-            Divider()
-            Button(action: {
-                deckViewModel.newDeckSheetIsPresented = false
-            }) {
-                Text("New Deck +")
+        NavigationStack {
+            VStack {
+                
+                Text("Choose a deck")
                     .font(.headline)
-                    .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.green)
+                    .padding(.top)
+                
+                List {
+                    ListNewDeck()
+                    ListNewDeck()
+                    ListNewDeck()
+                    ListNewDeck()
+                }
+                .listStyle(.plain)
+                
+                Divider()
+                NavigationLink {
+                    CreateDeckSheet()
+                } label: {
+                    Text("New Deck +")
+                        .font(.headline)
+                        .buttonStyle(.borderedProminent)
+                        .foregroundStyle(.green)
+                }
             }
+            .padding()
         }
-        .padding()
+        
     }
 }
 

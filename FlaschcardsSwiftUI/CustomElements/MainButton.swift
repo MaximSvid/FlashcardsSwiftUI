@@ -18,7 +18,7 @@ struct MainButton: View {
                 .frame(width: .infinity, height: 50)
                 .frame(maxWidth: .infinity)
                 .foregroundStyle(.white)
-                .background(.blue.opacity(0.6))
+                .background(.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
                 .padding([.trailing, .leading])
         }

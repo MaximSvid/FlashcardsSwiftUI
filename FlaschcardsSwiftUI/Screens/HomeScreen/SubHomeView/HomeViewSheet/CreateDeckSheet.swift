@@ -16,11 +16,14 @@ struct CreateDeckSheet: View {
         VStack {
             Text("Create a new deck")
                 .font(.headline)
-                .padding(.top)
+                .padding()
 
-            CustomTextField(placeholder: "Enter a deck name", text: deckViewModel.deckName)
+            CustomTextField(placeholder: "Enter a deck name", text: $deckViewModel.deckName)
+                .padding(.bottom)
             
             MainButton(action: {}, title: "Create new deck")
+                .padding(.top)
+            
         }
     }
 }

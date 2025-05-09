@@ -15,12 +15,13 @@ struct CustomTextField: View {
     var body: some View {
         TextField(placeholder, text: $text)
             .padding()
-            .foregroundStyle(.green.opacity(0.7))
+            .foregroundStyle(.black)
             .background(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(isFocused ? .black : .green.opacity(0.7), lineWidth: 1)
+                    .stroke(isFocused ? .green : .black, lineWidth: 1)
             )
             .focused($isFocused)
+            .padding()
     }
 }
 

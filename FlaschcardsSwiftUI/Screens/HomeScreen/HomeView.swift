@@ -54,7 +54,7 @@ struct HomeView: View {
             .sheet(isPresented: $deckViewModel.newDeckSheetIsPresented) {
                 NewDeckSheet()
                 //                    .environmentObject(deckViewModel)
-                    .presentationDetents([.fraction(0.7)])
+//                    .presentationDetents([.fraction(0.7)])
                     .presentationDragIndicator(.visible)
             }
         }
