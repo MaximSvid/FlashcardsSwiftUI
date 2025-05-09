@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct FlaschcardsSwiftUIApp: App {
+    @StateObject private var deckViewModel = DeckViewModel()
     var body: some Scene {
         WindowGroup {
-//            HomeView()
             TabNavigation()
         }
+        .environmentObject(deckViewModel)
+        .modelContainer(for: [Deck.self, Flashcard.self])
     }
 }

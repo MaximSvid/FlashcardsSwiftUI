@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var deckViewModel = DeckViewModel()
+    @EnvironmentObject private var deckViewModel: DeckViewModel
     
     var body: some View {
         NavigationView {
@@ -50,11 +50,9 @@ struct HomeView: View {
             }
             .toolbarBackground(Color.white, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            .environmentObject(deckViewModel)
             .sheet(isPresented: $deckViewModel.newDeckSheetIsPresented) {
                 NewDeckSheet()
-                //                    .environmentObject(deckViewModel)
-//                    .presentationDetents([.fraction(0.7)])
+                    .environmentObject(deckViewModel)
                     .presentationDragIndicator(.visible)
             }
         }

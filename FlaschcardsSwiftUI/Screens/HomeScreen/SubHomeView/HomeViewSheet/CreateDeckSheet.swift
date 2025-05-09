@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-
-
-
 struct CreateDeckSheet: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         VStack {
             Text("Create a new deck")
@@ -21,7 +19,9 @@ struct CreateDeckSheet: View {
             CustomTextField(placeholder: "Enter a deck name", text: $deckViewModel.deckName)
                 .padding(.bottom)
             
-            MainButton(action: {}, title: "Create new deck")
+            MainButton(action: {
+                deckViewModel.createNewDeck(context: modelContext)
+            }, title: "Create new deck")
                 .padding(.top)
             
         }

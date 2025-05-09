@@ -7,17 +7,18 @@
 import SwiftUI
 import SwiftData
 
+@Model
 class Deck {
-    let id: UUID
+    var id: UUID
     var title: String
-    var description: String?
-    var flashcards: [Flashcard]
+    var deckDescription: String?
+    @Relationship(deleteRule: .cascade) var flashcards: [Flashcard] = []
     var createdAt: Date
     
-    init(id: UUID, title: String, description: String? = nil, flashcards: [Flashcard], createdAt: Date) {
+    init(id: UUID, title: String, deckDescription: String? = nil, flashcards: [Flashcard], createdAt: Date) {
         self.id = id
         self.title = title
-        self.description = description
+        self.deckDescription = deckDescription
         self.flashcards = flashcards
         self.createdAt = createdAt
     }

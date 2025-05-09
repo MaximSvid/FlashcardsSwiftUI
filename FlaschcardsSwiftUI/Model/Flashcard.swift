@@ -7,8 +7,9 @@
 import SwiftUI
 import SwiftData
 
+@Model
 class Flashcard {
-    let id: UUID
+    var id: UUID
     var question: String
     var answer: String
     var isFavorite: Bool

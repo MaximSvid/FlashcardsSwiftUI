@@ -21,9 +21,7 @@ struct NewDeckSheet: View {
                 
                 List {
                     ListNewDeck()
-                    ListNewDeck()
-                    ListNewDeck()
-                    ListNewDeck()
+                                 
                 }
                 .listStyle(.plain)
                 
