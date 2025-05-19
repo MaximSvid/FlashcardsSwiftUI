@@ -11,6 +11,8 @@ class DeckViewModel: ObservableObject {
     @Published var newDeckSheetIsPresented: Bool = false
     @Published var deckName: String = ""
     @Published var deckDescription: String = ""
+    @Published var showAlertDialogUpdateDeckName: Bool = false
+    @Published var selectedDeck: Deck?
     
     func createNewDeck(context: ModelContext) {
         guard !deckName.isEmpty else { return }
@@ -29,7 +31,6 @@ class DeckViewModel: ObservableObject {
             try context.save()
             print("Deck: \(newDeck) saved successfully!")
             deckName = ""
-//            newDeckSheetIsPresented = false
         } catch {
             print("Failed to save context: \(error)")
         }
@@ -46,10 +47,10 @@ class DeckViewModel: ObservableObject {
         }
     }
     
-    func updateDeckName(context: ModelContext, deck: Deck) {
+    func updateDeckName(context: ModelContext, deck: Deck, newName: String) {
         guard !deckName.isEmpty else { return }
         
-        deck.title = deckName
+        deck.title = newName
         
         do {
             try context.save()
