@@ -6,22 +6,42 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NewDeckSheet: View {
-    //    @State private var showingModal = false  um ViewModel umwandeln
     @EnvironmentObject private var deckViewModel: DeckViewModel
+    @Environment(\.modelContext) private var modelContext
+    @Query private var decks: [Deck]
+    
     
     var body: some View {
         NavigationStack {
             VStack {
                 
                 Text("Choose a deck")
-                    .font(.headline)
-                    .padding(.top)
+                    .font(.title3.bold())
+                    .padding()
+                    .padding(.top, 20)
                 
                 List {
-                    ListNewDeck()
-                                 
+                    ForEach(decks) { deck in
+                        Text(deck.title)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    deckViewModel.deleteDeck(context: modelContext, deck: deck)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                                
+                                Button {
+                                    deckViewModel.updateDeckName(context: modelContext, deck: deck)
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                .tint(.yellow)
+                            }
+                    }
+                    
                 }
                 .listStyle(.plain)
                 
@@ -31,13 +51,14 @@ struct NewDeckSheet: View {
                 } label: {
                     Text("New Deck +")
                         .font(.headline)
-                        .buttonStyle(.borderedProminent)
-                        .foregroundStyle(.green)
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .foregroundStyle(.white)
+                        .background(.blue)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .padding([.trailing, .leading, .bottom])
                 }
             }
-            .padding()
         }
-        
     }
 }
 

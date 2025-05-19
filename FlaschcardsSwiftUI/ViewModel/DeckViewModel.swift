@@ -15,7 +15,13 @@ class DeckViewModel: ObservableObject {
     func createNewDeck(context: ModelContext) {
         guard !deckName.isEmpty else { return }
         
-        let newDeck = Deck(id: UUID(), title: deckName, deckDescription: deckDescription, flashcards: [], createdAt: Date())
+        let newDeck = Deck(
+            id: UUID(),
+            title: deckName,
+            deckDescription: deckDescription,
+            folders: [],
+            createdAt: Date()
+        )
         
         context.insert(newDeck)
         
@@ -23,8 +29,7 @@ class DeckViewModel: ObservableObject {
             try context.save()
             print("Deck: \(newDeck) saved successfully!")
             deckName = ""
-            deckDescription = ""
-            newDeckSheetIsPresented = false
+//            newDeckSheetIsPresented = false
         } catch {
             print("Failed to save context: \(error)")
         }
@@ -35,6 +40,20 @@ class DeckViewModel: ObservableObject {
         
         do {
             try context.save()
+            print("\(deck.title) - deleted successfully!")
+        } catch {
+            print("Failed to save context: \(error)")
+        }
+    }
+    
+    func updateDeckName(context: ModelContext, deck: Deck) {
+        guard !deckName.isEmpty else { return }
+        
+        deck.title = deckName
+        
+        do {
+            try context.save()
+            print("\(deck.title) - updated successfully!")
         } catch {
             print("Failed to save context: \(error)")
         }

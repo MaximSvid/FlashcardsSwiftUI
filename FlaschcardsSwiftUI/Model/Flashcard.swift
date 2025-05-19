@@ -23,5 +23,4 @@ class Flashcard {
         self.isFavorite = isFavorite
         self.creationDate = creationDate
     }
-    
 }

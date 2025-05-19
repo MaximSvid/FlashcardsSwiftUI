@@ -17,6 +17,7 @@ struct HomeView: View {
                 FlaschcardsInfo()
                 Spacer()
                 MainButton(action: {}, title: "Start")
+                    .padding(.bottom, 30)
             }
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.blue.opacity(0.03))
@@ -34,8 +35,10 @@ struct HomeView: View {
                     Button(action: {
                         deckViewModel.newDeckSheetIsPresented = true
                     }) {
-                        Text("New Deck")
-                            .foregroundStyle(.gray)
+                        HStack {
+                            Text("New Deck ")
+                            Image(systemName: "chevron.down.square.fill")
+                        }
                     }
                 }
                 

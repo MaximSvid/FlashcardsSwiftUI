@@ -15,8 +15,8 @@ struct MainButton: View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
-                .frame(width: .infinity, height: 50)
-                .frame(maxWidth: .infinity)
+//                .frame(width: .infinity, height: 50)
+                .frame(maxWidth: .infinity, maxHeight: 50)
                 .foregroundStyle(.white)
                 .background(.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
