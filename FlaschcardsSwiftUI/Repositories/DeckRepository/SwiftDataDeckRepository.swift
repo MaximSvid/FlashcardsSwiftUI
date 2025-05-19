@@ -20,14 +20,22 @@ class SwiftDataDeckRepository: DeckRepository {
             folders: [],
             createdAt: Date()
         )
+        context.insert(newDeck)
+        try context.save()
+        return newDeck
     }
     
     func deleteDeck(_ deck: Deck, context: ModelContext) throws {
-        
+        context.delete(deck)
+        try context.save()
     }
     
     func updateDeckName(_ deck: Deck, newName: String, context: ModelContext) throws {
-
+        guard !newName.isEmpty else {
+            throw Errors.emptyTitle
+        }
+        deck.title = newName
+        try context.save()
     }
     
     

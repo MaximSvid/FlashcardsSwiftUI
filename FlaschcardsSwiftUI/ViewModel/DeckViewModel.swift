@@ -14,49 +14,60 @@ class DeckViewModel: ObservableObject {
     @Published var showAlertDialogUpdateDeckName: Bool = false
     @Published var selectedDeck: Deck?
     
+    private let deckRepository: DeckRepository
+    
+    init(deckRepository: DeckRepository = SwiftDataDeckRepository()) {
+        self.deckRepository = deckRepository
+    }
     func createNewDeck(context: ModelContext) {
-        guard !deckName.isEmpty else { return }
-        
-        let newDeck = Deck(
-            id: UUID(),
-            title: deckName,
-            deckDescription: deckDescription,
-            folders: [],
-            createdAt: Date()
-        )
-        
-        context.insert(newDeck)
-        
         do {
-            try context.save()
-            print("Deck: \(newDeck) saved successfully!")
+            let _ = try deckRepository.createDeck(title: deckName, description: deckDescription, context: context)
+            print("Deck \(deckName) saved successfully!")
             deckName = ""
         } catch {
-            print("Failed to save context: \(error)")
+            print("Faield to save context: \(error)")
         }
     }
     
     func deleteDeck(context: ModelContext, deck: Deck) {
-        context.delete(deck)
-        
         do {
-            try context.save()
-            print("\(deck.title) - deleted successfully!")
+            try deckRepository.deleteDeck(deck, context: context)
+            print("Deck \(deck.title) deleted successfully!")
         } catch {
-            print("Failed to save context: \(error)")
+            print("Error deleting deck: \(error)")
         }
     }
     
     func updateDeckName(context: ModelContext, deck: Deck, newName: String) {
-        guard !deckName.isEmpty else { return }
-        
-        deck.title = newName
-        
         do {
-            try context.save()
-            print("\(deck.title) - updated successfully!")
+            try deckRepository.updateDeckName(deck, newName: newName, context: context)
+            print("Deck \(deck.title) updated successfully!")
         } catch {
-            print("Failed to save context: \(error)")
+            print("Failde to update deck name: \(error)")
         }
     }
+    
+//    func deleteDeck(context: ModelContext, deck: Deck) {
+//        context.delete(deck)
+//        
+//        do {
+//            try context.save()
+//            print("\(deck.title) - deleted successfully!")
+//        } catch {
+//            print("Failed to save context: \(error)")
+//        }
+//    }
+//    
+//    func updateDeckName(context: ModelContext, deck: Deck, newName: String) {
+//        guard !deckName.isEmpty else { return }
+//        
+//        deck.title = newName
+//        
+//        do {
+//            try context.save()
+//            print("\(deck.title) - updated successfully!")
+//        } catch {
+//            print("Failed to save context: \(error)")
+//        }
+//    }
 }
