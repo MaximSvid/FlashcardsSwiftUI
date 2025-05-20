@@ -14,8 +14,8 @@ struct TabNavigation: View {
                 HomeView()
             }
             
-            Tab("Home", systemImage: "house"){
-                HomeView()
+            Tab("Deck", systemImage: "folder"){
+                DeckView()
             }
             
             Tab("Home", systemImage: "house"){

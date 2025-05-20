@@ -11,7 +11,11 @@ class DeckViewModel: ObservableObject {
     @Published var newDeckSheetIsPresented: Bool = false
     @Published var deckName: String = ""
     @Published var deckDescription: String = ""
-    @Published var showAlertDialogUpdateDeckName: Bool = false
+    @Published var showAlertDialogUpdateDeckNameHomeView: Bool = false
+    
+    @Published var showAlertDialogUpdateDeckNameDeckView: Bool = false
+    @Published var showAlertDialogCreateNewDeck: Bool = false
+    
     @Published var selectedDeck: Deck?
     
     private let deckRepository: DeckRepository
@@ -42,32 +46,15 @@ class DeckViewModel: ObservableObject {
         do {
             try deckRepository.updateDeckName(deck, newName: newName, context: context)
             print("Deck \(deck.title) updated successfully!")
+            deckName = ""
+            selectedDeck = nil
         } catch {
             print("Failde to update deck name: \(error)")
         }
     }
     
-//    func deleteDeck(context: ModelContext, deck: Deck) {
-//        context.delete(deck)
-//        
-//        do {
-//            try context.save()
-//            print("\(deck.title) - deleted successfully!")
-//        } catch {
-//            print("Failed to save context: \(error)")
-//        }
-//    }
-//    
-//    func updateDeckName(context: ModelContext, deck: Deck, newName: String) {
-//        guard !deckName.isEmpty else { return }
-//        
-//        deck.title = newName
-//        
-//        do {
-//            try context.save()
-//            print("\(deck.title) - updated successfully!")
-//        } catch {
-//            print("Failed to save context: \(error)")
-//        }
-//    }
+    func whenCancelUpdateDeckName() {
+        deckName = ""
+        selectedDeck = nil
+    }
 }

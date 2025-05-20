@@ -35,7 +35,7 @@ struct NewDeckSheet: View {
                                 Button {
                                     deckViewModel.selectedDeck = deck
                                     deckViewModel.deckName = deck.title
-                                    deckViewModel.showAlertDialogUpdateDeckName = true
+                                    deckViewModel.showAlertDialogUpdateDeckNameHomeView = true
                                 } label: {
                                     Label("Edit", systemImage: "pencil")
                                 }
@@ -59,23 +59,19 @@ struct NewDeckSheet: View {
                         .padding([.trailing, .leading, .bottom])
                 }
             }
-            .alert("Edit Deck Name", isPresented: $deckViewModel.showAlertDialogUpdateDeckName) {
+            .alert("Edit Deck Name", isPresented: $deckViewModel.showAlertDialogUpdateDeckNameHomeView) {
                 TextField("Deck Name", text: $deckViewModel.deckName)
                 Button("Save") {
                     if let selectedDeck = deckViewModel.selectedDeck {
                         deckViewModel.updateDeckName(context: modelContext, deck: selectedDeck, newName: deckViewModel.deckName)
                     }
-                    deckViewModel.deckName = ""
-                    deckViewModel.selectedDeck = nil
                 }
                 Button("Cancel", role: .cancel) {
-                    deckViewModel.deckName = ""
-                    deckViewModel.selectedDeck = nil
+                    deckViewModel.whenCancelUpdateDeckName()
                 }
             } message: {
                 Text("Enter a new name for the deck.")
-            }
-            
+            }  
         }
     }
 }
