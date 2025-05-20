@@ -11,11 +11,14 @@ import SwiftData
 @main
 struct FlaschcardsSwiftUIApp: App {
     @StateObject private var deckViewModel = DeckViewModel()
+    @StateObject private var folderViewModel = FolderViewModel()
+    
     var body: some Scene {
         WindowGroup {
             TabNavigation()
         }
         .environmentObject(deckViewModel)
-        .modelContainer(for: [Deck.self, Flashcard.self])
+        .environmentObject(folderViewModel)
+        .modelContainer(for: [Deck.self, Folder.self, Flashcard.self])
     }
 }

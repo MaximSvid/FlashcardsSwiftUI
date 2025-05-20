@@ -35,6 +35,7 @@ struct DeckList: View {
                     }
             }
         }
+        .listStyle(.plain)
     }
 }
 

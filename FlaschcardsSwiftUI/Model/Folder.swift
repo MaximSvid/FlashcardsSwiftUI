@@ -13,17 +13,18 @@ class Folder {
     var id: UUID
     var name: String
     var createdAt: Date
-    @Relationship(deleteRule: .cascade) var flashcards: [Flashcard] = []
+    @Relationship(inverse: \Deck.folders) var deck: Deck?
     
     init(
         id: UUID = .init(),
          name: String = "",
          createdAt: Date = Date(),
-         flashcards: [Flashcard] = []
+        deck: Deck? = nil
     ) {
         self.id = id
         self.name = name
         self.createdAt = createdAt
+        self.deck = deck
     }
     
 }
