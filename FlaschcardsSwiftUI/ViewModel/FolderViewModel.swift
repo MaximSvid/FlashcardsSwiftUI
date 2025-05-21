@@ -30,6 +30,7 @@ class FolderViewModel: ObservableObject {
             
             print("Folder \(folderName) created")
             folderName = ""
+            showAlertCreateNewFolder = false
         } catch {
             print("Folder \(folderName) not created: \(error.localizedDescription)")
         }
@@ -48,7 +49,7 @@ class FolderViewModel: ObservableObject {
         do {
             try folderRepositry.updateFolder(folder: folder, newName: newName, context: context)
             print("Folder: \(folder.name) updated to \(newName)")
-            
+            folderName = ""
         } catch {
             print("Error updating folder name: \(error.localizedDescription)")
         }

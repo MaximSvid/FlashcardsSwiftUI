@@ -14,11 +14,31 @@ struct FolderView: View {
     @Query private var decks: [Deck]
     //    @Query(sort: \Folder.createdAt, order: .reverse) private var folders: [Folder]
     let deck: Deck
+    //    let folder: Folder?
     
     var body: some View {
         List {
             ForEach(deck.folders) { folder in
                 Text(folder.name)
+                    .swipeActions(edge: .trailing) {
+                        Button{
+                            folderViewModel.selectedFolder = folder
+                            folderViewModel.showAlerDeleteFolder = true
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        .tint(.red)
+                        
+                        Button {
+                            folderViewModel.selectedFolder = folder
+                            folderViewModel.folderName = folder.name
+                            folderViewModel.showAlertUpdateFolder = true
+                        } label: {
+                            Label ("Edit", systemImage: "pencil")
+                        }
+                        .tint(.yellow)
+                        
+                    }
             }
         }
         .listStyle(.plain)
@@ -40,14 +60,42 @@ struct FolderView: View {
                 if let selectedDeck = folderViewModel.selectedDeck {
                     folderViewModel.createNewFolder(in: selectedDeck, context: modelContext)
                     
-                    folderViewModel.folderName = ""
+                    //                    folderViewModel.folderName = ""
                     
                 }
                 folderViewModel.showAlertCreateNewFolder = false
             }
+            
             Button ("Cancel", role: .cancel) {
                 folderViewModel.folderName = ""
                 folderViewModel.showAlertCreateNewFolder = false
+            }
+        }
+        .alert("Delete Folder", isPresented: $folderViewModel.showAlerDeleteFolder) {
+            Button("Delete", role: .destructive) {
+                if let selectedFolder = folderViewModel.selectedFolder {
+                    folderViewModel.deleteFolder(context: modelContext, folder: selectedFolder)
+                    folderViewModel.selectedFolder = nil
+                }
+                
+            }
+            Button("Cancel", role: .cancel) {
+                folderViewModel.showAlerDeleteFolder = false
+                folderViewModel.selectedFolder = nil
+            }
+        }
+        .alert("Update Folder Name", isPresented: $folderViewModel.showAlertUpdateFolder) {
+            TextField("Folder Name", text: $folderViewModel.folderName)
+            Button("Save") {
+                if let selectedFolder = folderViewModel.selectedFolder {
+                    folderViewModel.updateFolderName(folder: selectedFolder, newName: folderViewModel.folderName, context: modelContext)
+                    folderViewModel.selectedFolder = nil
+                }
+            }
+            Button("Cancel", role: .cancel) {
+                folderViewModel.showAlertUpdateFolder = false
+                folderViewModel.selectedFolder = nil
+                folderViewModel.folderName = ""
             }
         }
     }
