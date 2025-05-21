@@ -12,45 +12,42 @@ struct FolderView: View {
     @EnvironmentObject private var folderViewModel: FolderViewModel
     @Environment(\.modelContext) private var modelContext
     @Query private var decks: [Deck]
-//    @Query(sort: \Folder.createdAt, order: .reverse) private var folders: [Folder]
+    //    @Query(sort: \Folder.createdAt, order: .reverse) private var folders: [Folder]
     let deck: Deck
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(deck.folders) { folder in
-                    Text(folder.name)
-                }
+        List {
+            ForEach(deck.folders) { folder in
+                Text(folder.name)
             }
-            .listStyle(.plain)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("All Folders")
+        }
+        .listStyle(.plain)
+        .navigationTitle(deck.title)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: {
+                    folderViewModel.selectedDeck = deck
+                    folderViewModel.showAlertCreateNewFolder = true
+                }) {
+                    Image(systemName: "square.and.pencil")
                         .font(.headline)
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        folderViewModel.showAlertCreateNewFolder = true
-                    }) {
-                        Image(systemName: "square.and.pencil")
-                            .font(.headline)
-                    }
-                }
             }
-//            .navigationDestination(for: Folder.self) {
-//                
-//            }
-            .alert("Create New Folder", isPresented: $folderViewModel.showAlertCreateNewFolder) {
-                TextField ("Folder Name", text: $folderViewModel.folderName)
-                Button("Create") {
-                    if let deck = folderViewModel.selectedDeck {
-                        folderViewModel.createNewFolder(in: deck, context: modelContext)
-                    }
-                }
-                Button ("Cancel", role: .cancel) {
+        }
+        .alert("Create New Folder", isPresented: $folderViewModel.showAlertCreateNewFolder) {
+            TextField ("Folder Name", text: $folderViewModel.folderName)
+            Button("Create") {
+                if let selectedDeck = folderViewModel.selectedDeck {
+                    folderViewModel.createNewFolder(in: selectedDeck, context: modelContext)
+                    
                     folderViewModel.folderName = ""
-                    folderViewModel.showAlertCreateNewFolder = false
+                    
                 }
+                folderViewModel.showAlertCreateNewFolder = false
+            }
+            Button ("Cancel", role: .cancel) {
+                folderViewModel.folderName = ""
+                folderViewModel.showAlertCreateNewFolder = false
             }
         }
     }

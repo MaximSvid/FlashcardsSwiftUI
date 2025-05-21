@@ -21,6 +21,7 @@ class FolderRepositoryImplementation: FolderRepository {
         )
         context.insert(newFolder)
         deck.folders.append(newFolder)
+        
         try context.save()
         return newFolder
         

@@ -15,6 +15,7 @@ class DeckViewModel: ObservableObject {
     
     @Published var showAlertDialogUpdateDeckNameDeckView: Bool = false
     @Published var showAlertDialogCreateNewDeck: Bool = false
+    @Published var showAlertDialogDeleteDeck: Bool = false
     
     @Published var selectedDeck: Deck?
     

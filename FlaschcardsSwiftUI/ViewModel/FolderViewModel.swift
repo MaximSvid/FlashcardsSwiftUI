@@ -26,7 +26,7 @@ class FolderViewModel: ObservableObject {
     func createNewFolder(in deck: Deck, context: ModelContext) {
         
         do {
-            let newFolder = try folderRepositry.createFolder(name: folderName, in: deck, context: context)
+            _ = try folderRepositry.createFolder(name: folderName, in: deck, context: context)
             
             print("Folder \(folderName) created")
             folderName = ""
