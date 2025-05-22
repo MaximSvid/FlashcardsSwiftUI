@@ -11,7 +11,7 @@ import SwiftData
 struct NewDeckSheet: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @Environment(\.modelContext) private var modelContext
-    @Query private var decks: [Deck]
+    @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
     
     
     var body: some View {

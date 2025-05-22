@@ -21,7 +21,7 @@ class DeckViewModel: ObservableObject {
     
     private let deckRepository: DeckRepository
     
-    init(deckRepository: DeckRepository = SwiftDataDeckRepository()) {
+    init(deckRepository: DeckRepository = DeckRepositoryImplementation()) {
         self.deckRepository = deckRepository
     }
     func createNewDeck(context: ModelContext) {

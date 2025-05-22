@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		15C466D62DDF268C005FB5C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15EF86BF2DC23AD000DC12EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 15EF86C62DC23AD000DC12EC;
+			remoteInfo = FlaschcardsSwiftUI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		15C466D22DDF268C005FB5C7 /* MyXCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyXCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15EF86C72DC23AD100DC12EC /* FlaschcardsSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlaschcardsSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		15C466D32DDF268C005FB5C7 /* MyXCTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MyXCTests;
+			sourceTree = "<group>";
+		};
 		15EF86C92DC23AD100DC12EC /* FlaschcardsSwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FlaschcardsSwiftUI;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		15C466CF2DDF268C005FB5C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15EF86C42DC23AD000DC12EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				15EF86C92DC23AD100DC12EC /* FlaschcardsSwiftUI */,
+				15C466D32DDF268C005FB5C7 /* MyXCTests */,
 				15EF86C82DC23AD100DC12EC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				15EF86C72DC23AD100DC12EC /* FlaschcardsSwiftUI.app */,
+				15C466D22DDF268C005FB5C7 /* MyXCTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		15C466D12DDF268C005FB5C7 /* MyXCTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15C466D82DDF268C005FB5C7 /* Build configuration list for PBXNativeTarget "MyXCTests" */;
+			buildPhases = (
+				15C466CE2DDF268C005FB5C7 /* Sources */,
+				15C466CF2DDF268C005FB5C7 /* Frameworks */,
+				15C466D02DDF268C005FB5C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				15C466D72DDF268C005FB5C7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				15C466D32DDF268C005FB5C7 /* MyXCTests */,
+			);
+			name = MyXCTests;
+			packageProductDependencies = (
+			);
+			productName = MyXCTests;
+			productReference = 15C466D22DDF268C005FB5C7 /* MyXCTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		15EF86C62DC23AD000DC12EC /* FlaschcardsSwiftUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15EF86D22DC23AD300DC12EC /* Build configuration list for PBXNativeTarget "FlaschcardsSwiftUI" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					15C466D12DDF268C005FB5C7 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 15EF86C62DC23AD000DC12EC;
+					};
 					15EF86C62DC23AD000DC12EC = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				15EF86C62DC23AD000DC12EC /* FlaschcardsSwiftUI */,
+				15C466D12DDF268C005FB5C7 /* MyXCTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		15C466D02DDF268C005FB5C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15EF86C52DC23AD000DC12EC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		15C466CE2DDF268C005FB5C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15EF86C32DC23AD000DC12EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		15C466D72DDF268C005FB5C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 15EF86C62DC23AD000DC12EC /* FlaschcardsSwiftUI */;
+			targetProxy = 15C466D62DDF268C005FB5C7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		15C466D92DDF268C005FB5C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.Maximsvid.MyXCTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlaschcardsSwiftUI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlaschcardsSwiftUI";
+			};
+			name = Debug;
+		};
+		15C466DA2DDF268C005FB5C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.Maximsvid.MyXCTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlaschcardsSwiftUI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlaschcardsSwiftUI";
+			};
+			name = Release;
+		};
 		15EF86D02DC23AD300DC12EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -309,6 +418,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		15C466D82DDF268C005FB5C7 /* Build configuration list for PBXNativeTarget "MyXCTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15C466D92DDF268C005FB5C7 /* Debug */,
+				15C466DA2DDF268C005FB5C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		15EF86C22DC23AD000DC12EC /* Build configuration list for PBXProject "FlaschcardsSwiftUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -7,7 +7,7 @@
 import SwiftData
 import SwiftUI
 
-class SwiftDataDeckRepository: DeckRepository {
+class DeckRepositoryImplementation: DeckRepository {
     func createDeck(title: String, description: String?, context: ModelContext) throws -> Deck {
         guard !title.isEmpty else {
             throw Errors.emptyTitle
@@ -37,6 +37,4 @@ class SwiftDataDeckRepository: DeckRepository {
         deck.title = newName
         try context.save()
     }
-    
-    
 }
