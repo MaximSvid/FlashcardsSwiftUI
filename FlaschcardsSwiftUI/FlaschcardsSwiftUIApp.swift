@@ -12,6 +12,7 @@ import SwiftData
 struct FlaschcardsSwiftUIApp: App {
     @StateObject private var deckViewModel = DeckViewModel()
     @StateObject private var folderViewModel = FolderViewModel()
+    @StateObject private var flashcardViewModel = FlashcardViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -19,6 +20,7 @@ struct FlaschcardsSwiftUIApp: App {
         }
         .environmentObject(deckViewModel)
         .environmentObject(folderViewModel)
+        .environmentObject(flashcardViewModel)
         .modelContainer(for: [Deck.self, Folder.self, Flashcard.self])
     }
 }

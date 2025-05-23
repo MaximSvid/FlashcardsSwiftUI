@@ -11,38 +11,39 @@ import SwiftData
 struct FolderView: View {
     @EnvironmentObject private var folderViewModel: FolderViewModel
     @Environment(\.modelContext) private var modelContext
-    @Query private var decks: [Deck]
-    //    @Query(sort: \Folder.createdAt, order: .reverse) private var folders: [Folder]
     let deck: Deck
-    //    let folder: Folder?
     
     var body: some View {
         List {
             ForEach(deck.folders) { folder in
-                Text(folder.name)
-                    .swipeActions(edge: .trailing) {
-                        Button{
-                            folderViewModel.selectedFolder = folder
-                            folderViewModel.showAlerDeleteFolder = true
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        .tint(.red)
-                        
-                        Button {
-                            folderViewModel.selectedFolder = folder
-                            folderViewModel.folderName = folder.name
-                            folderViewModel.showAlertUpdateFolder = true
-                        } label: {
-                            Label ("Edit", systemImage: "pencil")
-                        }
-                        .tint(.yellow)
-                        
+                NavigationLink(value: folder) {
+                    Text(folder.name)
+                }
+                .swipeActions(edge: .trailing) {
+                    Button{
+                        folderViewModel.selectedFolder = folder
+                        folderViewModel.showAlerDeleteFolder = true
+                    } label: {
+                        Label("Delete", systemImage: "trash")
                     }
+                    .tint(.red)
+                    
+                    Button {
+                        folderViewModel.selectedFolder = folder
+                        folderViewModel.folderName = folder.name
+                        folderViewModel.showAlertUpdateFolder = true
+                    } label: {
+                        Label ("Edit", systemImage: "pencil")
+                    }
+                    .tint(.yellow)
+                }
             }
         }
         .listStyle(.plain)
         .navigationTitle(deck.title)
+        .navigationDestination(for: Folder.self) { folder in
+            FlashcardView(selectedFolder: folder)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
@@ -59,9 +60,6 @@ struct FolderView: View {
             Button("Create") {
                 if let selectedDeck = folderViewModel.selectedDeck {
                     folderViewModel.createNewFolder(in: selectedDeck, context: modelContext)
-                    
-                    //                    folderViewModel.folderName = ""
-                    
                 }
                 folderViewModel.showAlertCreateNewFolder = false
             }
@@ -77,7 +75,6 @@ struct FolderView: View {
                     folderViewModel.deleteFolder(context: modelContext, folder: selectedFolder)
                     folderViewModel.selectedFolder = nil
                 }
-                
             }
             Button("Cancel", role: .cancel) {
                 folderViewModel.showAlerDeleteFolder = false

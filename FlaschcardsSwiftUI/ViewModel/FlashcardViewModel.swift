@@ -7,10 +7,12 @@
 import SwiftUI
 import SwiftData
 
-class FlashcardViewModel {
+class FlashcardViewModel: ObservableObject {
     
     @Published var question: String = ""
     @Published var answer: String = ""
+    
+    @Published var isSheetCreateNewFlashcardOpen: Bool = false
     
     @Published var isFavorite: Bool = false
     
