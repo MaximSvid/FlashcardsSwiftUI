@@ -8,31 +8,40 @@ import SwiftData
 import Foundation
 
 class FlashcardRepositoryImplementation: FlashcardRepository {
-    
-    func createFlashcard(flashcardName: String, in folder: Folder, context: ModelContext) throws -> Flashcard {
         
-        if flashcardName.isEmpty {
+    
+    func createFlashcard(question: String, answer: String, in folder: Folder, context: ModelContext) throws -> Flashcard {
+        if question.isEmpty || answer.isEmpty {
             throw Errors.emptyTitle
         }
         
         var newFlashcard = Flashcard(
             id: UUID(),
-            question: "",
-            answer: "",
+            question: question,
+            answer: answer,
+            creationDate: Date(),
+            folder: folder
         )
         context.insert(newFlashcard)
-//        folder.
+        folder.flashcards.append(newFlashcard) // aa to folder's lfashcards array
+        try context.save() // save the context to presist the re;ationship
         
         return newFlashcard
     }
     
+        
     func deleteFlashcard(flashcard: Flashcard, context: ModelContext) throws {
-        
+        context.delete(flashcard)
+        try context.save()
     }
     
-    func updateFlashcard(flashcard: Flashcard, newName: String, context: ModelContext) {
+    func updateFlashcard(flashcard: Flashcard, question: String, answer: String, context: ModelContext) throws {
+        if question.isEmpty || answer.isEmpty {
+            throw Errors.emptyTitle
+        }
         
+        flashcard.question = question
+        flashcard.answer = answer
+        try context.save()
     }
-    
-    
 }

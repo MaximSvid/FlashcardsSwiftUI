@@ -7,9 +7,9 @@
 import SwiftData
 
 protocol FlashcardRepository {
-    func createFlashcard(flashcardName: String, in folder: Folder, context: ModelContext) throws -> Flashcard
+    func createFlashcard(question: String, answer: String, in folder: Folder, context: ModelContext) throws -> Flashcard
     
     func deleteFlashcard(flashcard: Flashcard, context: ModelContext) throws
     
-    func updateFlashcard(flashcard: Flashcard, newName: String, context: ModelContext)
+    func updateFlashcard(flashcard: Flashcard, question: String, answer: String, context: ModelContext) throws
 }

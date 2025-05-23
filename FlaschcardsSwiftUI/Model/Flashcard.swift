@@ -15,9 +15,9 @@ class Flashcard {
     var isFavorite: Bool
     var creationDate: Date
     var coment: String?
-//    @Relationship(inverse: \Folder.)
+    @Relationship(inverse: \Folder.flashcards) var folder: Folder? // inverse relationship to Folder
     
-    init(id: UUID = UUID(), question: String, answer: String, isFavorite: Bool = false, creationDate: Date = Date()) {
+    init(id: UUID = UUID(), question: String, answer: String, isFavorite: Bool = false, creationDate: Date = Date(), folder: Folder? = nil) {
         self.id = id
         self.question = question
         self.answer = answer
