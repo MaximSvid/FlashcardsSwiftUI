@@ -19,9 +19,10 @@ struct FlashcardView: View {
     var body: some View {
         List {
             ForEach(flashcards.filter { $0.folder == selectedFolder }) { flashcard in
-                Text(flashcard.answer)
+                Text(flashcard.question)
             }
         }
+
         .listStyle(.plain)
         .navigationTitle(selectedFolder?.name ?? "Flashcards")
         .toolbar {

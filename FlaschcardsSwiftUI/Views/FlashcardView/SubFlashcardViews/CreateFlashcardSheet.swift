@@ -20,10 +20,45 @@ struct CreateFlashcardSheet: View {
                 .font(.title3.bold())
                 .padding()
             
-            CustomTextEditor(placeholder: "Question", text: $flashcardViewModel.question)
-                .padding()
-            CustomTextEditor(placeholder: "Answer", text: $flashcardViewModel.answer)
-                .padding()
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $flashcardViewModel.question)
+                    .frame(maxHeight: 100)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(style: StrokeStyle(lineWidth: 0.5))
+                    )
+                    .padding()
+                
+                if flashcardViewModel.question.isEmpty {
+                    Text("Question")
+                        .foregroundStyle(.gray)
+                        .padding()
+                        .padding(.top, 8)
+                        .padding(.leading, 8)
+                        .allowsHitTesting(false) // um nichts clicable zu blockieren
+                }
+            }
+            
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $flashcardViewModel.answer)
+                    .frame(maxHeight: 100)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(style: StrokeStyle(lineWidth: 0.5))
+                    )
+                    .padding()
+                
+                if flashcardViewModel.answer.isEmpty {
+                    Text("Answer")
+                        .foregroundStyle(.gray)
+                        .padding()
+                        .padding(.top, 8)
+                        .padding(.leading, 8)
+                        .allowsHitTesting(false) // um nichts clicable zu blockieren
+                    
+                }
+            }
+            
             
             MainButton(action: {
                 if let folder = selectedFolder {
@@ -32,7 +67,9 @@ struct CreateFlashcardSheet: View {
                 }
                 
             }, title: "Create")
-                
+            
+            Spacer()
+            
         }
     }
 }
