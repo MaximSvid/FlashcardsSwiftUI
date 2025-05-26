@@ -77,7 +77,7 @@ struct CreateFlashcardSheet: View {
                 }
                 
             }, title: "Create")
-            .disabled(!flashcardViewModel.isFormValid) // machen button nicht functionog when eine Fehler commt
+            .disabled(!flashcardViewModel.isFormValid) // deaktiviert den Button, wenn das Formular ungültig ist
             .opacity(flashcardViewModel.isFormValid ? 1 : 0.5) // um button ausgrauen 
             
             Spacer()
@@ -86,8 +86,4 @@ struct CreateFlashcardSheet: View {
             flashcardViewModel.errorMessage = ""
         }
     }
-}
-
-#Preview {
-    CreateFlashcardSheet()
 }

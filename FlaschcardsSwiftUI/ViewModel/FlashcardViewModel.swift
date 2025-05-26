@@ -22,22 +22,22 @@ class FlashcardViewModel: ObservableObject {
     
     private var flashcardRepository: FlashcardRepository
     
-    private var cancellables = Set<AnyCancellable>() // combine
+    private var cancellables = Set<AnyCancellable>() // // speichert alle Combine-Subscriptions, um Speicherlecks zu vermeiden
     
     init(flashcardRepository: FlashcardRepository = FlashcardRepositoryImplementation()) {
         self.flashcardRepository = flashcardRepository
     }
     
-    private func setupValidation() {
-        $question
-            .removeDuplicates()
-            .sink { [weak self] _ in
-                self?.errorMessage = ""
+    private func setupValidation() {    // richtet die Validierung für Eingabefelder ein
+        $question                       // question - publisher reagieret auf enderung
+            .removeDuplicates()         // entfernt doppelte Werte
+            .sink { [weak self] _ in    // empfängt Werte und führt Aktion aus
+                self?.errorMessage = "" // setzt Fehlermeldung zurück
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)   // speichert die Subscription
     }
     
-    var isFormValid: Bool {
+    var isFormValid: Bool {             // prüft, ob das Formular gültig ist
         let trimmedQuestion = question.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
         
