@@ -22,7 +22,6 @@ struct FlashcardView: View {
                 Text(flashcard.question)
             }
         }
-
         .listStyle(.plain)
         .navigationTitle(selectedFolder?.name ?? "Flashcards")
         .toolbar {

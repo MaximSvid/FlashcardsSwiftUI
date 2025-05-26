@@ -6,11 +6,13 @@
 //
 import SwiftUI
 import SwiftData
+import Combine
 
 class FlashcardViewModel: ObservableObject {
     
     @Published var question: String = ""
     @Published var answer: String = ""
+    @Published var errorMessage: String = ""
     
     @Published var isSheetCreateNewFlashcardOpen: Bool = false
     
@@ -18,14 +20,65 @@ class FlashcardViewModel: ObservableObject {
     
     @Published var selectedFlashcard: Flashcard?
     
-    
     private var flashcardRepository: FlashcardRepository
+    
+    private var cancellables = Set<AnyCancellable>() // combine
     
     init(flashcardRepository: FlashcardRepository = FlashcardRepositoryImplementation()) {
         self.flashcardRepository = flashcardRepository
     }
     
+    private func setupValidation() {
+        $question
+            .removeDuplicates()
+            .sink { [weak self] _ in
+                self?.errorMessage = ""
+            }
+            .store(in: &cancellables)
+    }
+    
+    var isFormValid: Bool {
+        let trimmedQuestion = question.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return !trimmedQuestion.isEmpty && !trimmedAnswer.isEmpty && errorMessage.isEmpty
+    }
+    
+    //func framework Combine, uberprüft ob flashcard schon gibt
+    func checkIfCardExists(in folder: Folder) {
+        let trimmedQuestion = question.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedQuestion.isEmpty else {
+            errorMessage = ""
+            return
+        }
+        
+        let exists = folder.flashcards.contains { flashcard in
+            flashcard.question.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == trimmedQuestion.lowercased()
+        }
+        
+        if exists {
+            errorMessage = "This card already exists..."
+        } else {
+            errorMessage = ""
+        }
+    }
+    
     func createNewFlashcard (in folder: Folder, context: ModelContext) {
+        
+        let trimmedQuestion = question.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedQuestion.isEmpty, !trimmedAnswer.isEmpty else {
+            errorMessage = "Please enter both a question and an answer."
+            return
+        }
+        checkIfCardExists(in: folder)
+        
+        guard errorMessage.isEmpty else {
+            return
+        }
+        
         do {
             let newFlashcard = try flashcardRepository.createFlashcard(
                 question: question,
@@ -36,6 +89,7 @@ class FlashcardViewModel: ObservableObject {
             question = ""
             answer = ""
             selectedFlashcard = newFlashcard
+            errorMessage = ""
             print("New Flashcard created successfully!")
         } catch {
             print("Error creating new flashcard: \(error)")

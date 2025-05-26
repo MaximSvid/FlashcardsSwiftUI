@@ -28,6 +28,11 @@ struct CreateFlashcardSheet: View {
                             .stroke(style: StrokeStyle(lineWidth: 0.5))
                     )
                     .padding()
+                    .onChange(of: flashcardViewModel.question) { oldValue, newValue in
+                        if let  folder = selectedFolder {
+                            flashcardViewModel.checkIfCardExists(in: folder)
+                        }
+                    }
                 
                 if flashcardViewModel.question.isEmpty {
                     Text("Question")
@@ -59,6 +64,11 @@ struct CreateFlashcardSheet: View {
                 }
             }
             
+            if !flashcardViewModel.errorMessage.isEmpty {
+                Text(flashcardViewModel.errorMessage)
+                    .foregroundStyle(.red)
+                    .font(.caption)
+            }
             
             MainButton(action: {
                 if let folder = selectedFolder {
@@ -67,9 +77,13 @@ struct CreateFlashcardSheet: View {
                 }
                 
             }, title: "Create")
+            .disabled(!flashcardViewModel.isFormValid) // machen button nicht functionog when eine Fehler commt
+            .opacity(flashcardViewModel.isFormValid ? 1 : 0.5) // um button ausgrauen 
             
             Spacer()
-            
+        }
+        .onDisappear {
+            flashcardViewModel.errorMessage = ""
         }
     }
 }
