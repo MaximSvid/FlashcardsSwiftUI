@@ -60,6 +60,7 @@ struct EditFlashcardView: View {
             Spacer()
         }
         .navigationTitle("Edit")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             flashcardViewModel.loadFlashcardForEditing(flashcard: selectedFlashcard)
         }
