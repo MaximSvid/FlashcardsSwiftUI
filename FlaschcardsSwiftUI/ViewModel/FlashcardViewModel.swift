@@ -15,6 +15,7 @@ class FlashcardViewModel: ObservableObject {
     @Published var errorMessage: String = ""
     
     @Published var isSheetCreateNewFlashcardOpen: Bool = false
+    @Published var alertDeleteFlashcardIsPresent: Bool = false
     
     @Published var isFavorite: Bool = false
     
@@ -66,13 +67,7 @@ class FlashcardViewModel: ObservableObject {
     
     func createNewFlashcard (in folder: Folder, context: ModelContext) {
         
-        let trimmedQuestion = question.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        guard !trimmedQuestion.isEmpty, !trimmedAnswer.isEmpty else {
-            errorMessage = "Please enter both a question and an answer."
-            return
-        }
+                
         checkIfCardExists(in: folder)
         
         guard errorMessage.isEmpty else {
@@ -96,6 +91,7 @@ class FlashcardViewModel: ObservableObject {
         }
     }
     
+    //-----------
     func updateFlashcard(flashcard: Flashcard, context: ModelContext) {
         do {
             try flashcardRepository.updateFlashcard(
@@ -110,6 +106,22 @@ class FlashcardViewModel: ObservableObject {
             print("Error updating flashcard: \(error)")
         }
     }
+    
+    func loadFlashcardForEditing(flashcard: Flashcard) {
+        self.question = flashcard.question
+        self.answer = flashcard.answer
+        self.isFavorite = flashcard.isFavorite
+        self.selectedFlashcard = flashcard
+    }
+    
+    func clearEditingData() {
+        self.question = ""
+        self.answer = ""
+        self.isFavorite = false
+        self.selectedFlashcard = nil
+    }
+    
+    //-------
     
     func deleteFlashcard(flashcard: Flashcard, context: ModelContext) {
         do {

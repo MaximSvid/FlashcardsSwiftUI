@@ -15,15 +15,32 @@ struct FlashcardView: View {
     @Query(sort: \Flashcard.creationDate, order: .reverse) private var flashcards: [Flashcard]
     
     var selectedFolder: Folder?
+    //    var selectedFlashcard: Flashcard?
     
     var body: some View {
         List {
-            ForEach(flashcards.filter { $0.folder == selectedFolder }) { flashcard in
-                Text(flashcard.question)
+            ForEach(flashcards.filter { $0.folder == selectedFolder }, id: \.self) { flashcard in
+                NavigationLink(value: flashcard) {
+                    Text(flashcard.question)
+                }
+                .swipeActions(edge: .trailing) {
+                    Button {
+                        flashcardViewModel.selectedFlashcard = flashcard
+                        flashcardViewModel.alertDeleteFlashcardIsPresent = true
+                    } label : {
+                        Label("Delete", systemImage: "trash")
+                    }
+                    .tint(.red)
+                }
             }
+            
         }
         .listStyle(.plain)
         .navigationTitle(selectedFolder?.name ?? "Flashcards")
+        .navigationDestination(for: Flashcard.self) { flashcard in
+            EditFlashcardView(selectedFlashcard: flashcard)
+                .environmentObject(flashcardViewModel)
+        }
         .toolbar {
             ToolbarItem (placement: .topBarTrailing) {
                 Button(action: {
@@ -39,6 +56,17 @@ struct FlashcardView: View {
                 .environmentObject(flashcardViewModel)
                 .environmentObject(folderViewModel)
                 .presentationDragIndicator(.visible)
+        }
+        .alert("Delete Flashcard form: \(selectedFolder?.name ?? "Unknown") ", isPresented: $flashcardViewModel.alertDeleteFlashcardIsPresent) {
+            Button("Delete", role: .destructive) {
+                if let selectedFlashcard = flashcardViewModel.selectedFlashcard {
+                    flashcardViewModel.deleteFlashcard(flashcard: selectedFlashcard, context: modelContext)
+                }
+            }
+            Button("Cancel", role: .cancel) {
+                flashcardViewModel.alertDeleteFlashcardIsPresent = false
+                flashcardViewModel.selectedFlashcard = nil
+            }
         }
     }
 }

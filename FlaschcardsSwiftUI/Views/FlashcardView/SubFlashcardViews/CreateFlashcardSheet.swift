@@ -16,7 +16,7 @@ struct CreateFlashcardSheet: View {
     
     var body: some View {
         VStack {
-            Text("Folder: ")
+            Text("Folder: \(selectedFolder?.name ?? "No folder selected")")
                 .font(.title3.bold())
                 .padding()
             
@@ -78,7 +78,7 @@ struct CreateFlashcardSheet: View {
                 
             }, title: "Create")
             .disabled(!flashcardViewModel.isFormValid) // deaktiviert den Button, wenn das Formular ungültig ist
-            .opacity(flashcardViewModel.isFormValid ? 1 : 0.5) // um button ausgrauen 
+            .opacity(flashcardViewModel.isFormValid ? 1 : 0.5) // um button ausgrauen
             
             Spacer()
         }

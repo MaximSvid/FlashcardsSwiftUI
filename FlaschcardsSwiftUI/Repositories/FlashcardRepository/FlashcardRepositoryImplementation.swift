@@ -15,7 +15,7 @@ class FlashcardRepositoryImplementation: FlashcardRepository {
             throw Errors.emptyTitle
         }
         
-        var newFlashcard = Flashcard(
+        let newFlashcard = Flashcard(
             id: UUID(),
             question: question,
             answer: answer,
