@@ -52,10 +52,27 @@ struct EditFlashcardView: View {
                 }
             }
             
+            if !flashcardViewModel.errorMessage.isEmpty {
+                Text(flashcardViewModel.errorMessage)
+                    .foregroundStyle(.red)
+                    .font(.caption)
+            }
+            
+            if !flashcardViewModel.infoMessage.isEmpty {
+                Text(flashcardViewModel.infoMessage)
+                    .foregroundStyle(.green)
+                    .font(.caption)
+                    .onAppear { print("InfoMessage shown: \(flashcardViewModel.infoMessage)") }
+            }
+            
+            
             MainButton(action: {
                 flashcardViewModel.updateFlashcard(flashcard: selectedFlashcard, context: modelContext)
                 dissmiss()
             }, title: "Edit")
+            .disabled(!flashcardViewModel.isFormValid) // deaktiviert den Button, wenn das Formular ungültig ist
+            .opacity(flashcardViewModel.isFormValid ? 1 : 0.5) // um button ausgrauen
+            
             
             Spacer()
         }

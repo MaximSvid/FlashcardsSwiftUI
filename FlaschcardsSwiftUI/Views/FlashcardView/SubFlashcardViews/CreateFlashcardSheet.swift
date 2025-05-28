@@ -28,11 +28,6 @@ struct CreateFlashcardSheet: View {
                             .stroke(style: StrokeStyle(lineWidth: 0.5))
                     )
                     .padding()
-                    .onChange(of: flashcardViewModel.question) { oldValue, newValue in
-                        if let  folder = selectedFolder {
-                            flashcardViewModel.checkIfCardExists(in: folder)
-                        }
-                    }
                 
                 if flashcardViewModel.question.isEmpty {
                     Text("Question")
@@ -70,6 +65,13 @@ struct CreateFlashcardSheet: View {
                     .font(.caption)
             }
             
+            if !flashcardViewModel.infoMessage.isEmpty {
+                Text(flashcardViewModel.infoMessage)
+                    .foregroundStyle(.green)
+                    .font(.caption)
+                    .onAppear { print("InfoMessage shown: \(flashcardViewModel.infoMessage)") }
+            }
+            
             MainButton(action: {
                 if let folder = selectedFolder {
                     flashcardViewModel.createNewFlashcard(in: folder, context: modelContext)
@@ -82,8 +84,13 @@ struct CreateFlashcardSheet: View {
             
             Spacer()
         }
+        .onAppear {
+            if let folder = selectedFolder {
+                flashcardViewModel.currentFolder = folder
+            }
+        }
         .onDisappear {
-            flashcardViewModel.errorMessage = ""
+            flashcardViewModel.clearEditingData()
         }
     }
 }
