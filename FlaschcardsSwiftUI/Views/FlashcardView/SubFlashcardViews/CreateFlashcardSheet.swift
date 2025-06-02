@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AlertToast
+
 
 struct CreateFlashcardSheet: View {
     @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
@@ -84,6 +86,7 @@ struct CreateFlashcardSheet: View {
             
             Spacer()
         }
+        
         .onAppear {
             if let folder = selectedFolder {
                 flashcardViewModel.currentFolder = folder
@@ -92,5 +95,6 @@ struct CreateFlashcardSheet: View {
         .onDisappear {
             flashcardViewModel.clearEditingData()
         }
+        
     }
 }

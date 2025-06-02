@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		70591691825A21CF3F7FB09A /* Pods_FlaschcardsSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700A1E381CCB4F54B8EBF85 /* Pods_FlaschcardsSwiftUI.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		15C466D62DDF268C005FB5C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -19,16 +23,23 @@
 /* Begin PBXFileReference section */
 		15C466D22DDF268C005FB5C7 /* MyXCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyXCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15EF86C72DC23AD100DC12EC /* FlaschcardsSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlaschcardsSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4278B1575CA6391FB126AE30 /* Pods-FlaschcardsSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlaschcardsSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-FlaschcardsSwiftUI/Pods-FlaschcardsSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		A700A1E381CCB4F54B8EBF85 /* Pods_FlaschcardsSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlaschcardsSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6DAC597770323BB962A0CEF /* Pods-FlaschcardsSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlaschcardsSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-FlaschcardsSwiftUI/Pods-FlaschcardsSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		15C466D32DDF268C005FB5C7 /* MyXCTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = MyXCTests;
 			sourceTree = "<group>";
 		};
 		15EF86C92DC23AD100DC12EC /* FlaschcardsSwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = FlaschcardsSwiftUI;
 			sourceTree = "<group>";
 		};
@@ -46,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70591691825A21CF3F7FB09A /* Pods_FlaschcardsSwiftUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +70,8 @@
 				15EF86C92DC23AD100DC12EC /* FlaschcardsSwiftUI */,
 				15C466D32DDF268C005FB5C7 /* MyXCTests */,
 				15EF86C82DC23AD100DC12EC /* Products */,
+				577A464990E48436FBF3ADCC /* Pods */,
+				C358C1F546DDCC6F020E1A6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +82,24 @@
 				15C466D22DDF268C005FB5C7 /* MyXCTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		577A464990E48436FBF3ADCC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F6DAC597770323BB962A0CEF /* Pods-FlaschcardsSwiftUI.debug.xcconfig */,
+				4278B1575CA6391FB126AE30 /* Pods-FlaschcardsSwiftUI.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C358C1F546DDCC6F020E1A6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A700A1E381CCB4F54B8EBF85 /* Pods_FlaschcardsSwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,8 +122,6 @@
 				15C466D32DDF268C005FB5C7 /* MyXCTests */,
 			);
 			name = MyXCTests;
-			packageProductDependencies = (
-			);
 			productName = MyXCTests;
 			productReference = 15C466D22DDF268C005FB5C7 /* MyXCTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -100,9 +130,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15EF86D22DC23AD300DC12EC /* Build configuration list for PBXNativeTarget "FlaschcardsSwiftUI" */;
 			buildPhases = (
+				03106D3121E3373380CBC6A0 /* [CP] Check Pods Manifest.lock */,
 				15EF86C32DC23AD000DC12EC /* Sources */,
 				15EF86C42DC23AD000DC12EC /* Frameworks */,
 				15EF86C52DC23AD000DC12EC /* Resources */,
+				4B1D23BFFDBADF9C738751F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -112,8 +144,6 @@
 				15EF86C92DC23AD100DC12EC /* FlaschcardsSwiftUI */,
 			);
 			name = FlaschcardsSwiftUI;
-			packageProductDependencies = (
-			);
 			productName = FlaschcardsSwiftUI;
 			productReference = 15EF86C72DC23AD100DC12EC /* FlaschcardsSwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -173,6 +203,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03106D3121E3373380CBC6A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlaschcardsSwiftUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B1D23BFFDBADF9C738751F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlaschcardsSwiftUI/Pods-FlaschcardsSwiftUI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlaschcardsSwiftUI/Pods-FlaschcardsSwiftUI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlaschcardsSwiftUI/Pods-FlaschcardsSwiftUI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		15C466CE2DDF268C005FB5C7 /* Sources */ = {
@@ -355,6 +427,7 @@
 		};
 		15EF86D32DC23AD300DC12EC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6DAC597770323BB962A0CEF /* Pods-FlaschcardsSwiftUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -386,6 +459,7 @@
 		};
 		15EF86D42DC23AD300DC12EC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4278B1575CA6391FB126AE30 /* Pods-FlaschcardsSwiftUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
