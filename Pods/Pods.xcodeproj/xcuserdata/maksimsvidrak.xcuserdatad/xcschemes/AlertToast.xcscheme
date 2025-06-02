@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BD9F52E07CA8CCC9E5112A7D8C1CE821"
-               BuildableName = "AlertToast.framework"
+               BuildableName = "libAlertToast.a"
                BlueprintName = "AlertToast"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

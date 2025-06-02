@@ -17,6 +17,7 @@ class FlashcardViewModel: ObservableObject {
     
     @Published var isSheetCreateNewFlashcardOpen: Bool = false
     @Published var alertDeleteFlashcardIsPresent: Bool = false
+    @Published var toastMessageIfFlashcardCreated: Bool = false
     
     @Published var isFavorite: Bool = false
     

@@ -1,4 +1,4 @@
-framework module Pods_FlaschcardsSwiftUI {
+module Pods_FlaschcardsSwiftUI {
   umbrella header "Pods-FlaschcardsSwiftUI-umbrella.h"
 
   export *

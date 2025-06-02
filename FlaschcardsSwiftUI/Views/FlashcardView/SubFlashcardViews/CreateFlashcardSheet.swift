@@ -77,6 +77,7 @@ struct CreateFlashcardSheet: View {
             MainButton(action: {
                 if let folder = selectedFolder {
                     flashcardViewModel.createNewFlashcard(in: folder, context: modelContext)
+                    flashcardViewModel.toastMessageIfFlashcardCreated = true
                     dismiss()
                 }
                 
@@ -86,7 +87,9 @@ struct CreateFlashcardSheet: View {
             
             Spacer()
         }
-        
+        .toast(isPresenting: $flashcardViewModel.toastMessageIfFlashcardCreated, duration: 2, tapToDismiss: true) {
+            AlertToast(type: .complete(.green), title: "Flashcard Created!")
+        }
         .onAppear {
             if let folder = selectedFolder {
                 flashcardViewModel.currentFolder = folder
@@ -94,6 +97,7 @@ struct CreateFlashcardSheet: View {
         }
         .onDisappear {
             flashcardViewModel.clearEditingData()
+//            flashcardViewModel.toastMessageIfFlashcardCreated = false
         }
         
     }

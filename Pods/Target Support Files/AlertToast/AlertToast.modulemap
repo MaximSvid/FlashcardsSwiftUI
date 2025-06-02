@@ -1,4 +1,4 @@
-framework module AlertToast {
+module AlertToast {
   umbrella header "AlertToast-umbrella.h"
 
   export *

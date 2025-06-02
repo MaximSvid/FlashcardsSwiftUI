@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C2C3A2B04FBF30C4A0FCF5FD409AF3F2"
-               BuildableName = "Pods_FlaschcardsSwiftUI.framework"
+               BuildableName = "libPods-FlaschcardsSwiftUI.a"
                BlueprintName = "Pods-FlaschcardsSwiftUI"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
