@@ -87,9 +87,6 @@ struct CreateFlashcardSheet: View {
             
             Spacer()
         }
-        .toast(isPresenting: $flashcardViewModel.toastMessageIfFlashcardCreated, duration: 2, tapToDismiss: true) {
-            AlertToast(type: .complete(.green), title: "Flashcard Created!")
-        }
         .onAppear {
             if let folder = selectedFolder {
                 flashcardViewModel.currentFolder = folder

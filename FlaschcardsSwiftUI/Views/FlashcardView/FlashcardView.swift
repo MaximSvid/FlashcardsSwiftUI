@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import AlertToast
 
 struct FlashcardView: View {
     @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
@@ -67,6 +68,20 @@ struct FlashcardView: View {
                 flashcardViewModel.alertDeleteFlashcardIsPresent = false
                 flashcardViewModel.selectedFlashcard = nil
             }
+        }
+        .toast(
+            isPresenting: $flashcardViewModel.toastMessageIfFlashcardCreated,
+            duration: 1,
+            tapToDismiss: true) {
+                AlertToast(
+                    displayMode: .hud,
+                    type: .regular,
+                    title: "Flashcard Created!",
+//                    style: .init(
+//                        backgroundColor: .green.opacity(0.5),
+//                        titleColor: .white
+//                    )
+                )
         }
     }
 }
