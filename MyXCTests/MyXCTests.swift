@@ -33,30 +33,30 @@ final class MyXCTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCreateNewDeckSuccess() {
-        deckViewModel.deckName = "TestDeck"
-        deckViewModel.deckDescription = "TestDescription"
-        
-        //act
-        deckViewModel.createNewDeck(context: modelContext)
-        
-        //Assert
-        XCTAssertEqual(mockDeckRepository.createDeck?.title, "TestDeck")
-        XCTAssertEqual(mockDeckRepository.createDeck?.deckDescription, "TestDescription")
-    }
+//    func testCreateNewDeckSuccess() {
+//        deckViewModel.deckName = "TestDeck"
+//        deckViewModel.deckDescription = "TestDescription"
+//        
+//        //act
+//        deckViewModel.createNewDeck(context: modelContext)
+//        
+//        //Assert
+//        XCTAssertEqual(mockDeckRepository.createDeck?.title, "TestDeck")
+//        XCTAssertEqual(mockDeckRepository.createDeck?.deckDescription, "TestDescription")
+//    }
     
-    func testUpdateDeckNameSuccess() {
-        let deck = Deck(id: UUID(), title: "Max", deckDescription: nil, folders: [], createdAt: Date())
-        deckViewModel.selectedDeck = deck
-        deckViewModel.deckName = "New Name"
-        
-        //Act
-        deckViewModel.updateDeckName(context: modelContext, deck: deck, newName: "New Name")
-        
-        //Assert
-        XCTAssertEqual(mockDeckRepository.updateDeck, deck)
-        XCTAssertEqual(mockDeckRepository.updatedDeckName, "New Name")
-    }
+//    func testUpdateDeckNameSuccess() {
+//        let deck = Deck(id: UUID(), title: "Max", deckDescription: nil, folders: [], createdAt: Date())
+//        deckViewModel.selectedDeck = deck
+//        deckViewModel.deckName = "New Name"
+//        
+//        //Act
+//        deckViewModel.updateDeckName(context: modelContext, deck: deck, newName: "New Name")
+//        
+//        //Assert
+//        XCTAssertEqual(mockDeckRepository.updateDeck, deck)
+//        XCTAssertEqual(mockDeckRepository.updatedDeckName, "New Name")
+//    }
     
     // testDelete
     func testDeleteDeckSuccess() {

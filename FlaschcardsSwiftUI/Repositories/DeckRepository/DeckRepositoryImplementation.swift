@@ -8,17 +8,18 @@ import SwiftData
 import SwiftUI
 
 class DeckRepositoryImplementation: DeckRepository {
-    func createDeck(title: String, description: String?, context: ModelContext) throws -> Deck {
-        guard !title.isEmpty else {
-            throw Errors.emptyTitle
-        }
+    func createDeck(targetLanguage: Language, context: ModelContext) throws -> Deck {
+//        guard !title.isEmpty else {
+//            throw Errors.emptyTitle
+//        }
         
-        let newDeck = Deck (
+        let newDeck = Deck(
             id: UUID(),
-            title: title,
-            deckDescription: description,
+//            title: title,
+//            deckDescription: description,
             folders: [],
-            createdAt: Date()
+            createdAt: Date(),
+            targenLanguage: targetLanguage
         )
         context.insert(newDeck)
         try context.save()
@@ -30,11 +31,11 @@ class DeckRepositoryImplementation: DeckRepository {
         try context.save()
     }
     
-    func updateDeckName(_ deck: Deck, newName: String, context: ModelContext) throws {
-        guard !newName.isEmpty else {
-            throw Errors.emptyTitle
-        }
-        deck.title = newName
-        try context.save()
-    }
+//    func updateDeckName(_ deck: Deck, newName: String, context: ModelContext) throws {
+//        guard !newName.isEmpty else {
+//            throw Errors.emptyTitle
+//        }
+//        deck.title = newName
+//        try context.save()
+//    }
 }

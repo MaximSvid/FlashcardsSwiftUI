@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
+    @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
+
     
     var body: some View {
         NavigationView {
@@ -36,8 +39,12 @@ struct HomeView: View {
                         deckViewModel.newDeckSheetIsPresented = true
                     }) {
                         HStack {
-                            Text("New Deck ")
-                            Image(systemName: "chevron.down.square.fill")
+                            Image(systemName: "flag")
+                            Text(decks.contains { $0.targenLanguage == deckViewModel.selectedLanguage }
+                                 ? deckViewModel.selectedLanguage.rawValue
+                                 : "Create a deck")
+                            Image(systemName: "arrowshape.down")
+                                .font(.footnote)
                         }
                     }
                 }

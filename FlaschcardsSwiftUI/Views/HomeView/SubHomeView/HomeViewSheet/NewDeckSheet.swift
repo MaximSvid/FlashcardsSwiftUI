@@ -22,29 +22,51 @@ struct NewDeckSheet: View {
                     .padding()
                     .padding(.top, 20)
                 
-                List {
-                    ForEach(decks) { deck in
-                        Text(deck.title)
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    deckViewModel.deleteDeck(context: modelContext, deck: deck)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                if !decks.isEmpty {
+                    List {
+                        ForEach(Language.allCases) { language in
+                            if decks.contains(where: { $0.targenLanguage == language}) {
+                                Button(action: {
+                                    deckViewModel.selectedLanguage = language
+                                    deckViewModel.newDeckSheetIsPresented = false
+                                }) {
+                                    Text(language.rawValue)
                                 }
-                                
-                                Button {
-                                    deckViewModel.selectedDeck = deck
-                                    deckViewModel.deckName = deck.title
-                                    deckViewModel.showAlertDialogUpdateDeckNameHomeView = true
-                                } label: {
-                                    Label("Edit", systemImage: "pencil")
+                                .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) {
+                                        if let deckToDelete = decks.first(where: {$0.targenLanguage == language}) {
+                                            deckViewModel.deleteDeck(context: modelContext, deck: deckToDelete)
+                                        }                                    } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
                                 }
-                                .tint(.yellow)
                             }
+                            
+                        }
                     }
-                    
+                    .listStyle(.plain)
+                } else {
+                    VStack {
+                        Text("No decks available")
+                            .font(.callout)
+                            .foregroundStyle(.gray)
+                        Spacer()
+                        Divider()
+                        NavigationLink {
+                            CreateDeckSheet()
+                                .environmentObject(deckViewModel)
+                        } label: {
+                            Text("New Deck +")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, maxHeight: 50)
+                                .foregroundStyle(.white)
+                                .background(.blue)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                                .padding([.trailing, .leading, .bottom])
+                        }
+                        
+                    }
                 }
-                .listStyle(.plain)
                 
                 Divider()
                 NavigationLink {
@@ -59,23 +81,6 @@ struct NewDeckSheet: View {
                         .padding([.trailing, .leading, .bottom])
                 }
             }
-            .alert("Edit Deck Name", isPresented: $deckViewModel.showAlertDialogUpdateDeckNameHomeView) {
-                TextField("Deck Name", text: $deckViewModel.deckName)
-                Button("Save") {
-                    if let selectedDeck = deckViewModel.selectedDeck {
-                        deckViewModel.updateDeckName(context: modelContext, deck: selectedDeck, newName: deckViewModel.deckName)
-                    }
-                }
-                Button("Cancel", role: .cancel) {
-                    deckViewModel.whenCancelUpdateDeckName()
-                }
-            } message: {
-                Text("Enter a new name for the deck.")
-            }  
         }
     }
-}
-
-#Preview {
-    NewDeckSheet()
 }

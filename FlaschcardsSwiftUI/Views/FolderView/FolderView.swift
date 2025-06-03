@@ -40,7 +40,7 @@ struct FolderView: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle(deck.title)
+//        .navigationTitle(deck.title)
         .navigationDestination(for: Folder.self) { folder in
             FlashcardView(selectedFolder: folder)
         }

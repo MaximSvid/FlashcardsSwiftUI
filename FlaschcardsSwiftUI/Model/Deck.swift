@@ -10,22 +10,21 @@ import SwiftData
 @Model
 class Deck {
     var id: UUID
-    var title: String
-    var deckDescription: String?
     @Relationship(deleteRule: .cascade) var folders: [Folder] = []
     var createdAt: Date
+    var targenLanguage: Language? // sprache die man lernen mochtet
+    var sourceLanguage: String = "Russian"
     
     init(
         id: UUID,
-         title: String,
-         deckDescription: String? = nil,
-         folders: [Folder],
-         createdAt: Date
+        folders: [Folder],
+        createdAt: Date,
+        targenLanguage: Language
     ) {
         self.id = id
-        self.title = title
-        self.deckDescription = deckDescription
+        
         self.folders = folders
         self.createdAt = createdAt
+        self.targenLanguage = targenLanguage
     }
 }

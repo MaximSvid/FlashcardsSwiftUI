@@ -18,7 +18,7 @@ struct CreateDeckSheet: View {
                 .font(.title3.bold())
                 .padding()
 
-            CustomTextField(placeholder: "Enter a deck name", text: $deckViewModel.deckName)
+//            CustomTextField(placeholder: "Enter a deck name", text: $deckViewModel.deckName)
                 .padding(.bottom)
             
             MainButton(action: {
