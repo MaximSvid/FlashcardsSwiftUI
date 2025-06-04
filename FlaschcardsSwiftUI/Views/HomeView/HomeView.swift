@@ -39,8 +39,8 @@ struct HomeView: View {
                         deckViewModel.newDeckSheetIsPresented = true
                     }) {
                         HStack {
-                            Image(systemName: "flag")
-                            Text(decks.contains { $0.targenLanguage == deckViewModel.selectedLanguage }
+                            Text(deckViewModel.selectedDeck?.targetLanguage?.imageName ?? "")
+                            Text(decks.contains { $0.targetLanguage == deckViewModel.selectedLanguage }
                                  ? deckViewModel.selectedLanguage.rawValue
                                  : "Create a deck")
                             Image(systemName: "arrowshape.down")

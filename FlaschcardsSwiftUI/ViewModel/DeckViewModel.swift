@@ -10,7 +10,8 @@ import SwiftData
 class DeckViewModel: ObservableObject {
     @Published var newDeckSheetIsPresented: Bool = false
     @Published var selectedLanguage: Language = .english
-    
+    @Published var selectedSourceLanguage: Language = .russian
+        
     @Published var showAlertDialogUpdateDeckNameHomeView: Bool = false
     @Published var showAlertDialogUpdateDeckNameDeckView: Bool = false
     
@@ -26,7 +27,7 @@ class DeckViewModel: ObservableObject {
     }
     func createNewDeck(context: ModelContext) {
         do {
-            let _ = try deckRepository.createDeck(targetLanguage: selectedLanguage, context: context)
+            let _ = try deckRepository.createDeck(targetLanguage: selectedLanguage, sourceLanguage: selectedSourceLanguage, context: context)
             print("Deck saved successfully!")
             selectedLanguage = .english
         } catch {

@@ -12,19 +12,20 @@ class Deck {
     var id: UUID
     @Relationship(deleteRule: .cascade) var folders: [Folder] = []
     var createdAt: Date
-    var targenLanguage: Language? // sprache die man lernen mochtet
-    var sourceLanguage: String = "Russian"
-    
+    var targetLanguage: Language? // sprache die man lernen mochtet
+    var sourceLanguage: Language?
     init(
         id: UUID,
         folders: [Folder],
         createdAt: Date,
-        targenLanguage: Language
+        targenLanguage: Language?,
+        sourceLanguage: Language?
     ) {
         self.id = id
         
         self.folders = folders
         self.createdAt = createdAt
-        self.targenLanguage = targenLanguage
+        self.targetLanguage = targenLanguage
+        self.sourceLanguage = sourceLanguage
     }
 }

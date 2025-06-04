@@ -9,29 +9,34 @@ import Foundation
 import SwiftData
 
 class MockDeckRepository: DeckRepository {
-        
+    
+    
     
     var shouldThrowError: Bool = false
     var createDeck: Deck?
     var deleteDeck: Deck?
-//    var updateDeck: Deck?
-//    var updatedDeckName: String?
+    //    var updateDeck: Deck?
+    //    var updatedDeckName: String?
     
-    func createDeck(targetLanguage: Language, context: ModelContext) throws -> Deck {
+    func createDeck(targetLanguage: Language, sourceLanguage: Language, context: ModelContext) throws -> Deck {
         if shouldThrowError{
             throw Errors.emptyTitle
         }
         let deck = Deck(
             id: UUID(),
-//            title: title,
-//            deckDescription: description,
+            //            title: title,
+            //            deckDescription: description,
             folders: [],
             createdAt: Date(),
-            targenLanguage: targetLanguage
+            targenLanguage: targetLanguage,
+            sourceLanguage: sourceLanguage
         )
         createDeck = deck
         return deck
+        
     }
+
+    
     
     func deleteDeck(_ deck: Deck, context: ModelContext) throws {
         if shouldThrowError {
@@ -45,9 +50,9 @@ class MockDeckRepository: DeckRepository {
         if shouldThrowError {
             throw Errors.errorUpdateDeck
         }
-//        updateDeck = deck
-//        updatedDeckName = newName
-//        deck.title = newName
+        //        updateDeck = deck
+        //        updatedDeckName = newName
+        //        deck.title = newName
     }
     
     

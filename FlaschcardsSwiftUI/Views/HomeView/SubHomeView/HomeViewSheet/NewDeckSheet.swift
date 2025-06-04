@@ -24,24 +24,27 @@ struct NewDeckSheet: View {
                 
                 if !decks.isEmpty {
                     List {
-                        ForEach(Language.allCases) { language in
-                            if decks.contains(where: { $0.targenLanguage == language}) {
-                                Button(action: {
-                                    deckViewModel.selectedLanguage = language
-                                    deckViewModel.newDeckSheetIsPresented = false
-                                }) {
-                                    Text(language.rawValue)
-                                }
-                                .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) {
-                                        if let deckToDelete = decks.first(where: {$0.targenLanguage == language}) {
-                                            deckViewModel.deleteDeck(context: modelContext, deck: deckToDelete)
-                                        }                                    } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
+                        ForEach(decks) { deck in
+                            Button(action: {
+                                deckViewModel.selectedLanguage = deck.targetLanguage ?? .english
+                                deckViewModel.selectedSourceLanguage = deck.sourceLanguage ?? .russian
+                                deckViewModel.newDeckSheetIsPresented = false
+                            }) {
+                                HStack {
+                                    Text(deck.sourceLanguage?.imageName ?? "")
+                                    Text(deck.sourceLanguage?.displayName ?? "")
+                                    Text("-")
+                                    Text(deck.targetLanguage?.imageName ?? "")
+                                    Text(deck.targetLanguage?.displayName ?? "")
                                 }
                             }
-                            
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    deckViewModel.deleteDeck(context: modelContext, deck: deck)
+                                } label: {
+                                    Label ("Delete", systemImage: "trash")
+                                }
+                            }
                         }
                     }
                     .listStyle(.plain)
@@ -51,20 +54,6 @@ struct NewDeckSheet: View {
                             .font(.callout)
                             .foregroundStyle(.gray)
                         Spacer()
-                        Divider()
-                        NavigationLink {
-                            CreateDeckSheet()
-                                .environmentObject(deckViewModel)
-                        } label: {
-                            Text("New Deck +")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity, maxHeight: 50)
-                                .foregroundStyle(.white)
-                                .background(.blue)
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-                                .padding([.trailing, .leading, .bottom])
-                        }
-                        
                     }
                 }
                 
