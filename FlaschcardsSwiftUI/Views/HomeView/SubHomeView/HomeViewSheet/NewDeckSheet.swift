@@ -70,7 +70,6 @@ struct NewDeckSheet: View {
                         .padding([.trailing, .leading, .bottom])
                 }
             }
-            //.modifier(ToastModifier(toast: $deckViewModel.toast))
         }
     }
 }

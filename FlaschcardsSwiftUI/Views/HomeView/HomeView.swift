@@ -12,6 +12,8 @@ struct HomeView: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
     
+//    private let userNativeLanguage: Language = .russian
+//    private let userNativeLanguage: Language =
     
     var body: some View {
         NavigationView {
@@ -38,17 +40,28 @@ struct HomeView: View {
                     Button(action: {
                         deckViewModel.newDeckSheetIsPresented = true
                     }) {
-                        HStack {
-                            Text(decks.contains { $0.targetLanguage == deckViewModel.selectedLanguage }
-                                 ? deckViewModel.selectedLanguage.imageName
-                                 : "🌐")
+                        HStack(spacing: 8) {
+                            // Используем компонент наложенных флагов
+                            if decks.contains(where: { $0.targetLanguage == deckViewModel.selectedLanguage }) {
+                                OverlappingFlags(
+                                    native: deckViewModel.selectedSourceLanguage,
+                                    target: deckViewModel.selectedLanguage,
+                                    size: 20
+                                )
+                            } else {
+                                Text("🌐")
+                                    .font(.system(size: 20))
+                            }
+                            
                             Text(decks.contains { $0.targetLanguage == deckViewModel.selectedLanguage }
                                  ? deckViewModel.selectedLanguage.rawValue
                                  : "Create a deck")
                             .foregroundStyle(.black.opacity(0.8))
-                            Image(systemName: "arrowshape.down")
-                                .font(.footnote)
-                                .foregroundStyle(.black.opacity(0.8))
+                            .font(.system(size: 16, weight: .medium))
+                            
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundStyle(.black.opacity(0.6))
                         }
                     }
                 }
