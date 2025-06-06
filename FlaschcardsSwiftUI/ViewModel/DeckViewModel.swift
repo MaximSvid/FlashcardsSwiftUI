@@ -24,6 +24,7 @@ class DeckViewModel: ObservableObject {
     @Published var isValidating: Bool = false
     @Published var errorMessage: String = ""
     
+    @Published var toast: Toast? = nil
     
     @Published var selectedDeck: Deck?
     
@@ -132,6 +133,8 @@ class DeckViewModel: ObservableObject {
             print("Deck saved successfully!")
             selectedLanguage = .english
             selectedSourceLanguage = .russian
+            
+            toast = Toast(style: .success, message: "Deck created successfully", width: .infinity, topPadding: 0)
         } catch {
             print("Faield to save context: \(error)")
         }

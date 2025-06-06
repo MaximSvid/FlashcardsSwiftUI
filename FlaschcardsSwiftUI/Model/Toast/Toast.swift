@@ -11,10 +11,12 @@ struct Toast: Equatable {
     let message: String
     var duration: Double = 2
     let width: CGFloat?
+    let topPadding: CGFloat?
     
-    init(style: ToastStyle, message: String, width: CGFloat? = nil) {
+    init(style: ToastStyle, message: String, width: CGFloat? = nil, topPadding: CGFloat? = nil) {
         self.style = style
         self.message = message
         self.width = width
+        self.topPadding = topPadding
     }
 }
