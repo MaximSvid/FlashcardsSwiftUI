@@ -25,7 +25,7 @@ struct OverlappingFlags: View {
                 .font(.system(size: size))
                 .offset(x: -size * 0.35, y: size * 0.35)
 //                .opacity(0.7)
-                .scaleEffect(0.8)
+                .scaleEffect(0.9)
             
             // Передний флаг (изучаемый язык)
             Text(targetLanguage.imageName)
@@ -33,6 +33,6 @@ struct OverlappingFlags: View {
                 .offset(x: size * 0.1, y: -size * 0.1)
 //                .shadow(color: .black.opacity(0.2), radius: 2, x: 1, y: 1)
         }
-        .frame(width: size * 1.45, height: size * 1.45)
+        .frame(width: size * 1.4, height: size * 1.4)
     }
 }

@@ -11,10 +11,7 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
-    
-//    private let userNativeLanguage: Language = .russian
-//    private let userNativeLanguage: Language =
-    
+        
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
@@ -81,6 +78,7 @@ struct HomeView: View {
                 NewDeckSheet()
                     .environmentObject(deckViewModel)
                     .presentationDragIndicator(.visible)
+                    .withRootToast()
             }
         }
     }

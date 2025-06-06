@@ -134,8 +134,13 @@ class DeckViewModel: ObservableObject {
             selectedLanguage = .english
             selectedSourceLanguage = .russian
             
-            toast = Toast(style: .success, message: "Deck created successfully", width: .infinity)
+            ToastManager.shared.show(
+                Toast(style: .success, message: "Deck created successfully", width: .infinity)
+            )
         } catch {
+            ToastManager.shared.show(
+                Toast(style: .error, message: "Failed to create deck", width: .infinity)
+            )
             print("Faield to save context: \(error)")
         }
     }
@@ -143,8 +148,14 @@ class DeckViewModel: ObservableObject {
     func deleteDeck(context: ModelContext, deck: Deck) {
         do {
             try deckRepository.deleteDeck(deck, context: context)
+            ToastManager.shared.show(
+                Toast(style: .success, message: "Deck deleted successfully", width: .infinity)
+            )
             print("Deck deleted successfully!")
         } catch {
+            ToastManager.shared.show(
+                Toast(style: .error, message: "Failed to delete deck", width: .infinity)
+            )
             print("Error deleting deck: \(error)")
         }
     }

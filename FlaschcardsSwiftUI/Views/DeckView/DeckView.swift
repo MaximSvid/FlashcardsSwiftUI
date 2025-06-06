@@ -30,7 +30,7 @@ struct DeckView: View {
                         }
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
-                                deckViewModel.deleteDeck(context: modelContext, deck: deck)
+                                deckViewModel.showAlertDialogDeleteDeck = true
                             } label: {
                                 Label ("Delete", systemImage: "trash")
                             }
@@ -77,18 +77,18 @@ struct DeckView: View {
                 //                } message: {
                 //                    Text ("Enter a new name for the deck.")
                 //                }
-                //                .alert("Delete Deck", isPresented: $deckViewModel.showAlertDialogDeleteDeck) {
-                //                    Button("Delete", role: .destructive) {
-                //                        if let selectedDeck = deckViewModel.selectedDeck {
-                //                            deckViewModel.deleteDeck(context: modelContext, deck: selectedDeck)
-                //                            deckViewModel.selectedDeck = nil
-                //                        }
-                //                    }
-                //                    Button("Cancel", role: .cancel) {
-                //                        deckViewModel.showAlertDialogDeleteDeck = false
-                //                        deckViewModel.selectedDeck = nil
-                //                    }
-                //                }
+                .alert("Delete Deck", isPresented: $deckViewModel.showAlertDialogDeleteDeck) {
+                    Button("Delete", role: .destructive) {
+                        if let selectedDeck = deckViewModel.selectedDeck {
+                            deckViewModel.deleteDeck(context: modelContext, deck: selectedDeck)
+                            deckViewModel.selectedDeck = nil
+                        }
+                    }
+                    Button("Cancel", role: .cancel) {
+                        deckViewModel.showAlertDialogDeleteDeck = false
+                        deckViewModel.selectedDeck = nil
+                    }
+                }
             }
         }
     }

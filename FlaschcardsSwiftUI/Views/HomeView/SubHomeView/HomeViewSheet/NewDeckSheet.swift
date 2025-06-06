@@ -69,6 +69,7 @@ struct NewDeckSheet: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .padding([.trailing, .leading, .bottom])
                 }
+                
             }
         }
     }
