@@ -56,8 +56,10 @@ struct NewDeckSheet: View {
                             .font(.callout)
                             .foregroundStyle(.gray)
                     }
+//                    Spacer()
+
                 }
-                Spacer()
+                
                 Divider()
                 NavigationLink {
                     CreateDeckSheet()
