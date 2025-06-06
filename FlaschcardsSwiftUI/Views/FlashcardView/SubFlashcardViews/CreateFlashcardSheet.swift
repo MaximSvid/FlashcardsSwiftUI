@@ -86,7 +86,6 @@ struct CreateFlashcardSheet: View {
             MainButton(action: {
                 if let folder = selectedFolder {
                     flashcardViewModel.createNewFlashcard(in: folder, context: modelContext)
-                    //                    flashcardViewModel.toastMessageIfFlashcardCreated = true
                     dismiss()
                 }
                 

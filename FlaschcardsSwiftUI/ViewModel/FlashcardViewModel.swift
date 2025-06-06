@@ -21,7 +21,6 @@ class FlashcardViewModel: ObservableObject {
     @Published var isSheetCreateNewFlashcardOpen: Bool = false
     @Published var alertDeleteFlashcardIsPresent: Bool = false
     
-    
     @Published var isFavorite: Bool = false
     
     @Published var selectedFlashcard: Flashcard?
@@ -29,6 +28,8 @@ class FlashcardViewModel: ObservableObject {
     
     // Добавляем свойство для отслеживания изменений
     @Published var hasChanges: Bool = false
+    
+    @Published var toast: Toast? = nil
     
     private var flashcardRepository: FlashcardRepository
     
@@ -154,6 +155,9 @@ class FlashcardViewModel: ObservableObject {
             errorMessage = ""
             infoMessage = ""
             currentFolder = nil
+            
+            toast = Toast(style: .success, message: "Flashcard created successfully!", width: .infinity)
+            
             print("New Flashcard created successfully!")
         } catch {
             print("Error creating new flashcard: \(error)")
@@ -229,6 +233,7 @@ class FlashcardViewModel: ObservableObject {
             )
             print("Flashcard deleted successfully!")
             selectedFlashcard = nil
+            toast = Toast(style: .info, message: "Flashcard deleted successfully!", width: .infinity)
         } catch {
             print("Error deleting flashcard: \(error)")
         }

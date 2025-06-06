@@ -31,15 +31,11 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		15C466D32DDF268C005FB5C7 /* MyXCTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = MyXCTests;
 			sourceTree = "<group>";
 		};
 		15EF86C92DC23AD100DC12EC /* FlaschcardsSwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = FlaschcardsSwiftUI;
 			sourceTree = "<group>";
 		};
@@ -90,7 +86,6 @@
 				F6DAC597770323BB962A0CEF /* Pods-FlaschcardsSwiftUI.debug.xcconfig */,
 				4278B1575CA6391FB126AE30 /* Pods-FlaschcardsSwiftUI.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
