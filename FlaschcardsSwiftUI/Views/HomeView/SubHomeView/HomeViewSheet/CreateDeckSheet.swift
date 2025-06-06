@@ -51,8 +51,13 @@ struct CreateDeckSheet: View {
                 .padding(.horizontal)
                 
                 Spacer()
-                
-                Text("данная пара уже существует")
+                HStack(alignment: .center) {
+                    Image(systemName: deckViewModel.validationIcon)
+                    Text(deckViewModel.validationMessage)
+                        .font(.caption)
+                }
+                .foregroundStyle(deckViewModel.validationColor)
+                                
                 // Create Button
                 Button(action: {
                     deckViewModel.createNewDeck(context: modelContext)
@@ -68,8 +73,13 @@ struct CreateDeckSheet: View {
                     .foregroundColor(.white)
                     .cornerRadius(12)
                 }
+                .disabled(!deckViewModel.canCreateDeck)
+                .opacity(deckViewModel.canCreateDeck ? 1 : 0.5)
                 .padding(.horizontal)
                 .padding(.bottom, 20)
+            }
+            .onAppear {
+                deckViewModel.setModelContext(modelContext)
             }
         }
     }

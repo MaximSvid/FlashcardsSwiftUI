@@ -9,6 +9,7 @@ import Foundation
 import SwiftData
 
 class MockDeckRepository: DeckRepository {
+        
     
     
     
@@ -28,7 +29,7 @@ class MockDeckRepository: DeckRepository {
             //            deckDescription: description,
             folders: [],
             createdAt: Date(),
-            targenLanguage: targetLanguage,
+            targetLanguage: targetLanguage,
             sourceLanguage: sourceLanguage
         )
         createDeck = deck

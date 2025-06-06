@@ -18,14 +18,14 @@ class Deck {
         id: UUID,
         folders: [Folder],
         createdAt: Date,
-        targenLanguage: Language?,
+        targetLanguage: Language?,
         sourceLanguage: Language?
     ) {
         self.id = id
         
         self.folders = folders
         self.createdAt = createdAt
-        self.targetLanguage = targenLanguage
+        self.targetLanguage = targetLanguage
         self.sourceLanguage = sourceLanguage
     }
 }

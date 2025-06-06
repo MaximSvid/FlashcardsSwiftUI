@@ -50,13 +50,14 @@ struct NewDeckSheet: View {
                     .listStyle(.plain)
                 } else {
                     VStack {
+                        Image(systemName: "plus.rectangle.on.folder")
+                            .font(.title)
                         Text("No decks available")
                             .font(.callout)
                             .foregroundStyle(.gray)
-                        Spacer()
                     }
                 }
-                
+                Spacer()
                 Divider()
                 NavigationLink {
                     CreateDeckSheet()
@@ -66,7 +67,7 @@ struct NewDeckSheet: View {
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .foregroundStyle(.white)
                         .background(.blue)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                         .padding([.trailing, .leading, .bottom])
                 }
             }

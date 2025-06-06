@@ -11,7 +11,7 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
-
+    
     
     var body: some View {
         NavigationView {
@@ -39,12 +39,16 @@ struct HomeView: View {
                         deckViewModel.newDeckSheetIsPresented = true
                     }) {
                         HStack {
-                            Text(deckViewModel.selectedDeck?.targetLanguage?.imageName ?? "")
+                            Text(decks.contains { $0.targetLanguage == deckViewModel.selectedLanguage }
+                                 ? deckViewModel.selectedLanguage.imageName
+                                 : "🌐")
                             Text(decks.contains { $0.targetLanguage == deckViewModel.selectedLanguage }
                                  ? deckViewModel.selectedLanguage.rawValue
                                  : "Create a deck")
+                            .foregroundStyle(.black.opacity(0.8))
                             Image(systemName: "arrowshape.down")
                                 .font(.footnote)
+                                .foregroundStyle(.black.opacity(0.8))
                         }
                     }
                 }

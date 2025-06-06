@@ -13,7 +13,7 @@ class DeckRepositoryImplementation: DeckRepository {
             id: UUID(),
             folders: [],
             createdAt: Date(),
-            targenLanguage: targetLanguage,
+            targetLanguage: targetLanguage,
             sourceLanguage: sourceLanguage
         )
         context.insert(newDeck)
@@ -21,7 +21,6 @@ class DeckRepositoryImplementation: DeckRepository {
         return newDeck
 
     }
-    
     
     func deleteDeck(_ deck: Deck, context: ModelContext) throws {
         context.delete(deck)
