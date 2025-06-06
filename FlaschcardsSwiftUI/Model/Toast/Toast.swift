@@ -19,4 +19,4 @@ struct Toast: Equatable {
         self.duration = duration
         self.width = width
     }
-}
+} 

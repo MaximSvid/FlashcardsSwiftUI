@@ -56,10 +56,7 @@ struct NewDeckSheet: View {
                             .font(.callout)
                             .foregroundStyle(.gray)
                     }
-//                    Spacer()
-
                 }
-                
                 Divider()
                 NavigationLink {
                     CreateDeckSheet()
@@ -73,6 +70,7 @@ struct NewDeckSheet: View {
                         .padding([.trailing, .leading, .bottom])
                 }
             }
+            .modifier(ToastModifier(toast: $deckViewModel.toast))
         }
     }
 }
