@@ -62,22 +62,31 @@ struct CreateFlashcardSheet: View {
             }
             
             if !flashcardViewModel.errorMessage.isEmpty {
-                Text(flashcardViewModel.errorMessage)
-                    .foregroundStyle(.red)
-                    .font(.caption)
+                HStack(alignment: .center, spacing: 8) {
+                    Image(systemName: flashcardViewModel.errorIcon)
+                        .foregroundStyle(.red)
+                    Text(flashcardViewModel.errorMessage)
+                        .foregroundStyle(.red)
+                        .font(.caption)
+                }
+                .padding(.horizontal)
             }
             
             if !flashcardViewModel.infoMessage.isEmpty {
-                Text(flashcardViewModel.infoMessage)
-                    .foregroundStyle(.green)
-                    .font(.caption)
-                    .onAppear { print("InfoMessage shown: \(flashcardViewModel.infoMessage)") }
+                HStack(alignment: .center, spacing: 8) {
+                    Image(systemName: flashcardViewModel.infoIcon)
+                        .foregroundStyle(flashcardViewModel.infoIcon == "checkmark.circle.fill" ? .green : .blue)
+                    Text(flashcardViewModel.infoMessage)
+                        .foregroundStyle(flashcardViewModel.infoIcon == "checkmark.circle.fill" ? .green : .blue)
+                        .font(.caption)
+                }
+                .padding(.horizontal)
+                .onAppear { print("InfoMessage shown: \(flashcardViewModel.infoMessage)") }
             }
-            
             MainButton(action: {
                 if let folder = selectedFolder {
                     flashcardViewModel.createNewFlashcard(in: folder, context: modelContext)
-                    flashcardViewModel.toastMessageIfFlashcardCreated = true
+                    //                    flashcardViewModel.toastMessageIfFlashcardCreated = true
                     dismiss()
                 }
                 
@@ -94,7 +103,7 @@ struct CreateFlashcardSheet: View {
         }
         .onDisappear {
             flashcardViewModel.clearEditingData()
-//            flashcardViewModel.toastMessageIfFlashcardCreated = false
+            //            flashcardViewModel.toastMessageIfFlashcardCreated = false
         }
         
     }

@@ -12,12 +12,15 @@ class FlashcardViewModel: ObservableObject {
     
     @Published var question: String = ""
     @Published var answer: String = ""
+    
     @Published var errorMessage: String = ""
     @Published var infoMessage: String = ""
+    @Published var errorIcon:String = ""
+    @Published var infoIcon:String = ""
     
     @Published var isSheetCreateNewFlashcardOpen: Bool = false
     @Published var alertDeleteFlashcardIsPresent: Bool = false
-    @Published var toastMessageIfFlashcardCreated: Bool = false
+    
     
     @Published var isFavorite: Bool = false
     
@@ -37,8 +40,6 @@ class FlashcardViewModel: ObservableObject {
     init(flashcardRepository: FlashcardRepository = FlashcardRepositoryImplementation()) {
         self.flashcardRepository = flashcardRepository
         setupValidation() // activierung die Combine - Pipline
-        print("SetupValidation called from init")
-        
     }
     
     // MARK: - Validation Setup
@@ -55,36 +56,41 @@ class FlashcardViewModel: ObservableObject {
                 let trimmedQuestion = question.trimmingCharacters(in: .whitespacesAndNewlines)
                 let trimmedAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
                 
-                // Проверяем дубликаты только если есть папка и вопрос не пустой
+                // Сбрасываем сообщения и иконки
+                self.errorMessage = ""
+                self.errorIcon = ""
+                self.infoMessage = ""
+                self.infoIcon = ""
+                
+                // Проверяем дубликаты
                 if let folder = folder, !trimmedQuestion.isEmpty {
                     self.checkIfCardExistsInternal(question: trimmedQuestion, in: folder)
-                } else {
-                    self.errorMessage = ""
                 }
-                
                 // Проверяем наличие изменений
                 self.checkForChanges(question: trimmedQuestion, answer: trimmedAnswer)
                 
-                // Логика для infoMessage с проверкой режима редактирования
-                if trimmedQuestion.isEmpty && trimmedAnswer.isEmpty {
+                // Логика для infoMessage и infoIcon
+                if !self.errorMessage.isEmpty {
+                    self.infoMessage = "" // Очищаем infoMessage при наличии ошибки
+                    self.infoIcon = ""
+                } else if trimmedQuestion.isEmpty && trimmedAnswer.isEmpty {
                     self.infoMessage = ""
+                    self.infoIcon = ""
                 } else if !trimmedQuestion.isEmpty && trimmedAnswer.isEmpty {
-                    self.infoMessage = "Only question is filled."
+                    self.infoMessage = "Please enter an answer."
+                    self.infoIcon = "info.circle.fill"
                 } else if trimmedQuestion.isEmpty && !trimmedAnswer.isEmpty {
-                    self.infoMessage = "Only answer is filled."
-                } else if self.errorMessage.isEmpty {
-                    // Различаем режимы создания и редактирования
+                    self.infoMessage = "Please enter a question."
+                    self.infoIcon = "info.circle.fill"
+                } else {
                     if selectedFlashcard != nil {
-                        if self.hasChanges {
-                            self.infoMessage = "Ready to update!"
-                        } else {
-                            self.infoMessage = "No changes made."
-                        }
+                        self.infoMessage = self.hasChanges ? "Ready to update!" : "No changes made."
+                        self.infoIcon = self.hasChanges ? "checkmark.circle.fill" : "info.circle.fill"
                     } else {
                         self.infoMessage = "Ready to create!"
+                        self.infoIcon = "checkmark.circle.fill"
                     }
                 }
-                
                 print("📤 Validation result - Error: '\(self.errorMessage)', Info: '\(self.infoMessage)', HasChanges: \(self.hasChanges)")
             }
             .store(in: &cancellables)
@@ -109,8 +115,10 @@ class FlashcardViewModel: ObservableObject {
         
         if exists {
             self.errorMessage = "This card already exists..."
+            self.errorIcon = "exclamationmark.triangle.fill"
         } else {
             self.errorMessage = ""
+            self.errorIcon = ""
         }
     }
     

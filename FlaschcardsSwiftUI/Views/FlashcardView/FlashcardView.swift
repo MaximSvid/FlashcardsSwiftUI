@@ -69,19 +69,15 @@ struct FlashcardView: View {
                 flashcardViewModel.selectedFlashcard = nil
             }
         }
-        .toast(
-            isPresenting: $flashcardViewModel.toastMessageIfFlashcardCreated,
-            duration: 1,
-            tapToDismiss: true) {
-                AlertToast(
-                    displayMode: .hud,
-                    type: .regular,
-                    title: "Flashcard Created!",
-//                    style: .init(
-//                        backgroundColor: .green.opacity(0.5),
-//                        titleColor: .white
-//                    )
-                )
-        }
+//        .toast(
+//            isPresenting: $flashcardViewModel.toastMessageIfFlashcardCreated,
+//            duration: 1,
+//            tapToDismiss: true) {
+//                AlertToast(
+//                    displayMode: .hud,
+//                    type: .regular,
+//                    title: "Flashcard Created!",
+//                )
+//        }
     }
 }
