@@ -134,7 +134,7 @@ class DeckViewModel: ObservableObject {
             selectedLanguage = .english
             selectedSourceLanguage = .russian
             
-            toast = Toast(style: .success, message: "Deck created successfully", width: .infinity, topPadding: 0)
+            toast = Toast(style: .success, message: "Deck created successfully", width: .infinity)
         } catch {
             print("Faield to save context: \(error)")
         }
