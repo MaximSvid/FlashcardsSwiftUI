@@ -69,6 +69,6 @@ struct FlashcardView: View {
                 flashcardViewModel.selectedFlashcard = nil
             }
         }
-        .modifier(ToastModifier(toast: $flashcardViewModel.toast))
+//        .modifier(ToastModifier(toast: $flashcardViewModel.toast))
     }
 }

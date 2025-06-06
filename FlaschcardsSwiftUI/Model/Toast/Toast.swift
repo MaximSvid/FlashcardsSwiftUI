@@ -6,15 +6,17 @@
 //
 import SwiftUI
 
+// MARK: - Обновленная структура Toast
 struct Toast: Equatable {
     let style: ToastStyle
     let message: String
-    var duration: Double = 2
+    var duration: Double = 2.0
     let width: CGFloat?
     
-    init(style: ToastStyle, message: String, width: CGFloat? = nil) {
+    init(style: ToastStyle, message: String, duration: Double = 2.0, width: CGFloat? = nil) {
         self.style = style
         self.message = message
+        self.duration = duration
         self.width = width
     }
 }

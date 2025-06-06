@@ -17,6 +17,7 @@ struct FlaschcardsSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
             TabNavigation()
+                .withRootToast()
         }
         .environmentObject(deckViewModel)
         .environmentObject(folderViewModel)

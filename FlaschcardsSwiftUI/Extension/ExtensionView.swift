@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+// MARK: - View Extension для удобного использования
 extension View {
-
-  func toastView(toast: Binding<Toast?>) -> some View {
-    self.modifier(ToastModifier(toast: toast))
-  }
+    func withRootToast() -> some View {
+        self.modifier(RootToastModifier())
+    }
+    
+    // Метод для показа toast из любого места в приложении
+    func showToast(_ toast: Toast) {
+        ToastManager.shared.show(toast)
+    }
 }

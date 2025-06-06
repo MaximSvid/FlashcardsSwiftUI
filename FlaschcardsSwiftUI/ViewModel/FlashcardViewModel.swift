@@ -156,10 +156,15 @@ class FlashcardViewModel: ObservableObject {
             infoMessage = ""
             currentFolder = nil
             
-            toast = Toast(style: .success, message: "Flashcard created successfully!", width: .infinity)
-            
+            // Используем глобальный ToastManager
+            ToastManager.shared.show(
+                Toast(style: .success, message: "Flashcard created successfully!")
+            )
             print("New Flashcard created successfully!")
         } catch {
+            ToastManager.shared.show(
+                Toast(style: .error, message: "Failed to create flashcard")
+            )
             print("Error creating new flashcard: \(error)")
         }
     }
@@ -233,8 +238,13 @@ class FlashcardViewModel: ObservableObject {
             )
             print("Flashcard deleted successfully!")
             selectedFlashcard = nil
-            toast = Toast(style: .info, message: "Flashcard deleted successfully!", width: .infinity)
+            ToastManager.shared.show(
+                Toast(style: .info, message: "Flashcard deleted successfully!")
+            )
         } catch {
+            ToastManager.shared.show(
+                Toast(style: .error, message: "Failed to delete flashcard")
+            )
             print("Error deleting flashcard: \(error)")
         }
     }
