@@ -10,16 +10,19 @@ import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
+    @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
-        
+    
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 Divider()
                 FlaschcardsInfo()
                 Spacer()
-                MainButton(action: {}, title: "Start")
-                    .padding(.bottom, 30)
+                MainButton(action: {
+                    startStudySession()
+                }, title: "Start")
+                .padding(.bottom, 30)
             }
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.blue.opacity(0.03))
@@ -80,11 +83,25 @@ struct HomeView: View {
                     .presentationDragIndicator(.visible)
                     .withRootToast()
             }
+            .fullScreenCover(isPresented: $studySessionViewModel.studySessionActive) {
+                
+            }
+//            .navigationDestination(isPresented: $navigateToQuestionView) {
+//                //                QuestionView(folder: folder)
+//                QuestionView(folder: selectedFolder ?? Folder(id: UUID(), name: "Default Folder"))
+//                    .environmentObject(deckViewModel)
+//            }
         }
     }
-}
-
-#Preview {
-    HomeView()
-        .environmentObject(DeckViewModel())
+    
+    private func startStudySession() {
+        guard let selectedDeck = decks.first(where: { $0.targetLanguage == deckViewModel.selectedLanguage}),
+              let folderWithCards = selectedDeck.folders.first(where: { !$0.flashcards.isEmpty}) else {
+            ToastManager.shared.show(
+                Toast(style: .warning, message: "No flashcards available for this deck. Create some!")
+            )
+            return
+        }
+        studySessionViewModel.startStudySession(with: folderWithCards)
+    }
 }

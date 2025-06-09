@@ -13,6 +13,7 @@ struct FlaschcardsSwiftUIApp: App {
     @StateObject private var deckViewModel = DeckViewModel()
     @StateObject private var folderViewModel = FolderViewModel()
     @StateObject private var flashcardViewModel = FlashcardViewModel()
+    @StateObject private var studySessionViewModel = StudySessionViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -22,6 +23,7 @@ struct FlaschcardsSwiftUIApp: App {
         .environmentObject(deckViewModel)
         .environmentObject(folderViewModel)
         .environmentObject(flashcardViewModel)
+        .environmentObject(studySessionViewModel)
         .modelContainer(for: [Deck.self, Folder.self, Flashcard.self])
     }
 }

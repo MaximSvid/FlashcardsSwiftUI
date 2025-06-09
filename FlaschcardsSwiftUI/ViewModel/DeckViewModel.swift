@@ -149,7 +149,7 @@ class DeckViewModel: ObservableObject {
         do {
             try deckRepository.deleteDeck(deck, context: context)
             ToastManager.shared.show(
-                Toast(style: .success, message: "Deck deleted successfully", width: .infinity)
+                Toast(style: .info, message: "Deck deleted successfully", width: .infinity)
             )
             print("Deck deleted successfully!")
         } catch {
