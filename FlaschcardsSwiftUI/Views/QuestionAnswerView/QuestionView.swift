@@ -15,12 +15,11 @@ struct QuestionView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    Text("\(studySessionViewModel.currentCardIndex + 1)/\(studySessionViewModel.flashcards.count)")
-                        .font(.caption)
-                        .foregroundStyle(.gray)
-                    
-                }
+//                HStack {
+//                    Text("\(studySessionViewModel.currentCardIndex + 1)/\(studySessionViewModel.flashcards.count)")
+//                        .font(.caption)
+//                        .foregroundStyle(.gray)
+//                }
                 VStack {
                     Text(studySessionViewModel.currentFlashcard?.question ?? "")
                         .font(.headline)

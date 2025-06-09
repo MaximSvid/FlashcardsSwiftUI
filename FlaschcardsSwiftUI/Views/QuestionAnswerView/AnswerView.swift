@@ -32,7 +32,7 @@ struct AnswerView: View {
                 Spacer()
                 
                 HStack {
-                    //здесь должна быть кнопка, а точнее три кнопки под виду это одна кнопка но разделенная на три части перегаровками (левая часть - easy, середина - normal, правая часть - hard
+                    DifficultyButtonView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

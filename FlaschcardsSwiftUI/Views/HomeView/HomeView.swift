@@ -19,9 +19,23 @@ struct HomeView: View {
                 Divider()
                 FlaschcardsInfo()
                 Spacer()
-                MainButton(action: {
-                    startStudySession()
-                }, title: "Start")
+                //                MainButton(action: {
+                //                    startStudySession()
+                //                }, title: "Start")
+                
+                NavigationLink(destination:
+                                StudySessionView()
+                    .environmentObject(studySessionViewModel)
+                ) {
+                    Text("Start Study Session")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .foregroundStyle(.white)
+                        .background(.blue)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .padding([.trailing, .leading])
+
+                }
                 .padding(.bottom, 30)
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -84,13 +98,7 @@ struct HomeView: View {
                     .withRootToast()
             }
             .fullScreenCover(isPresented: $studySessionViewModel.studySessionActive) {
-                
             }
-//            .navigationDestination(isPresented: $navigateToQuestionView) {
-//                //                QuestionView(folder: folder)
-//                QuestionView(folder: selectedFolder ?? Folder(id: UUID(), name: "Default Folder"))
-//                    .environmentObject(deckViewModel)
-//            }
         }
     }
     
