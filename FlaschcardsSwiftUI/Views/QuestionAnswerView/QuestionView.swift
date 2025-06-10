@@ -40,8 +40,8 @@ struct QuestionView: View {
                 .padding(.bottom, 25)
             }
         }
-        .navigationBarBackButtonHidden(true)  // оставляете эту строку
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .background(Color(.systemBackground))
         .overlay(
             RoundedRectangle(cornerRadius: 16)

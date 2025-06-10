@@ -42,6 +42,10 @@ struct DeckView: View {
                 .navigationDestination(for: Deck.self) { deck in
                     FolderView(deck: deck)
                 }
+                .navigationDestination(for: Flashcard.self) { flashcard in
+                    EditFlashcardView(selectedFlashcard: flashcard)
+                        .environmentObject(FlashcardViewModel()) // или передайте существующий
+                }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {

@@ -38,10 +38,10 @@ struct FlashcardView: View {
         }
         .listStyle(.plain)
         .navigationTitle(selectedFolder?.name ?? "Flashcards")
-        .navigationDestination(for: Flashcard.self) { flashcard in
-            EditFlashcardView(selectedFlashcard: flashcard)
-                .environmentObject(flashcardViewModel)
-        }
+//        .navigationDestination(for: Flashcard.self) { flashcard in
+//            EditFlashcardView(selectedFlashcard: flashcard)
+//                .environmentObject(flashcardViewModel)
+//        }
         .toolbar {
             ToolbarItem (placement: .topBarTrailing) {
                 Button(action: {

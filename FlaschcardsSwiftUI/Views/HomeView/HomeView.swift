@@ -13,6 +13,7 @@ struct HomeView: View {
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
     
+    
     // Проверяем есть ли папки с карточками
     private var hasAvailableFolders: Bool {
         guard let selectedDeck = decks.first(where: { $0.targetLanguage == deckViewModel.selectedLanguage }) else {

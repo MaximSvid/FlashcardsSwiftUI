@@ -38,7 +38,7 @@ struct AnswerView: View {
         .padding()
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(style: StrokeStyle(lineWidth: 1))
+                .stroke(Color(.systemGray4), lineWidth: 0.5)
         )
     }
 }
