@@ -31,7 +31,7 @@ class StudySessionViewModel: ObservableObject {
         self.flashcards = folder.flashcards
         self.currentCardIndex = 0
         self.showingAnswer = false
-        self.studySessionActive = true
+        self.studySessionActive = !folder.flashcards.isEmpty // nur when flashcards gibt
     }
     
     func showAnswer() {

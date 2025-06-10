@@ -27,7 +27,7 @@ struct HomeFolderList: View {
         if let deck = selectedDeck, let folder = selectedFolder {
             VStack {
                 ForEach(deck.folders, id: \.id) {folder in
-                    if !folder.flashcards.isEmpty {
+//                    if !folder.flashcards.isEmpty {
                         InfoCard(deck: deck, folder: folder)
                             .frame(maxWidth: .infinity)
                             .padding(.horizontal, 16)
@@ -42,7 +42,7 @@ struct HomeFolderList: View {
                                     .stroke(Color(.systemGray5), lineWidth: 1)
                             )
                             .padding(.horizontal)
-                    }
+//                    }
                 }
             }
         }

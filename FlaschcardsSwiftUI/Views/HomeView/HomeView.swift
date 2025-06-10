@@ -37,18 +37,6 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination:
-                                StudySessionView()
-                    .environmentObject(studySessionViewModel)
-                ) {
-                    Text("Start Study Session")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, maxHeight: 50)
-                        .foregroundStyle(.white)
-                        .background(hasAvailableFolders ? .blue : .gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding([.trailing, .leading])
-                }
                 .disabled(!hasAvailableFolders) // Отключаем кнопку если нет карточек
                 .padding(.bottom, 30)
             }
@@ -127,28 +115,3 @@ struct HomeView: View {
     }
 }
 
-// ДОПОЛНИТЕЛЬНО: Placeholder для пустого состояния
-struct EmptyFoldersPlaceholder: View {
-    var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "folder.badge.plus")
-                .font(.system(size: 48))
-                .foregroundStyle(.secondary)
-            
-            Text("No folders with flashcards")
-                .font(.headline)
-                .foregroundStyle(.primary)
-            
-            Text("Create folders and add flashcards to start studying")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 40)
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.horizontal)
-    }
-}

@@ -8,36 +8,40 @@
 import SwiftUI
 
 struct StudySessionView: View {
-    @EnvironmentObject private var studySessionView: StudySessionViewModel
+    @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationView {
-            Group {
-                if studySessionView.showingAnswer {
+            VStack {
+                if studySessionViewModel.showingAnswer {
                     AnswerView()
-                        .environmentObject(studySessionView)
                 } else {
                     QuestionView()
-                        .environmentObject(studySessionView)
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .principal) {
+                    Text("Study Session")
+                        .font(.headline)
+                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        studySessionView.endStudySession()
+                        studySessionViewModel.endStudySession()
                         dismiss()
                     }) {
-                        Text("Close")
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
                     }
                 }
             }
         }
-        .onDisappear {
-            if !studySessionView.studySessionActive {
-                dismiss()
-            }
-        }
+        .navigationViewStyle(StackNavigationViewStyle()) // Принудительно используем стек
     }
 }
+
 

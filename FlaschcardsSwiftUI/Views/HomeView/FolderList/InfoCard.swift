@@ -11,11 +11,9 @@ struct InfoCard: View {
     let deck: Deck
     let folder: Folder
     
-    // Правильный подсчет всех карточек во всех папках
+    // ошибка - неверная передача количества элементов!!!
     private var totalFlashcards: Int {
-        deck.folders.reduce(0) { total, folder in
-            total + folder.flashcards.count
-        }
+        folder.flashcards.count
     }
     
     // Статистика по сложности карточек
@@ -37,8 +35,6 @@ struct InfoCard: View {
                     Text(deck.sourceLanguage?.imageName ?? "🌐")
                         .font(.system(size: 28))
                         .frame(width: 32, height: 32)
-//                        .background(Color(.systemGray6))
-//                        .clipShape(Circle())
                     
                     Text(deck.sourceLanguage?.displayName ?? "Unknown")
                         .font(.system(size: 16, weight: .semibold))
@@ -56,8 +52,6 @@ struct InfoCard: View {
                     Text(deck.targetLanguage?.imageName ?? "🌐")
                         .font(.system(size: 28))
                         .frame(width: 32, height: 32)
-//                        .background(Color(.systemGray6))
-//                        .clipShape(Circle())
                     
                     Text(deck.targetLanguage?.displayName ?? "Unknown")
                         .font(.system(size: 16, weight: .semibold))
@@ -76,8 +70,8 @@ struct InfoCard: View {
                     .font(.system(size: 16))
                     .foregroundStyle(.gray)
                 Text("Folder: \(folder.name)")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(.secondary)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(.black)
             }
             Divider()
                 .background(Color(.systemGray4))
@@ -87,19 +81,17 @@ struct InfoCard: View {
             HStack {
                 Image(systemName: "rectangle.stack.fill")
                     .font(.system(size: 16))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.blue)
                 
                 Text("Flashcards:")
                     .font(.system(size: 15, weight: .medium))
                     .foregroundStyle(.secondary)
                 
-                Text("\(totalFlashcards)")
+                Text(totalFlashcards == 0 ? "No flashcards" : "\(totalFlashcards)")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundStyle(.black)
                 
                 Spacer()
-
-                
             }
             
             // Difficulty Buttons Section
@@ -122,6 +114,12 @@ struct InfoCard: View {
                     action: {  }
                 )
             }
+            
+            VStack {
+                StudyNowButton(folder: folder)
+            }
+            .frame(height: 50)
         }
     }
 }
+
