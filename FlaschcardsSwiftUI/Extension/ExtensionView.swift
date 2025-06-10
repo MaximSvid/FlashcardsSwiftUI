@@ -18,3 +18,14 @@ extension View {
         ToastManager.shared.show(toast)
     }
 }
+
+extension StudySessionViewModel {
+    var progressPercentage: Double {
+        guard !flashcards.isEmpty else { return 0.0 }
+        return Double(currentCardIndex + 1) / Double(flashcards.count)
+    }
+    
+    var progressText: String {
+        return "\(currentCardIndex + 1) of \(flashcards.count)"
+    }
+}

@@ -11,7 +11,8 @@ struct DifficultyButtonView: View {
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
+//            Spacer()
             Button(action: {
                 studySessionViewModel.nextCard()
             }) {
@@ -22,7 +23,7 @@ struct DifficultyButtonView: View {
                         .foregroundStyle(CardDifficulty.easy.color)
                 }
             }
-            
+            Spacer()
             Button(action: {
                 studySessionViewModel.nextCard()
             }) {
@@ -31,10 +32,9 @@ struct DifficultyButtonView: View {
                         .foregroundStyle(CardDifficulty.normal.color)
                     Text(CardDifficulty.normal.displayName)
                         .foregroundStyle(CardDifficulty.normal.color)
-                    
                 }
             }
-            
+            Spacer()
             Button(action: {
                 studySessionViewModel.nextCard()
             }) {
@@ -45,8 +45,10 @@ struct DifficultyButtonView: View {
                         .foregroundStyle(CardDifficulty.hard.color)
                 }
             }
+//            Spacer()
         }
         .frame(maxWidth: .infinity)
+        .padding()
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(style: StrokeStyle(lineWidth: 1))

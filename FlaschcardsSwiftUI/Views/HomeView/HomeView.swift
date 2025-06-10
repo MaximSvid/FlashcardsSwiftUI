@@ -15,9 +15,12 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading, spacing: 0) {
+            ScrollView {
                 Divider()
                 FlaschcardsInfo()
+//                HomeFolderList(deckViewModel: deckViewModel, decks: decks)
+                HomeFolderList(decks: decks)
+                
                 Spacer()
                 //                MainButton(action: {
                 //                    startStudySession()

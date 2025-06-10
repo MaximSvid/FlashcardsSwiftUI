@@ -13,22 +13,29 @@ struct AnswerView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                
+                ProgressView(
+//                    studySessionViewModel.selectedFolder.count
+                ) {
+                    Text("Progress")
+                }
+                .progressViewStyle(.linear)
+                .padding()
+
                 HStack {
                     Text("\(studySessionViewModel.currentCardIndex + 1) / \(studySessionViewModel.flashcards.count)")
                         .font(.caption)
                         .foregroundStyle(.gray)
                     Spacer()
                 }
-                HStack {
-                    Text(studySessionViewModel.currentFlashcard?.question ?? "")
+                
+                    Text(studySessionViewModel.currentFlashcard?.question ?? "Probleme!!!")
                         .font(.caption)
                         .foregroundStyle(.gray)
-                    Divider()
-                    Text(studySessionViewModel.currentFlashcard?.answer ?? "")
+                Divider()
+                    Text(studySessionViewModel.currentFlashcard?.answer ?? "Probleme!!!")
                         .font(.headline)
                         .foregroundStyle(.black)
-                }
+                
                 Spacer()
                 
                 HStack {
@@ -52,18 +59,8 @@ struct AnswerView: View {
                         }
                     }
                 }
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        
-                    }) {
-                        Image(systemName: "backward.circle")
-                    }
-                }
             }
         }
     }
 }
 
-#Preview {
-    AnswerView()
-}

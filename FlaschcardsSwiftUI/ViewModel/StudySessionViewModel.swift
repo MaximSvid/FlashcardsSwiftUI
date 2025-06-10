@@ -78,5 +78,4 @@ class StudySessionViewModel: ObservableObject {
         currentCard.studyCount += 1
         currentCard.lastStudiedDate = Date()
     }
-
 }
