@@ -24,14 +24,12 @@ struct OverlappingFlags: View {
             Text(nativeLanguage.imageName)
                 .font(.system(size: size))
                 .offset(x: -size * 0.35, y: size * 0.35)
-//                .opacity(0.7)
                 .scaleEffect(0.9)
             
             // Передний флаг (изучаемый язык)
             Text(targetLanguage.imageName)
                 .font(.system(size: size))
                 .offset(x: size * 0.1, y: -size * 0.1)
-//                .shadow(color: .black.opacity(0.2), radius: 2, x: 1, y: 1)
         }
         .frame(width: size * 1.4, height: size * 1.4)
     }
