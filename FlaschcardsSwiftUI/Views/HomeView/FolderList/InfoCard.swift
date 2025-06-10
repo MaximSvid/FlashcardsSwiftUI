@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InfoCard: View {
     let deck: Deck
+    let folder: Folder
     
     // Правильный подсчет всех карточек во всех папках
     private var totalFlashcards: Int {
@@ -29,7 +30,7 @@ struct InfoCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Language Section with improved design
+            
             HStack(spacing: 16) {
                 // Source Language
                 HStack(spacing: 8) {
@@ -69,6 +70,18 @@ struct InfoCard: View {
             // Divider for visual separation
             Divider()
                 .background(Color(.systemGray4))
+
+            HStack {
+                Image(systemName: "")
+                    .font(.system(size: 16))
+                    .foregroundStyle(.gray)
+                Text("Folder: \(folder.name)")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(.secondary)
+            }
+            Divider()
+                .background(Color(.systemGray4))
+
             
             // Flashcards Count Section
             HStack {
@@ -82,16 +95,11 @@ struct InfoCard: View {
                 
                 Text("\(totalFlashcards)")
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.black)
                 
                 Spacer()
+
                 
-                // Optional: Show folders count
-                if deck.folders.count > 1 {
-                    Text("(\(deck.folders.count) folders)")
-                        .font(.system(size: 13))
-                        .foregroundStyle(.tertiary)
-                }
             }
             
             // Difficulty Buttons Section
@@ -114,56 +122,6 @@ struct InfoCard: View {
                     action: {  }
                 )
             }
-        }
-    }
-}
-
-struct DifficultyButton: View {
-    let difficulty: CardDifficulty
-    let count: Int
-    let action: () -> Void
-    
-    @State private var isPressed = false
-    
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 6) {
-                Image(systemName: difficulty.icon)
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(difficulty.color)
-                
-                Text(difficulty.displayName)
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(difficulty.color)
-                
-                // Count badge
-                Text("\(count)")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(.white)
-                    .frame(minWidth: 20, minHeight: 16)
-                    .background(difficulty.color)
-                    .clipShape(Capsule())
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 8)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(difficulty.color.opacity(isPressed ? 0.2 : 0.1))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(difficulty.color.opacity(0.3), lineWidth: 1)
-                    )
-            )
-            .scaleEffect(isPressed ? 0.95 : 1.0)
-        }
-        .buttonStyle(PlainButtonStyle())
-        .onLongPressGesture(minimumDuration: 0, maximumDistance: .infinity) { isPressing in
-            withAnimation(.easeInOut(duration: 0.1)) {
-                isPressed = isPressing
-            }
-        } perform: {
-            action()
         }
     }
 }

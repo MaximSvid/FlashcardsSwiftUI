@@ -13,18 +13,29 @@ struct HomeView: View {
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
     
+    // Проверяем есть ли папки с карточками
+    private var hasAvailableFolders: Bool {
+        guard let selectedDeck = decks.first(where: { $0.targetLanguage == deckViewModel.selectedLanguage }) else {
+            return false
+        }
+        return selectedDeck.folders.contains { !$0.flashcards.isEmpty }
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                Divider()
                 FlaschcardsInfo()
-//                HomeFolderList(deckViewModel: deckViewModel, decks: decks)
-                HomeFolderList(decks: decks)
+                
+                // Показываем HomeFolderList только если есть папки с карточками
+                if hasAvailableFolders {
+                    HomeFolderList(decks: decks)
+                        .environmentObject(deckViewModel)
+                } else {
+                    // Показываем placeholder если нет папок
+                    EmptyFoldersPlaceholder()
+                }
                 
                 Spacer()
-                //                MainButton(action: {
-                //                    startStudySession()
-                //                }, title: "Start")
                 
                 NavigationLink(destination:
                                 StudySessionView()
@@ -34,11 +45,11 @@ struct HomeView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .foregroundStyle(.white)
-                        .background(.blue)
+                        .background(hasAvailableFolders ? .blue : .gray)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .padding([.trailing, .leading])
-
                 }
+                .disabled(!hasAvailableFolders) // Отключаем кнопку если нет карточек
                 .padding(.bottom, 30)
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -58,7 +69,6 @@ struct HomeView: View {
                         deckViewModel.newDeckSheetIsPresented = true
                     }) {
                         HStack(spacing: 8) {
-                            // Используем компонент наложенных флагов
                             if decks.contains(where: { $0.targetLanguage == deckViewModel.selectedLanguage }) {
                                 OverlappingFlags(
                                     native: deckViewModel.selectedSourceLanguage,
@@ -114,5 +124,31 @@ struct HomeView: View {
             return
         }
         studySessionViewModel.startStudySession(with: folderWithCards)
+    }
+}
+
+// ДОПОЛНИТЕЛЬНО: Placeholder для пустого состояния
+struct EmptyFoldersPlaceholder: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "folder.badge.plus")
+                .font(.system(size: 48))
+                .foregroundStyle(.secondary)
+            
+            Text("No folders with flashcards")
+                .font(.headline)
+                .foregroundStyle(.primary)
+            
+            Text("Create folders and add flashcards to start studying")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 40)
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.horizontal)
     }
 }

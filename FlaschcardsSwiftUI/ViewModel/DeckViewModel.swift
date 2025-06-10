@@ -27,6 +27,7 @@ class DeckViewModel: ObservableObject {
     @Published var toast: Toast? = nil
     
     @Published var selectedDeck: Deck?
+//    @Published var deck: Deck
     
     private let deckRepository: DeckRepository
     private var cancellables = Set<AnyCancellable>()
@@ -159,4 +160,20 @@ class DeckViewModel: ObservableObject {
             print("Error deleting deck: \(error)")
         }
     }
+    
+//    var totalFlashcards: Int {
+//        deck.folders.reduce(0) { total, folder in
+//            total + folder.flashcards.count
+//        }
+//    }
+//    
+//     var difficultyStats: (easy: Int, normal: Int, hard: Int) {
+//        let allCards = deck.folders.flatMap { $0.flashcards }
+//        return (
+//            easy: allCards.reduce(0) { $0 + $1.easyCount },
+//            normal: allCards.reduce(0) { $0 + $1.normalCount },
+//            hard: allCards.reduce(0) { $0 + $1.hardCount }
+//        )
+//    }
+
 }
