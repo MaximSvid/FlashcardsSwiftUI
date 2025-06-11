@@ -25,6 +25,4 @@ class SpeechServiceImplementation: SpeechServiceProtocol {
     func stopSpeaking() {
         synthesizer.stopSpeaking(at: .immediate)
     }
-    
-    
 }

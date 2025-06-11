@@ -9,40 +9,65 @@ import SwiftUI
 
 struct QuestionView: View {
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
-    
+
     var body: some View {
         VStack {
-            // progressView
             Spacer()
-            HStack {
-                Image(systemName: "speaker.wave.2")
-                    .font(.system(size: 22))
-                    .foregroundStyle(.blue)
-                    .onTapGesture {
-                        studySessionViewModel.speakQuestion()
+            
+            // Main question content
+            VStack {
+                HStack {
+                    Button(action: {
+//                        studySessionViewModel.speakQuestion()
+                        studySessionViewModel.toggleSound()
+                    }) {
+                        Image(systemName: studySessionViewModel.soundIconName)
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(.blue.opacity(0.8))
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.trailing, 8)
+                    
+                    Text(studySessionViewModel.currentFlashcard?.question ?? "No question available")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.primary)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+//                .padding(.horizontal, 20)
+                .padding([.leading, .trailing])
+                .padding(.vertical, 16)
                 
-                Text(studySessionViewModel.currentFlashcard?.question ?? "No question available")
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .foregroundStyle(.primary)
             }
-                        
+            
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .background(Color(.systemBackground))
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color(.systemGray4), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color(.systemGray3), lineWidth: 1.5)
         )
-        .padding(.horizontal)
-        .padding(.bottom)
+//        .padding(.horizontal, 16)
+        .padding()
+        .padding(.bottom, 16)
         .onTapGesture {
             studySessionViewModel.showAnswer()
+        }
+        .onAppear {
+            // Автоматическое воспроизведение через полсекунды после появления
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                studySessionViewModel.speakQuestionIfEnabled()
+            }
+        }
+        .onChange(of: studySessionViewModel.currentCardIndex) { _, _ in
+            // Автоматическое воспроизведение при смене карточки
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                studySessionViewModel.speakQuestionIfEnabled()
+            }
         }
     }
 }

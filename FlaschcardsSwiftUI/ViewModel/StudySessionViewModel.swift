@@ -11,6 +11,7 @@ class StudySessionViewModel: ObservableObject {
     @Published var showingAnswer: Bool = false
     @Published var studySessionActive: Bool = false
     @Published var selectedLanguage: Language = .english
+    @Published var isSoundEnabled: Bool = true // zustand von voice
     
     private let speechService: SpeechServiceProtocol
     
@@ -89,6 +90,16 @@ class StudySessionViewModel: ObservableObject {
         currentCard.lastStudiedDate = Date()
     }
     
+    func toggleSound() {
+        if isSoundEnabled {
+            isSoundEnabled = false
+            stopSpeaking()
+        } else {
+            isSoundEnabled = true
+            speakQuestion()
+        }
+    }
+    
     func speakQuestion() {
         if let question = currentFlashcard?.question {
             speechService.speak(text: question, language: selectedLanguage)
@@ -97,5 +108,18 @@ class StudySessionViewModel: ObservableObject {
     
     func stopSpeaking() {
         speechService.stopSpeaking()
+    }
+    
+    // MARK: - Computed Properties
+    
+    var soundIconName: String {
+        isSoundEnabled ? "speaker.wave.2" : "speaker.slash"
+    }
+    
+    func speakQuestionIfEnabled() {
+        // Метод для автоматического воспроизведения с проверкой настроек
+        if isSoundEnabled {
+            speakQuestion()
+        }
     }
 }
