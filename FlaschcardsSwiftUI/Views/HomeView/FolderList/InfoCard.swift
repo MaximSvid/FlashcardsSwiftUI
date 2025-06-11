@@ -28,54 +28,23 @@ struct InfoCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            
-//            HStack(spacing: 16) {
-                // Source Language
-//                HStack(spacing: 8) {
-//                    Text(deck.sourceLanguage?.imageName ?? "🌐")
-//                        .font(.system(size: 28))
-//                        .frame(width: 32, height: 32)
-//                    
-//                    Text(deck.sourceLanguage?.displayName ?? "Unknown")
-//                        .font(.system(size: 16, weight: .semibold))
-//                        .foregroundStyle(.primary)
-//                }
-                
-                // Arrow with animation potential
-//                Image(systemName: "arrow.right")
-//                    .font(.system(size: 14, weight: .medium))
-//                    .foregroundStyle(.secondary)
-//                    .frame(minWidth: 20)
-//                
-//                // Target Language
-//                HStack(spacing: 8) {
-//                    Text(deck.targetLanguage?.imageName ?? "🌐")
-//                        .font(.system(size: 28))
-//                        .frame(width: 32, height: 32)
-//                    
-//                    Text(deck.targetLanguage?.displayName ?? "Unknown")
-//                        .font(.system(size: 16, weight: .semibold))
-//                        .foregroundStyle(.primary)
-//                }
-//                
-//                Spacer()
-//            }
-            
-            // Divider for visual separation
-//            Divider()
-//                .background(Color(.systemGray4))
 
             HStack {
                 OverlappingFlags(
                     native: deck.sourceLanguage ?? .english,
                     target: deck.targetLanguage ?? .english)
-                Image(systemName: "")
-                    .font(.system(size: 16))
-                    .foregroundStyle(.gray)
-                Text(" Folder: \(folder.name)")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(.black)
-            }
+                                
+                HStack {
+                    Text(" Folder: ")
+                        .font(.system(size: 20, weight: .medium))
+                        .foregroundStyle(.gray)
+                    Text(folder.name)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundStyle(.black)
+
+                    Spacer()
+                }
+                            }
             Divider()
                 .background(Color(.systemGray4))
 
@@ -98,23 +67,27 @@ struct InfoCard: View {
             }
             
             // Difficulty Buttons Section
+            
             HStack(spacing: 12) {
-                DifficultyButton(
+                DifficultyButtonFolderList(
                     difficulty: .easy,
                     count: difficultyStats.easy,
-                    action: {  }
+                    action: {  },
+                    isDisabled: folder.flashcards.isEmpty
                 )
                 
-                DifficultyButton(
+                DifficultyButtonFolderList(
                     difficulty: .normal,
                     count: difficultyStats.normal,
-                    action: {  }
+                    action: {  },
+                    isDisabled: folder.flashcards.isEmpty
                 )
                 
-                DifficultyButton(
+                DifficultyButtonFolderList(
                     difficulty: .hard,
                     count: difficultyStats.hard,
-                    action: {  }
+                    action: {  },
+                    isDisabled: folder.flashcards.isEmpty
                 )
             }
             

@@ -1,20 +1,22 @@
 //
-//  DifficultyButton.swift
+//  DifficultyButtonView.swift
 //  FlaschcardsSwiftUI
 //
-//  Created by Maxim Svidrak on 10.06.25.
+//  Created by Maxim Svidrak on 09.06.25.
 //
 
 import SwiftUI
 
-struct DifficultyButton: View {
+struct DifficultyButtonAnswerView: View {
+    //    @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
+    
     let difficulty: CardDifficulty
-    let count: Int
     let action: () -> Void
     
     @State private var isPressed = false
     
     var body: some View {
+        
         Button(action: action) {
             VStack(spacing: 6) {
                 Image(systemName: difficulty.icon)
@@ -24,14 +26,6 @@ struct DifficultyButton: View {
                 Text(difficulty.displayName)
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(difficulty.color)
-                
-                // Count badge
-                Text("\(count)")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(.white)
-                    .frame(minWidth: 20, minHeight: 16)
-                    .background(difficulty.color)
-                    .clipShape(Capsule())
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
@@ -47,12 +41,6 @@ struct DifficultyButton: View {
             .scaleEffect(isPressed ? 0.95 : 1.0)
         }
         .buttonStyle(PlainButtonStyle())
-//        .onLongPressGesture(minimumDuration: 0, maximumDistance: .infinity) { isPressing in
-//            withAnimation(.easeInOut(duration: 0.1)) {
-//                isPressed = isPressing
-//            }
-//        } perform: {
-//            action()
-//        }
     }
 }
+
