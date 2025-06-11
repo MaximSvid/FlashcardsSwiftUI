@@ -10,6 +10,13 @@ class StudySessionViewModel: ObservableObject {
     @Published var currentCardIndex: Int = 0
     @Published var showingAnswer: Bool = false
     @Published var studySessionActive: Bool = false
+    @Published var selectedLanguage: Language = .english
+    
+    private let speechService: SpeechServiceProtocol
+    
+    init(speechService: SpeechServiceProtocol = SpeechServiceImplementation()) {
+        self.speechService = speechService
+    }
     
     var flashcards: [Flashcard] = []
     
@@ -32,6 +39,9 @@ class StudySessionViewModel: ObservableObject {
         self.currentCardIndex = 0
         self.showingAnswer = false
         self.studySessionActive = !folder.flashcards.isEmpty // nur when flashcards gibt
+        if let deck = folder.deck {
+            self.selectedLanguage = deck.targetLanguage ?? .english
+        }
     }
     
     func showAnswer() {
@@ -77,5 +87,15 @@ class StudySessionViewModel: ObservableObject {
         // Обновляем общий счетчик изучения
         currentCard.studyCount += 1
         currentCard.lastStudiedDate = Date()
+    }
+    
+    func speakQuestion() {
+        if let question = currentFlashcard?.question {
+            speechService.speak(text: question, language: selectedLanguage)
+        }
+    }
+    
+    func stopSpeaking() {
+        speechService.stopSpeaking()
     }
 }

@@ -14,31 +14,23 @@ struct QuestionView: View {
         VStack {
             // progressView
             Spacer()
-            
-            Text(studySessionViewModel.currentFlashcard?.question ?? "No question available")
-                .font(.title2)
-                .fontWeight(.medium)
-                .multilineTextAlignment(.center)
-                .padding()
-                .foregroundStyle(.primary)
-            
-            Spacer()
-            
-            if !studySessionViewModel.showingAnswer {
-                Button(action: {
-                    studySessionViewModel.showAnswer()
-                }) {
-                    Text("Show Answer")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(12)
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 25)
+            HStack {
+                Image(systemName: "speaker.wave.2")
+                    .font(.system(size: 22))
+                    .foregroundStyle(.blue)
+                    .onTapGesture {
+                        studySessionViewModel.speakQuestion()
+                    }
+                
+                Text(studySessionViewModel.currentFlashcard?.question ?? "No question available")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                    .foregroundStyle(.primary)
             }
+                        
+            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
@@ -49,5 +41,8 @@ struct QuestionView: View {
         )
         .padding(.horizontal)
         .padding(.bottom)
+        .onTapGesture {
+            studySessionViewModel.showAnswer()
+        }
     }
 }
