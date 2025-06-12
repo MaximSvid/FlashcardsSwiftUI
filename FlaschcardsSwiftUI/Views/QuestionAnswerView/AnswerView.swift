@@ -15,14 +15,16 @@ struct AnswerView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     VStack {
+                        HStack {
+                            Spacer()
+                            Text("\(studySessionViewModel.currentCardIndex + 1) / \(studySessionViewModel.flashcards.count)")
+                                .font(.caption)
+                                .foregroundStyle(.gray)
+                        }
                         Spacer()
                         
                         VStack {
-                            HStack {
-                                Text("\(studySessionViewModel.currentCardIndex + 1) / \(studySessionViewModel.flashcards.count)")
-                                    .font(.caption)
-                                    .foregroundStyle(.gray)
-                            }
+                            
                             
                             Text(studySessionViewModel.currentFlashcard?.question ?? "Probleme!!!")
                                 .font(.caption)
@@ -31,7 +33,7 @@ struct AnswerView: View {
                             Divider()
                             
                             Text(studySessionViewModel.currentFlashcard?.answer ?? "Probleme!!!")
-                                .font(.headline)
+                                .font(.title2)
                                 .foregroundStyle(.black)
                         }
                         
@@ -57,7 +59,6 @@ struct AnswerView: View {
                                 action: { studySessionViewModel.nextCard() }
                             )
                         }
-//                        .padding(.bottom)
                     }
                     .padding()
                     .overlay(
@@ -72,7 +73,7 @@ struct AnswerView: View {
         }
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.systemGray4), lineWidth: 0.5)
+                .stroke(Color(.systemGray4), lineWidth: 1.5)
         )
         .padding()
         .padding(.bottom, 16)
