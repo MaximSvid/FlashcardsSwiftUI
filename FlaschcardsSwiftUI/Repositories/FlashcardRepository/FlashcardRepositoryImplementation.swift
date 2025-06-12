@@ -8,7 +8,6 @@ import SwiftData
 import Foundation
 
 class FlashcardRepositoryImplementation: FlashcardRepository {
-        
     
     func createFlashcard(question: String, answer: String, in folder: Folder, context: ModelContext) throws -> Flashcard {
         if question.isEmpty || answer.isEmpty {
@@ -44,4 +43,15 @@ class FlashcardRepositoryImplementation: FlashcardRepository {
         flashcard.answer = answer
         try context.save()
     }
+    
+    func saveCardDifficulty(flashcard: Flashcard, difficulty: CardDifficulty, context: ModelContext) throws {
+        flashcard.difficulty = difficulty
+        try context.save()
+    }
+    
+//    func updateCardDifficulty(flashcard: Flashcard, difficulty: CardDifficulty, context: ModelContext) {
+//        
+//        
+//        context.save()
+//    }
 }

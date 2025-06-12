@@ -12,4 +12,8 @@ protocol FlashcardRepository {
     func deleteFlashcard(flashcard: Flashcard, context: ModelContext) throws
     
     func updateFlashcard(flashcard: Flashcard, question: String, answer: String, context: ModelContext) throws
+    
+    func saveCardDifficulty(flashcard: Flashcard, difficulty: CardDifficulty, context: ModelContext) throws
+    
+//    func updateCardDifficulty(flashcard: Flashcard, difficulty: CardDifficulty, context: ModelContext)
 }

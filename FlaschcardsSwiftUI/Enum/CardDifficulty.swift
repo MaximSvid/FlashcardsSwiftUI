@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum CardDifficulty: String, CaseIterable {
+enum CardDifficulty: String, CaseIterable, Codable {
     case easy = "easy"
     case normal = "normal"
     case hard = "hard"

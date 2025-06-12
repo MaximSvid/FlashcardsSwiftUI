@@ -71,22 +71,29 @@ struct InfoCard: View {
             HStack(spacing: 12) {
                 DifficultyButtonFolderList(
                     difficulty: .easy,
-                    count: difficultyStats.easy,
-                    action: {  },
+                    count: 
+                        difficultyStats.easy,
+                    action: {
+                        
+                    },
                     isDisabled: folder.flashcards.isEmpty
                 )
                 
                 DifficultyButtonFolderList(
                     difficulty: .normal,
                     count: difficultyStats.normal,
-                    action: {  },
+                    action: {
+                        
+                    },
                     isDisabled: folder.flashcards.isEmpty
                 )
                 
                 DifficultyButtonFolderList(
                     difficulty: .hard,
                     count: difficultyStats.hard,
-                    action: {  },
+                    action: {
+                        
+                    },
                     isDisabled: folder.flashcards.isEmpty
                 )
             }

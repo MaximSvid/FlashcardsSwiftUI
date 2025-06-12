@@ -18,6 +18,13 @@ class Flashcard {
     @Relationship(inverse: \Folder.flashcards) var folder: Folder? // inverse relationship to Folder
     
     // Study Progress Properties
+    var difficulty: CardDifficulty? // speisherung nach schwierigkeit
+    
+    var lastReviewed: Date? // für wiederholungLogic
+    var nextReviewDate: Date? // für wiederholungLogic
+    
+    var reviewCount: Int = 0 // für statistic
+    // --- falsh
     var lastStudiedDate: Date?
     var studyCount: Int = 0
     var easyCount: Int = 0
@@ -25,6 +32,7 @@ class Flashcard {
     var hardCount: Int = 0
 //    var lastDidiculty: String?,
 //    var nextReviewDate: Date?
+    // --- falsh
     
     init(id: UUID = UUID(), question: String, answer: String, isFavorite: Bool = false, creationDate: Date = Date(), folder: Folder? = nil) {
         self.id = id

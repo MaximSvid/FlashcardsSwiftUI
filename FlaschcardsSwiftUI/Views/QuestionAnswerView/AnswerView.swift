@@ -9,6 +9,9 @@ import SwiftUI
 
 struct AnswerView: View {
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
+    @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
+    @Environment(\.modelContext) private var modelContext
+    
     
     var body: some View {
         GeometryReader { geometry in
@@ -46,17 +49,44 @@ struct AnswerView: View {
                             
                             DifficultyButtonAnswerView(
                                 difficulty: .easy,
-                                action: {studySessionViewModel.nextCard()}
+                                action: {
+                                    if let currentFlashcard = studySessionViewModel.currentFlashcard {
+                                        flashcardViewModel.saveCardDifficulty(
+                                            flashcard: currentFlashcard,
+                                            difficulty: CardDifficulty.easy,
+                                            context: modelContext
+                                        )
+                                        
+                                    }
+                                    studySessionViewModel.nextCard()
+                                }
                             )
                             
                             DifficultyButtonAnswerView(
                                 difficulty: .normal,
-                                action: { studySessionViewModel.nextCard() }
+                                action: {
+                                    if let currentFlashcard = studySessionViewModel.currentFlashcard {
+                                        flashcardViewModel.saveCardDifficulty(
+                                            flashcard: currentFlashcard,
+                                            difficulty: CardDifficulty.normal,
+                                            context: modelContext
+                                        )
+                                    }
+                                    studySessionViewModel.nextCard() }
                             )
                             
                             DifficultyButtonAnswerView(
                                 difficulty: .hard,
-                                action: { studySessionViewModel.nextCard() }
+                                action: {
+                                    if let currentFlashcard = studySessionViewModel.currentFlashcard {
+                                        flashcardViewModel.saveCardDifficulty(
+                                            flashcard: currentFlashcard,
+                                            difficulty: CardDifficulty.hard,
+                                            context: modelContext
+                                        )
+                                    }
+                                    studySessionViewModel.nextCard()
+                                }
                             )
                         }
                     }

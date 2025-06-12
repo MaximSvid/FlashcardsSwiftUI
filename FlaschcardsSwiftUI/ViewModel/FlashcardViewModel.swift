@@ -248,4 +248,15 @@ class FlashcardViewModel: ObservableObject {
             print("Error deleting flashcard: \(error)")
         }
     }
+    
+    func saveCardDifficulty(flashcard: Flashcard, difficulty: CardDifficulty, context: ModelContext)  {
+        do {
+            try flashcardRepository.saveCardDifficulty(flashcard: flashcard, difficulty: difficulty, context: context)
+        } catch {
+            ToastManager.shared.show(
+                Toast(style: .error, message: "Failed to save card difficulty")
+            )
+            print("Saving card difficulty failed: \(error)")
+        }
+    }
 }
