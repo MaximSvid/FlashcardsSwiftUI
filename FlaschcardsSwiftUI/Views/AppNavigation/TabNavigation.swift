@@ -18,8 +18,8 @@ struct TabNavigation: View {
                 DeckView()
             }
             
-            Tab("Home", systemImage: "house"){
-                HomeView()
+            Tab("Settings", systemImage: "gear"){
+                SettingsView()
             }
         }
     }

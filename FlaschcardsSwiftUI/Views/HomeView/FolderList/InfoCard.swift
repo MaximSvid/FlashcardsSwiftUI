@@ -18,11 +18,11 @@ struct InfoCard: View {
     
     // Статистика по сложности карточек
     private var difficultyStats: (easy: Int, normal: Int, hard: Int) {
-        let allCards = deck.folders.flatMap { $0.flashcards }
+        let flashcards = folder.flashcards
         return (
-            easy: allCards.reduce(0) { $0 + $1.easyCount },
-            normal: allCards.reduce(0) { $0 + $1.normalCount },
-            hard: allCards.reduce(0) { $0 + $1.hardCount }
+            easy: flashcards.filter { $0.difficulty == .easy}.count,
+            normal: flashcards.filter { $0.difficulty == .normal}.count,
+            hard: flashcards.filter { $0.difficulty == .hard}.count,
         )
     }
     
@@ -71,8 +71,7 @@ struct InfoCard: View {
             HStack(spacing: 12) {
                 DifficultyButtonFolderList(
                     difficulty: .easy,
-                    count: 
-                        difficultyStats.easy,
+                    count: difficultyStats.easy,
                     action: {
                         
                     },

@@ -72,23 +72,23 @@ class StudySessionViewModel: ObservableObject {
         flashcards = []
     }
     
-    func markCardDifficulty(_ difficulty: CardDifficulty) {
-        guard let currentCard = currentFlashcard else { return }
-        
-        // Обновляем счетчики сложности
-        switch difficulty {
-        case .easy:
-            currentCard.easyCount += 1
-        case .normal:
-            currentCard.normalCount += 1
-        case .hard:
-            currentCard.hardCount += 1
-        }
-        
-        // Обновляем общий счетчик изучения
-        currentCard.studyCount += 1
-        currentCard.lastStudiedDate = Date()
-    }
+//    func markCardDifficulty(_ difficulty: CardDifficulty) {
+//        guard let currentCard = currentFlashcard else { return }
+//        
+//        // Обновляем счетчики сложности
+//        switch difficulty {
+//        case .easy:
+//            currentCard.easyCount += 1
+//        case .normal:
+//            currentCard.normalCount += 1
+//        case .hard:
+//            currentCard.hardCount += 1
+//        }
+//        
+//        // Обновляем общий счетчик изучения
+//        currentCard.studyCount += 1
+//        currentCard.lastStudiedDate = Date()
+//    }
     
     func toggleSound() {
         if isSoundEnabled {

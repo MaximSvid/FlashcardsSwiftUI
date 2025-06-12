@@ -25,11 +25,11 @@ class Flashcard {
     
     var reviewCount: Int = 0 // für statistic
     // --- falsh
-    var lastStudiedDate: Date?
-    var studyCount: Int = 0
-    var easyCount: Int = 0
-    var normalCount: Int = 0
-    var hardCount: Int = 0
+//    var lastStudiedDate: Date?
+//    var studyCount: Int = 0
+//    var easyCount: Int = 0
+//    var normalCount: Int = 0
+//    var hardCount: Int = 0
 //    var lastDidiculty: String?,
 //    var nextReviewDate: Date?
     // --- falsh
