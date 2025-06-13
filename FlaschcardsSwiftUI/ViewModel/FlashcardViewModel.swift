@@ -260,15 +260,37 @@ class FlashcardViewModel: ObservableObject {
         }
     }
     
-     var difficultyStats: (easy: Int, normal: Int, hard: Int) {
-         guard let flashcards = currentFolder?.flashcards else {
-             return (easy: 0, normal: 0, hard: 0)
-         }
+    var difficultyStats: (easy: Int, normal: Int, hard: Int) {
+        guard let flashcards = currentFolder?.flashcards else {
+            return (easy: 0, normal: 0, hard: 0)
+        }
         return (
             easy: flashcards.filter { $0.difficulty == .easy}.count,
             normal: flashcards.filter { $0.difficulty == .normal}.count,
             hard: flashcards.filter { $0.difficulty == .hard}.count,
         )
     }
+    
+    //MARK: nich richtig functionieret
+     var totalFlashcards: Int {
+        currentFolder?.flashcards.count ?? 0
+    }
+}
 
+extension FlashcardViewModel {
+    
+    // Метод для получения статистики сложности для конкретной папки
+    func getDifficultyStats(for folder: Folder) -> (easy: Int, normal: Int, hard: Int) {
+        let flashcards = folder.flashcards
+        return (
+            easy: flashcards.filter { $0.difficulty == .easy }.count,
+            normal: flashcards.filter { $0.difficulty == .normal }.count,
+            hard: flashcards.filter { $0.difficulty == .hard }.count
+        )
+    }
+    
+    // Метод для получения общего количества карточек в папке
+    func getTotalFlashcards(for folder: Folder) -> Int {
+        return folder.flashcards.count
+    }
 }

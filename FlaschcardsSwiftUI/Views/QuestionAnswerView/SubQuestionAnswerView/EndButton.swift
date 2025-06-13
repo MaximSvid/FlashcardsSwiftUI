@@ -26,8 +26,8 @@ struct EndButton: View {
                 
                 Text("\(count)")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(.white)
-                    .background(difficulty.color)
+                    .foregroundStyle(difficulty.color)
+//                    .background(difficulty.color)
             }
             .frame(maxWidth: .infinity)
             .padding()
@@ -36,7 +36,7 @@ struct EndButton: View {
 //            )
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-//                    .stroke((isDisabled ? Color.gray : difficulty.color).opacity(0.3), lineWidth: 1)
+                    .stroke(difficulty.color.opacity(0.3), lineWidth: 1.5)
             )
         }
         .padding([.top, .bottom], 15)

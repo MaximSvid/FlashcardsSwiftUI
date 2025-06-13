@@ -9,57 +9,72 @@ import SwiftUI
 
 struct EndAnswerQuestionView: View {
     @EnvironmentObject private var folderViewModel: FolderViewModel
+    @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
     var selectedFolder: Folder?
+    @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack {
-//                    Text("You are folder: \(folderViewModel.selectedFolder) gelernt congradulation")
-                    
-//                    //easy
-//                    EndButton(
-//                        difficulty: .easy,
-//                        count: <#T##Int#>,
-//                        action: <#T##() -> Void#>
-//                    )
-//                    
-//                    //normal
-//                    EndButton(
-//                        difficulty: <#T##CardDifficulty#>,
-//                        count: <#T##Int#>,
-//                        action: <#T##() -> Void#>
-//                    )
-//                    
-//                    //hard
-//                    EndButton(
-//                        difficulty: <#T##CardDifficulty#>,
-//                        count: <#T##Int#>,
-//                        action: <#T##() -> Void#>
-//                    )
-//                    
-//                    //reapetAll
-//                    EndButton(
-//                        difficulty: <#T##CardDifficulty#>,
-//                        count: <#T##Int#>,
-//                        action: <#T##() -> Void#>
-//                    )
-//                    
-//                    //next Folder
-//                    EndButton(
-//                        difficulty: <#T##CardDifficulty#>,
-//                        count: <#T##Int#>,
-//                        action: <#T##() -> Void#>
-//                    )
+                    Spacer()
+                    VStack {
+                        Text("Study Results")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundStyle(.primary)
+                            .padding(.bottom, 20)
+                        
+                        
+                        //easy
+                        EndButton(
+                            difficulty: .easy,
+                            count: flashcardViewModel.difficultyStats.easy,
+                            action: {
+                                studySessionViewModel.startStudySessionWithDifficulty(.easy)
+                            }
+                        )
+                        
+                        //normal
+                        EndButton(
+                            difficulty: .normal,
+                            count: flashcardViewModel.difficultyStats.normal,
+                            action: {
+                                studySessionViewModel.startStudySessionWithDifficulty(.normal)
+                            }
+                        )
+                        
+                        //hard
+                        EndButton(
+                            difficulty: .hard,
+                            count: flashcardViewModel.difficultyStats.hard,
+                            action: {
+                                studySessionViewModel.startStudySessionWithDifficulty(.hard)
+                            }
+                        )
+                        
+                        //                    //reapetAll
+                        //                    EndButton(
+                        //                        difficulty: <#T##CardDifficulty#>,
+                        //                        count: <#T##Int#>,
+                        //                        action: <#T##() -> Void#>
+                        //                    )
+                        //
+                        //                    //next Folder
+                        //                    EndButton(
+                        //                        difficulty: <#T##CardDifficulty#>,
+                        //                        count: <#T##Int#>,
+                        //                        action: <#T##() -> Void#>
+                        //                    )
+                        //                    Spacer()
+                    }
+                    //
                 }
-                .navigationTitle("Folder \(selectedFolder?.name ?? "") end...")
+//                .navigationTitle("Folder \(selectedFolder?.name ?? "") end...")
                 .padding()
-                .frame(maxWidth: .infinity, maxHeight: geometry.size.height)
+                .frame(maxHeight: geometry.size.height)
+                .frame(maxWidth: .infinity)
             }
         }
     }
 }
 
-#Preview {
-    EndAnswerQuestionView()
-}

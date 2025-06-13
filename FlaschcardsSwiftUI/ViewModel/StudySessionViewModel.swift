@@ -7,11 +7,13 @@
 import SwiftUI
 
 class StudySessionViewModel: ObservableObject {
+    @Published var currentFolder: Folder?
     @Published var currentCardIndex: Int = 0
     @Published var showingAnswer: Bool = false
     @Published var studySessionActive: Bool = false
     @Published var selectedLanguage: Language = .english
     @Published var isSoundEnabled: Bool = true // zustand von voice
+    @Published var isSessionFinished: Bool = false //
     
     private let speechService: SpeechServiceProtocol
     
@@ -21,6 +23,7 @@ class StudySessionViewModel: ObservableObject {
     
     var flashcards: [Flashcard] = []
     
+    //MARK: StudySession Start ----------------
     var currentFlashcard: Flashcard? {
         guard currentCardIndex < flashcards.count else {
             return nil
@@ -36,9 +39,11 @@ class StudySessionViewModel: ObservableObject {
     }
     
     func startStudySession(with folder: Folder) {
+        self.currentFolder = folder
         self.flashcards = folder.flashcards
         self.currentCardIndex = 0
         self.showingAnswer = false
+        self.isSessionFinished = false
         self.studySessionActive = !folder.flashcards.isEmpty // nur when flashcards gibt
         if let deck = folder.deck {
             self.selectedLanguage = deck.targetLanguage ?? .english
@@ -50,76 +55,94 @@ class StudySessionViewModel: ObservableObject {
     }
     
     func nextCard() {
-        guard hasNextCard else {
-            return
-        }
-        self.currentCardIndex += 1
-        self.showingAnswer = false
-    }
-    
-    func previousCard() {
-        guard hasPreviousCard else {
-            return
-        }
-        self.currentCardIndex -= 1
-        self.showingAnswer = false
-    }
-    
-    func endStudySession() {
-        self.studySessionActive = false
-        currentCardIndex = 0
-        showingAnswer = false
-        flashcards = []
-    }
-    
-//    func markCardDifficulty(_ difficulty: CardDifficulty) {
-//        guard let currentCard = currentFlashcard else { return }
-//        
-//        // Обновляем счетчики сложности
-//        switch difficulty {
-//        case .easy:
-//            currentCard.easyCount += 1
-//        case .normal:
-//            currentCard.normalCount += 1
-//        case .hard:
-//            currentCard.hardCount += 1
-//        }
-//        
-//        // Обновляем общий счетчик изучения
-//        currentCard.studyCount += 1
-//        currentCard.lastStudiedDate = Date()
-//    }
-    
-    func toggleSound() {
-        if isSoundEnabled {
-            isSoundEnabled = false
-            stopSpeaking()
+        if hasNextCard {
+            self.currentCardIndex += 1
+            self.showingAnswer = false
         } else {
-            isSoundEnabled = true
-            speakQuestion()
+            completeStudySession()
         }
     }
-    
-    func speakQuestion() {
-        if let question = currentFlashcard?.question {
-            speechService.speak(text: question, language: selectedLanguage)
+        
+        func previousCard() {
+            guard hasPreviousCard else {
+                return
+            }
+            self.currentCardIndex -= 1
+            self.showingAnswer = false
         }
-    }
-    
-    func stopSpeaking() {
-        speechService.stopSpeaking()
-    }
-    
-    // MARK: - Computed Properties
-    
-    var soundIconName: String {
-        isSoundEnabled ? "speaker.wave.2" : "speaker.slash"
-    }
-    
-    func speakQuestionIfEnabled() {
-        // Метод для автоматического воспроизведения с проверкой настроек
-        if isSoundEnabled {
-            speakQuestion()
+        
+        func completeStudySession() {
+            self.isSessionFinished = true
+            self.showingAnswer = false
+            print("Study session completed! All cards have been studied.")
         }
+        
+        func endStudySession() {
+            self.studySessionActive = false
+            currentCardIndex = 0
+            showingAnswer = false
+            flashcards = []
+        }
+        
+        // Метод для перезапуска сессии (например, для повторного изучения)
+        func restartSession() {
+            guard let folder = currentFolder else { return }
+            startStudySession(with: folder)
+        }
+        
+         func checkIfSessionCompleted() {
+            if flashcards.isEmpty {
+                isSessionFinished = true
+            }
+        }
+        
+        // Метод для изучения карточек определенной сложности
+        func startStudySessionWithDifficulty(_ difficulty: CardDifficulty) {
+            guard let folder = currentFolder else { return }
+            let filteredCards = folder.flashcards.filter { $0.difficulty == difficulty }
+            
+            if !filteredCards.isEmpty {
+                self.flashcards = filteredCards
+                self.currentCardIndex = 0
+                self.showingAnswer = false
+                self.isSessionFinished = false
+                self.studySessionActive = true
+            }
+        }
+        
+        //MARK: StudySession End ----------------
+        
+        //MARK: Voice Start--------------------
+        func toggleSound() {
+            if isSoundEnabled {
+                isSoundEnabled = false
+                stopSpeaking()
+            } else {
+                isSoundEnabled = true
+                speakQuestion()
+            }
+        }
+        
+        func speakQuestion() {
+            if let question = currentFlashcard?.question {
+                speechService.speak(text: question, language: selectedLanguage)
+            }
+        }
+        
+        func stopSpeaking() {
+            speechService.stopSpeaking()
+        }
+        
+        
+        func speakQuestionIfEnabled() {
+            // Метод для автоматического воспроизведения с проверкой настроек
+            if isSoundEnabled {
+                speakQuestion()
+            }
+        }
+        var soundIconName: String {
+            isSoundEnabled ? "speaker.wave.2" : "speaker.slash"
+        }
+        //MARK: Voice End-----------------
+        
     }
-}

@@ -9,16 +9,21 @@ import SwiftUI
 
 struct StudySessionView: View {
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
+    @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationView {
             VStack {
-                if studySessionViewModel.showingAnswer {
+                if studySessionViewModel.isSessionFinished {
+                    EndAnswerQuestionView(selectedFolder: studySessionViewModel.currentFolder)
+                        .environmentObject(flashcardViewModel)
+                } else if studySessionViewModel.showingAnswer {
                     AnswerView()
                 } else {
                     QuestionView()
                 }
+                
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -39,6 +44,11 @@ struct StudySessionView: View {
                     }
                 }
             }
+//            .onAppear {
+            // убирает вообще количесво изученых карточек
+//                //синхронизация папок
+//                flashcardViewModel.currentFolder = studySessionViewModel.currentFolder
+//            }
         }
         .navigationViewStyle(StackNavigationViewStyle()) // Принудительно используем стек
     }

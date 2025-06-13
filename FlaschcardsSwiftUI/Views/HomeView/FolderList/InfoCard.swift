@@ -12,29 +12,19 @@ struct InfoCard: View {
     let deck: Deck
     let folder: Folder
     
-    // ошибка - неверная передача количества элементов!!!
+    // перенести логику во viewModel
     private var totalFlashcards: Int {
         folder.flashcards.count
     }
     
-    // Статистика по сложности карточек
-//    private var difficultyStats: (easy: Int, normal: Int, hard: Int) {
-//        let flashcards = folder.flashcards
-//        return (
-//            easy: flashcards.filter { $0.difficulty == .easy}.count,
-//            normal: flashcards.filter { $0.difficulty == .normal}.count,
-//            hard: flashcards.filter { $0.difficulty == .hard}.count,
-//        )
-//    }
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-
+            
             HStack {
                 OverlappingFlags(
                     native: deck.sourceLanguage ?? .english,
                     target: deck.targetLanguage ?? .english)
-                                
+                
                 HStack {
                     Text(" Folder: ")
                         .font(.system(size: 20, weight: .medium))
@@ -42,13 +32,13 @@ struct InfoCard: View {
                     Text(folder.name)
                         .font(.system(size: 20, weight: .bold))
                         .foregroundStyle(.black)
-
+                    
                     Spacer()
                 }
-                            }
+            }
             Divider()
                 .background(Color(.systemGray4))
-
+            
             
             // Flashcards Count Section
             HStack {
@@ -70,41 +60,36 @@ struct InfoCard: View {
             // Difficulty Buttons Section
             
             HStack(spacing: 12) {
+                let stats = flashcardViewModel.getDifficultyStats(for: folder)
+                
                 DifficultyButtonFolderList(
                     difficulty: .easy,
-                    count: flashcardViewModel.difficultyStats.easy,
-                    action: {
-                        
-                    },
+                    count: stats.easy,
+                    action: { },
                     isDisabled: folder.flashcards.isEmpty
                 )
                 
                 DifficultyButtonFolderList(
                     difficulty: .normal,
-                    count: flashcardViewModel.difficultyStats.normal,
-                    action: {
-                        
-                    },
+                    count: stats.normal,
+                    action: { },
                     isDisabled: folder.flashcards.isEmpty
                 )
                 
                 DifficultyButtonFolderList(
                     difficulty: .hard,
-                    count: flashcardViewModel.difficultyStats.hard,
-                    action: {
-                        
-                    },
+                    count: stats.hard,
+                    action: { },
                     isDisabled: folder.flashcards.isEmpty
                 )
             }
-            
             VStack {
                 StudyNowButton(folder: folder)
             }
             .frame(height: 50)
         }
         .onAppear {
-            flashcardViewModel.currentFolder = folder // verbindung mit folder
+            flashcardViewModel.currentFolder = folder
         }
     }
 }
