@@ -259,4 +259,16 @@ class FlashcardViewModel: ObservableObject {
             print("Saving card difficulty failed: \(error)")
         }
     }
+    
+     var difficultyStats: (easy: Int, normal: Int, hard: Int) {
+         guard let flashcards = currentFolder?.flashcards else {
+             return (easy: 0, normal: 0, hard: 0)
+         }
+        return (
+            easy: flashcards.filter { $0.difficulty == .easy}.count,
+            normal: flashcards.filter { $0.difficulty == .normal}.count,
+            hard: flashcards.filter { $0.difficulty == .hard}.count,
+        )
+    }
+
 }

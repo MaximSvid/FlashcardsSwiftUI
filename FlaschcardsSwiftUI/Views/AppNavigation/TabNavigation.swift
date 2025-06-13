@@ -24,7 +24,4 @@ struct TabNavigation: View {
         }
     }
 }
-
-#Preview {
-    TabNavigation()
-}
+ 

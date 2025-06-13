@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InfoCard: View {
+    @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
     let deck: Deck
     let folder: Folder
     
@@ -17,14 +18,14 @@ struct InfoCard: View {
     }
     
     // Статистика по сложности карточек
-    private var difficultyStats: (easy: Int, normal: Int, hard: Int) {
-        let flashcards = folder.flashcards
-        return (
-            easy: flashcards.filter { $0.difficulty == .easy}.count,
-            normal: flashcards.filter { $0.difficulty == .normal}.count,
-            hard: flashcards.filter { $0.difficulty == .hard}.count,
-        )
-    }
+//    private var difficultyStats: (easy: Int, normal: Int, hard: Int) {
+//        let flashcards = folder.flashcards
+//        return (
+//            easy: flashcards.filter { $0.difficulty == .easy}.count,
+//            normal: flashcards.filter { $0.difficulty == .normal}.count,
+//            hard: flashcards.filter { $0.difficulty == .hard}.count,
+//        )
+//    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -71,7 +72,7 @@ struct InfoCard: View {
             HStack(spacing: 12) {
                 DifficultyButtonFolderList(
                     difficulty: .easy,
-                    count: difficultyStats.easy,
+                    count: flashcardViewModel.difficultyStats.easy,
                     action: {
                         
                     },
@@ -80,7 +81,7 @@ struct InfoCard: View {
                 
                 DifficultyButtonFolderList(
                     difficulty: .normal,
-                    count: difficultyStats.normal,
+                    count: flashcardViewModel.difficultyStats.normal,
                     action: {
                         
                     },
@@ -89,7 +90,7 @@ struct InfoCard: View {
                 
                 DifficultyButtonFolderList(
                     difficulty: .hard,
-                    count: difficultyStats.hard,
+                    count: flashcardViewModel.difficultyStats.hard,
                     action: {
                         
                     },
@@ -101,6 +102,9 @@ struct InfoCard: View {
                 StudyNowButton(folder: folder)
             }
             .frame(height: 50)
+        }
+        .onAppear {
+            flashcardViewModel.currentFolder = folder // verbindung mit folder
         }
     }
 }
