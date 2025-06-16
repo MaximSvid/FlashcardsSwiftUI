@@ -66,7 +66,7 @@ struct EndAnswerQuestionView: View {
                         .buttonStyle(PlainButtonStyle())
                         
                         Button(action: {
-                            studySessionViewModel.startNextFolderStudySession() // не работает - 
+//                            studySessionViewModel.startNextFolderStudySession() // не работает - 
                         }) {
                             Text("Next Folder")
                                 .font(.system(size: 16, weight: .semibold))

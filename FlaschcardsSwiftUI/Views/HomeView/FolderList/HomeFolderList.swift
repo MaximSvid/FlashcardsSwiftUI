@@ -45,6 +45,7 @@ struct HomeFolderList: View {
 //                    }
                 }
             }
+            .padding(.top)
         }
     }
 }
