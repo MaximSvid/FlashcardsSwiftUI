@@ -54,5 +54,22 @@ class FolderViewModel: ObservableObject {
             print("Error updating folder name: \(error.localizedDescription)")
         }
     }
-    
+    var folders: [Folder] {
+        return selectedDeck?.folders ?? []
+    }
+    func getNextFolder(after currentFolder: Folder) -> Folder? {
+        let allFolders = folders
+        guard let currentIndex = allFolders.firstIndex(where: {$0.id == currentFolder.id}) else {
+            return nil
+        }
+        let nextIndex = currentIndex + 1
+        
+        for i in nextIndex..<allFolders.count {
+            let folder = allFolders[i]
+            if !folder.flashcards.isEmpty {
+                return folder
+            }
+        }
+        return nil
+    }
 }

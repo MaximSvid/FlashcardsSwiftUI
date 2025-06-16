@@ -15,6 +15,7 @@ struct FlaschcardsSwiftUIApp: App {
     @StateObject private var flashcardViewModel = FlashcardViewModel()
     @StateObject private var studySessionViewModel = StudySessionViewModel()
     
+        
     var body: some Scene {
         WindowGroup {
             TabNavigation()

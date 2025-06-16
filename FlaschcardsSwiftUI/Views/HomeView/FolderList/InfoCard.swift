@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InfoCard: View {
     @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
+    @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
     let deck: Deck
     let folder: Folder
     
@@ -65,21 +66,27 @@ struct InfoCard: View {
                 DifficultyButtonFolderList(
                     difficulty: .easy,
                     count: stats.easy,
-                    action: { },
+                    action: {
+                        studySessionViewModel.startStudySessionWithDifficulty(.easy, from: folder)
+                    },
                     isDisabled: folder.flashcards.isEmpty
                 )
                 
                 DifficultyButtonFolderList(
                     difficulty: .normal,
                     count: stats.normal,
-                    action: { },
+                    action: {
+                        studySessionViewModel.startStudySessionWithDifficulty(.normal, from: folder)
+                    },
                     isDisabled: folder.flashcards.isEmpty
                 )
                 
                 DifficultyButtonFolderList(
                     difficulty: .hard,
                     count: stats.hard,
-                    action: { },
+                    action: {
+                        studySessionViewModel.startStudySessionWithDifficulty(.hard, from: folder)
+                    },
                     isDisabled: folder.flashcards.isEmpty
                 )
             }

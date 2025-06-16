@@ -11,6 +11,8 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @EnvironmentObject private var studySessionViewModel: StudySessionViewModel
+    @EnvironmentObject private var folderViewModel: FolderViewModel
+    @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
     
     
@@ -31,6 +33,7 @@ struct HomeView: View {
                 if hasAvailableFolders {
                     HomeFolderList(decks: decks)
                         .environmentObject(deckViewModel)
+                        .environmentObject(folderViewModel)
                 } else {
                     // Показываем placeholder если нет папок
                     EmptyFoldersPlaceholder()
@@ -38,8 +41,8 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                .disabled(!hasAvailableFolders) // Отключаем кнопку если нет карточек
-                .padding(.bottom, 30)
+                    .disabled(!hasAvailableFolders) // Отключаем кнопку если нет карточек
+                    .padding(.bottom, 30)
             }
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.blue.opacity(0.03))
@@ -99,8 +102,13 @@ struct HomeView: View {
                     .presentationDragIndicator(.visible)
                     .withRootToast()
             }
-            .fullScreenCover(isPresented: $studySessionViewModel.studySessionActive) {
-            }
+//            .fullScreenCover(isPresented: $studySessionViewModel.studySessionActive) {
+//                EndAnswerQuestionView() // Предполагается, что это представление отображается
+//                    .environmentObject(deckViewModel)
+//                    .environmentObject(folderViewModel) // Добавлено
+//                    .environmentObject(flashcardViewModel)
+//                    .environmentObject(studySessionViewModel)
+//            }
         }
     }
     
