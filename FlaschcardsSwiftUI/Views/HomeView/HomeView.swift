@@ -43,8 +43,22 @@ struct HomeView: View {
                         .withRootToast()
                 }
                 .sheet(isPresented: $showCreateFolder) { createFolderSheet }
+                .onAppear {
+                    updateSelectedDeck()
+                }
+                .onChange(of: deckViewModel.selectedLanguage){ _, _ in
+                    updateSelectedDeck()
+                }
+                .onChange(of: decks) { _, _ in
+                    updateSelectedDeck()
+                }
         }
     }
+    
+    //передаем правильно deck
+    private func updateSelectedDeck() {
+            deckViewModel.selectedDeck = selectedDeck
+        }
     
     // Main content view
     private var mainContent: some View {
@@ -92,9 +106,10 @@ struct HomeView: View {
                 createdAt: Date(),
                 targetLanguage: .english,
                 sourceLanguage: .english
-            )
+            ), showCreateFolder: $showCreateFolder
         )
         .presentationDragIndicator(.visible)
+        .withRootToast()
     }
     
     @ToolbarContentBuilder

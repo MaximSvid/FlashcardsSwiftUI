@@ -18,10 +18,19 @@ struct CreateDeckSheet: View {
             VStack(spacing: 24) {
                 // Header
                 VStack(spacing: 8) {
-                    Image(systemName: "plus.rectangle.on.folder")
-                        .font(.system(size: 40))
-                        .foregroundColor(.blue.opacity(0.7))
-                    
+                    ZStack {
+                        Circle()
+                            .fill(
+                                Color.blue.opacity(0.1)
+                            )
+                            .frame(width: 80, height: 80)
+                        
+                        Image(systemName: "plus.rectangle.on.folder")
+                            .font(.system(size: 32, weight: .medium))
+                            .foregroundStyle(
+                                Color.blue.opacity(0.8)
+                            )
+                    }                    
                     Text("Create New Deck")
                         .font(.title2.bold())
                         .foregroundColor(.primary)

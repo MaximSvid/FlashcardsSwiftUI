@@ -14,29 +14,34 @@ struct DropdownMenu: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Button(action: {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isPresented = false
-                }
-                // Небольшая задержка для плавной анимации
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    showCreateFolder = true
+                if deckViewModel.selectedDeck == nil {
+                    ToastManager.shared.show(Toast(style: .info, message: "Create a deck first"))
+                } else {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isPresented = false
+                    }
+                    // Небольшая задержка для плавной анимации
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        showCreateFolder = true
+                    }
                 }
             }) {
                 HStack {
                     Text("Create Folder")
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(deckViewModel.selectedDeck == nil ? .gray : .black)
                         .font(.system(size: 16, weight: .medium))
                     
                     Spacer()
                     
                     Image(systemName: "folder.badge.plus")
                         .font(.system(size: 20))
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(deckViewModel.selectedDeck == nil ? .gray : .black)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
                 .contentShape(Rectangle())
             }
+//            .disabled(deckViewModel.selectedDeck == nil)
             
             Divider()
                 .padding(.horizontal, 16)
@@ -52,17 +57,5 @@ struct DropdownMenu: View {
         )
         .frame(width: 230)
         .transition(.scale(scale: 0.95).combined(with: .opacity))
-        .sheet(isPresented: $showCreateFolder) {
-            CreateFolderHomeView(
-                deck: deckViewModel.selectedDeck ?? Deck(
-                    id: UUID(),
-                    folders: [],
-                    createdAt: Date(),
-                    targetLanguage: .english,
-                    sourceLanguage: .english
-                )
-            )
-            .presentationDragIndicator(.visible)
-        }
     }
 }

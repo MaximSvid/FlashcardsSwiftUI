@@ -12,6 +12,7 @@ struct CreateFolderHomeView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     var deck: Deck
+    @Binding var showCreateFolder: Bool
     
     var body: some View {
         NavigationView {
@@ -21,22 +22,14 @@ struct CreateFolderHomeView: View {
                         ZStack {
                             Circle()
                                 .fill(
-                                    LinearGradient(
-                                        colors: [Color.blue.opacity(0.1), Color.purple.opacity(0.1)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
+                                    Color.blue.opacity(0.1)
                                 )
                                 .frame(width: 80, height: 80)
                             
                             Image(systemName: "folder.badge.plus")
                                 .font(.system(size: 32, weight: .medium))
                                 .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [Color.blue, Color.purple],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
+                                    Color.blue.opacity(0.8)
                                 )
                         }
                         
@@ -65,17 +58,19 @@ struct CreateFolderHomeView: View {
                     Spacer()
                     
                     MainButton(action: {
-                        folderViewModel.createNewFolder(in: deck, context: modelContext)
+                        if !folderViewModel.folderName.isEmpty {
+                            folderViewModel.createNewFolder(in: deck, context: modelContext) // работает неправильно
+                            showCreateFolder = false
+                        } else {
+                            ToastManager.shared.show(Toast(style: .info, message: "Folfer name can not be empty!"))
+                        }
+                                                
                     }, title: "Crete Folder")
                     
                 }
                 .buttonStyle(PlainButtonStyle())
-                .scaleEffect(folderViewModel.folderName.isEmpty ? 0.95 : 1.0)
-                .opacity(folderViewModel.folderName.isEmpty ? 0.6 : 1.0)
-//                .animation(.easeInOut(duration: 0.2), value: folderViewModel.folderName.isEmpty)
-//                .disabled(folderViewModel.folderName.isEmpty)
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 16)
             .padding(.top, 40)
             .padding(.bottom, 24)
 
