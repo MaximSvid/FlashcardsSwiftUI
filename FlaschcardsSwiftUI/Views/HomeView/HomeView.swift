@@ -15,97 +15,115 @@ struct HomeView: View {
     @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
     @State private var showingDropdown: Bool = false
+    @State private var showCreateFolder: Bool = false
     
+    // Computed property for selected deck
+    private var selectedDeck: Deck? {
+        decks.first { $0.targetLanguage == deckViewModel.selectedLanguage }
+    }
     
-    // Проверяем есть ли папки с карточками
+    // Check if there are folders with flashcards
     private var hasAvailableFolders: Bool {
-        guard let selectedDeck = decks.first(where: { $0.targetLanguage == deckViewModel.selectedLanguage }) else {
-            return false
-        }
-        return selectedDeck.folders.contains { !$0.flashcards.isEmpty }
+        selectedDeck?.folders.contains { !$0.flashcards.isEmpty } ?? false
     }
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                //                FlaschcardsInfo()
-                
-                // Показываем HomeFolderList только если есть папки с карточками
-                if hasAvailableFolders {
-                    HomeFolderList(decks: decks)
+            mainContent
+                .navigationBarTitleDisplayMode(.inline)
+                .background(Color.blue.opacity(0.03))
+                .toolbar { toolbarContent() }
+                .toolbarBackground(Color.white, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .overlay { dropdownOverlay }
+                .sheet(isPresented: $deckViewModel.newDeckSheetIsPresented) {
+                    NewDeckSheet()
                         .environmentObject(deckViewModel)
-                        .environmentObject(folderViewModel)
-                } else {
-                    // Показываем placeholder если нет папок
-                    EmptyFoldersPlaceholder()
+                        .presentationDragIndicator(.visible)
+                        .withRootToast()
                 }
-                
-                Spacer()
-                
-                    .disabled(!hasAvailableFolders) // Отключаем кнопку если нет карточек
-                    .padding(.bottom, 30)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .background(Color.blue.opacity(0.03))
-            .toolbar {
-                toolbarContent()
-            }
-            .overlay {
-                // для замыливания заднего фона
-                if showingDropdown {
-                    Color.black.opacity(0.1)
-                        .ignoresSafeArea(.all)
-                        .onTapGesture {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                showingDropdown = false
-                            }
-                        }
-                        .overlay(alignment: .topTrailing) {
-                            DropdownMenu(isPresented: $showingDropdown)
-                                .padding(.top, 25)
-                                .padding(.trailing, 16)
-                        }
-                }
-            }
-            .toolbarBackground(Color.white, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .sheet(isPresented: $deckViewModel.newDeckSheetIsPresented) {
-                NewDeckSheet()
+                .sheet(isPresented: $showCreateFolder) { createFolderSheet }
+        }
+    }
+    
+    // Main content view
+    private var mainContent: some View {
+        ScrollView {
+            if hasAvailableFolders {
+                HomeFolderList(decks: decks)
                     .environmentObject(deckViewModel)
-                    .presentationDragIndicator(.visible)
-                    .withRootToast()
+                    .environmentObject(folderViewModel)
+            } else {
+                EmptyFoldersPlaceholder()
+            }
+            Spacer()
+                .disabled(!hasAvailableFolders)
+                .padding(.bottom, 30)
+        }
+    }
+    
+    // Dropdown overlay view
+    private var dropdownOverlay: some View {
+        Group {
+            if showingDropdown {
+                Color.black.opacity(0.1)
+                    .ignoresSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            showingDropdown = false
+                        }
+                    }
+                    .overlay(alignment: .topTrailing) {
+                        DropdownMenu(
+                            isPresented: $showingDropdown,
+                            showCreateFolder: $showCreateFolder // Передаем binding
+                        )
+                    }
             }
         }
+    }
+    
+    // Create folder sheet view
+    private var createFolderSheet: some View {
+        CreateFolderHomeView(
+            deck: deckViewModel.selectedDeck ?? Deck(
+                id: UUID(),
+                folders: [],
+                createdAt: Date(),
+                targetLanguage: .english,
+                sourceLanguage: .english
+            )
+        )
+        .presentationDragIndicator(.visible)
     }
     
     @ToolbarContentBuilder
     private func toolbarContent() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            
+            EmptyView()
         }
-        
         ToolbarItem(placement: .principal) {
             principalToolbarButton()
         }
-        
         ToolbarItem(placement: .topBarTrailing) {
-            Button(action: {
-                showingDropdown.toggle()
-            }) {
-                Image(systemName: "ellipsis")
-                    .foregroundStyle(.gray)
-                    .overlay(
-                        Circle()
-                            .fill(.gray.opacity(0.15))
-                            .frame(width: 30, height: 30)
-                    )
-            }
+            trailingButton()
         }
     }
     
-    //move to mvvm?
+    private func trailingButton() -> some View {
+        Button(action: { showingDropdown.toggle() }) {
+            Image(systemName: "ellipsis")
+                .foregroundStyle(.gray)
+                .overlay(
+                    Circle()
+                        .fill(.gray.opacity(0.15))
+                        .frame(width: 30, height: 30)
+                )
+        }
+    }
+    
     private func principalToolbarButton() -> some View {
-        let hasSelectedDeck = decks.contains(where: { $0.targetLanguage == deckViewModel.selectedLanguage })
+        let hasSelectedDeck = selectedDeck != nil
         
         return Button(action: {
             deckViewModel.newDeckSheetIsPresented = true
@@ -121,11 +139,9 @@ struct HomeView: View {
                     Text("🌐")
                         .font(.system(size: 20))
                 }
-                
                 Text(hasSelectedDeck ? deckViewModel.selectedLanguage.rawValue : "Create a deck")
                     .foregroundStyle(.black.opacity(0.8))
                     .font(.system(size: 16, weight: .medium))
-                
                 Image(systemName: "chevron.down")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(.black.opacity(0.6))
@@ -133,10 +149,9 @@ struct HomeView: View {
         }
     }
     
-    //move to viewModel
     private func startStudySession() {
-        guard let selectedDeck = decks.first(where: { $0.targetLanguage == deckViewModel.selectedLanguage}),
-              let folderWithCards = selectedDeck.folders.first(where: { !$0.flashcards.isEmpty}) else {
+        guard let selectedDeck = selectedDeck,
+              let folderWithCards = selectedDeck.folders.first(where: { !$0.flashcards.isEmpty }) else {
             ToastManager.shared.show(
                 Toast(style: .warning, message: "No flashcards available for this deck. Create some!")
             )
