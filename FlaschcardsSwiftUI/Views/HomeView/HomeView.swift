@@ -62,7 +62,7 @@ struct HomeView: View {
                         }
                         .overlay(alignment: .topTrailing) {
                             DropdownMenu(isPresented: $showingDropdown)
-                                .padding(.top, 30)
+                                .padding(.top, 25)
                                 .padding(.trailing, 16)
                         }
                 }
@@ -96,7 +96,8 @@ struct HomeView: View {
                     .foregroundStyle(.gray)
                     .overlay(
                         Circle()
-                            .fill(.gray.opacity(0.1))
+                            .fill(.gray.opacity(0.15))
+                            .frame(width: 30, height: 30)
                     )
             }
         }
@@ -145,83 +146,6 @@ struct HomeView: View {
     }
 }
 
-struct DropdownMenu: View {
-    @Binding var isPresented: Bool
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            DropdownItem(title: "Create Folder", icon: "folder.badge.plus") {
-                // действие создания папки
-                isPresented = false
-            }
-            
-            Divider()
-                .padding(.horizontal, 16)
-            
-            DropdownItem(title: "Import Cards", icon: "square.and.arrow.down") {
-                // действие импорта карточек
-                isPresented = false
-            }
-            
-            Divider()
-                .padding(.horizontal, 16)
-            
-            DropdownItem(title: "Settings", icon: "gear") {
-                // действие настроек
-                isPresented = false
-            }
-        }
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
-                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-        )
-        .frame(width: 200)
-        .transition(.scale(scale: 0.95).combined(with: .opacity))
-        .onTapGesture {
-            // предотвращаем закрытие при тапе по меню
-        }
-        .background(
-            // Невидимый фон для закрытия меню при тапе вне его
-            Color.clear
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        isPresented = false
-                    }
-                }
-                .ignoresSafeArea()
-        )
-    }
-}
 
-struct DropdownItem: View {
-    let title: String
-    let icon: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .foregroundStyle(.blue)
-                    .frame(width: 20)
-                
-                Text(title)
-                    .foregroundStyle(.primary)
-                    .font(.system(size: 16, weight: .medium))
-                
-                Spacer()
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(PlainButtonStyle())
-        .background(
-            Rectangle()
-                .fill(.gray.opacity(0.05))
-                .opacity(0) // прозрачный фон, который появляется при нажатии
-        )
-    }
-}
+
+
