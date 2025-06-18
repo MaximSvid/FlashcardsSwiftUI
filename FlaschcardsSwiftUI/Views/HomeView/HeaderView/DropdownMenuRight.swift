@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct DropdownMenu: View {
+struct DropdownMenuRight: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @Binding var isPresented: Bool
     @Binding var showCreateFolder: Bool
@@ -20,10 +20,7 @@ struct DropdownMenu: View {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         isPresented = false
                     }
-                    // Небольшая задержка для плавной анимации
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         showCreateFolder = true
-                    }
                 }
             }) {
                 HStack {
@@ -41,14 +38,14 @@ struct DropdownMenu: View {
                 .padding(.vertical, 12)
                 .contentShape(Rectangle())
             }
-//            .disabled(deckViewModel.selectedDeck == nil)
+
             
-            Divider()
-                .padding(.horizontal, 16)
-            
-            DropdownItem(title: "Settings", icon: "gear") {
-                isPresented = false
-            }
+//            Divider()
+//                .padding(.horizontal, 16)
+//            
+//            DropdownItem(title: "Settings", icon: "gear") {
+//                isPresented = false
+//            }
         }
         .background(
             RoundedRectangle(cornerRadius: 12)

@@ -15,6 +15,7 @@ struct MainButton: View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
+                .padding()
                 .frame(maxWidth: .infinity, maxHeight: 50)
                 .foregroundStyle(.white)
                 .background(.blue)

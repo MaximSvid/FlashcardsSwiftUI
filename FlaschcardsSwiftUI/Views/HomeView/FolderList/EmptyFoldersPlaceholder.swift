@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct EmptyFoldersPlaceholder: View {
+    let deck: Deck?
     @EnvironmentObject private var folderViewModel: FolderViewModel
     @State private var showCreateFolderSheet: Bool = false
+    @Binding var showCreateFolder: Bool
+    @EnvironmentObject private var deckViewModel: DeckViewModel
+
     
     var body: some View {
         VStack(spacing: 16) {
@@ -27,16 +31,27 @@ struct EmptyFoldersPlaceholder: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             
-//            Button(action: {
-//                showCreateFolderSheet = true
-//            }) {
-//                Text("Create a folder")
-//                    .font(.headline)
-//                    .frame(maxHeight: 50)
-//                    .foregroundStyle(.white)
-//                    .background(Color.blue.opacity(0.9))
-//                    .clipShape(RoundedRectangle(cornerRadius: 12))
-//            }
+                //добавить проверку если deck == nil или если deck не выбран тогда кнопка - create a deck иначе create a folder
+            
+            if deck == nil {
+                MainButton(action: {
+                    deckViewModel.newDeckSheetIsPresented = true
+                }, title: "Create a deck")
+            } else {
+                Button(action: {
+                    showCreateFolder = true
+                }) {
+                    Text("Crate a folder")
+                        .padding()
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.white)
+                        .background(Color.green.opacity(0.9))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+                
+            }
+            
         }
         .frame(maxWidth: .infinity)
 //        .frame(height: 50)

@@ -71,7 +71,7 @@ struct HomeView: View {
                     .environmentObject(flashcardViewModel)
                     .environmentObject(studySessionViewModel)
             } else {
-                EmptyFoldersPlaceholder()
+                EmptyFoldersPlaceholder(deck: selectedDeck, showCreateFolder: $showCreateFolder)
             }
             Spacer()
                 .disabled(!hasAvailableFolders)
@@ -91,7 +91,7 @@ struct HomeView: View {
                         }
                     }
                     .overlay(alignment: .topTrailing) {
-                        DropdownMenu(
+                        DropdownMenuRight(
                             isPresented: $showingDropdown,
                             showCreateFolder: $showCreateFolder // Передаем binding
                         )
