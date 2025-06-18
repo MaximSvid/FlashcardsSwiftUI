@@ -71,6 +71,8 @@ struct CreateDeckSheet: View {
                 Button(action: {
                     deckViewModel.createNewDeck(context: modelContext)
                     dismiss()
+                    //зесь должена вибираться созданная пара и отправлять в homeView
+                    deckViewModel.newDeckSheetIsPresented = false
                 }) {
                     HStack {
                         Text("Create Deck")
