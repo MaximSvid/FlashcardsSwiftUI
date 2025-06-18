@@ -13,6 +13,7 @@ struct CreateDeckSheet: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
@@ -30,7 +31,7 @@ struct CreateDeckSheet: View {
                             .foregroundStyle(
                                 Color.blue.opacity(0.8)
                             )
-                    }                    
+                    }
                     Text("Create New Deck")
                         .font(.title2.bold())
                         .foregroundColor(.primary)
@@ -66,13 +67,14 @@ struct CreateDeckSheet: View {
                         .font(.caption)
                 }
                 .foregroundStyle(deckViewModel.validationColor)
-                                
+                
                 // Create Button
                 Button(action: {
-                    deckViewModel.createNewDeck(context: modelContext)
-                    dismiss()
-                    //зесь должена вибираться созданная пара и отправлять в homeView
-                    deckViewModel.newDeckSheetIsPresented = false
+                    if let newDeck = deckViewModel.createNewDeck(context: modelContext) {
+                        deckViewModel.selectedDeck = newDeck
+                        dismiss()
+                        deckViewModel.newDeckSheetIsPresented = false
+                    }
                 }) {
                     HStack {
                         Text("Create Deck")

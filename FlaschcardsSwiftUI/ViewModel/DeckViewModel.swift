@@ -124,25 +124,27 @@ class DeckViewModel: ObservableObject {
             }
         }
     
-    func createNewDeck(context: ModelContext) {
+    func createNewDeck(context: ModelContext) -> Deck? {
         do {
-            let _ = try deckRepository.createDeck(
+            let newDeck = try deckRepository.createDeck(
                 targetLanguage: selectedLanguage,
                 sourceLanguage: selectedSourceLanguage,
                 context: context
             )
             print("Deck saved successfully!")
-            selectedLanguage = .english
-            selectedSourceLanguage = .russian
+            selectedLanguage = newDeck.targetLanguage ?? .english
+            selectedSourceLanguage = newDeck.sourceLanguage ?? .russian
             
             ToastManager.shared.show(
                 Toast(style: .success, message: "Deck created successfully", width: .infinity)
             )
+            return newDeck
         } catch {
             ToastManager.shared.show(
                 Toast(style: .error, message: "Failed to create deck", width: .infinity)
             )
             print("Faield to save context: \(error)")
+            return nil
         }
     }
     
