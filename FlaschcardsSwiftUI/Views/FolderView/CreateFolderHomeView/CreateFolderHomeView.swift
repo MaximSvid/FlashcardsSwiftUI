@@ -61,6 +61,8 @@ struct CreateFolderHomeView: View {
                         if !folderViewModel.folderName.isEmpty {
                             folderViewModel.createNewFolder(in: deck, context: modelContext) // работает неправильно
                             showCreateFolder = false
+                            ToastManager.shared.show(Toast(style: .info, message: "Folder created successfully!"))
+
                         } else {
                             ToastManager.shared.show(Toast(style: .info, message: "Folfer name can not be empty!"))
                         }

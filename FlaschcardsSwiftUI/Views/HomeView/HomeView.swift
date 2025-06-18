@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var showingDropdown: Bool = false
     @State private var showCreateFolder: Bool = false
     
+    
     // Computed property for selected deck
     private var selectedDeck: Deck? {
         decks.first { $0.targetLanguage == deckViewModel.selectedLanguage }
@@ -24,7 +25,7 @@ struct HomeView: View {
     
     // Check if there are folders with flashcards
     private var hasAvailableFolders: Bool {
-        selectedDeck?.folders.contains { !$0.flashcards.isEmpty } ?? false
+        !(selectedDeck?.folders.isEmpty ?? true) // Показываем все папки, даже пустые
     }
     
     var body: some View {
@@ -45,11 +46,11 @@ struct HomeView: View {
                 .sheet(isPresented: $showCreateFolder) { createFolderSheet }
                 .onAppear {
                     updateSelectedDeck()
-                }
-                .onChange(of: deckViewModel.selectedLanguage){ _, _ in
+                }                .onChange(of: deckViewModel.selectedLanguage){ _, _ in
                     updateSelectedDeck()
                 }
                 .onChange(of: decks) { _, _ in
+                    // а здесь обновлять эти папки
                     updateSelectedDeck()
                 }
         }
@@ -57,16 +58,18 @@ struct HomeView: View {
     
     //передаем правильно deck
     private func updateSelectedDeck() {
-            deckViewModel.selectedDeck = selectedDeck
-        }
+        deckViewModel.selectedDeck = selectedDeck
+    }
     
     // Main content view
     private var mainContent: some View {
         ScrollView {
-            if hasAvailableFolders {
-                HomeFolderList(decks: decks)
+            if let selectedDeck = selectedDeck, hasAvailableFolders {
+                HomeFolderList(deck: selectedDeck)
                     .environmentObject(deckViewModel)
                     .environmentObject(folderViewModel)
+                    .environmentObject(flashcardViewModel)
+                    .environmentObject(studySessionViewModel)
             } else {
                 EmptyFoldersPlaceholder()
             }
