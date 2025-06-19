@@ -16,16 +16,6 @@ struct HomeView: View {
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
         
     
-    // Computed property for selected deck
-    private var selectedDeck: Deck? {
-        decks.first { $0.targetLanguage == deckViewModel.selectedLanguage }
-    }
-    
-    // Check if there are folders with flashcards
-    private var hasAvailableFolders: Bool {
-        !(selectedDeck?.folders.isEmpty ?? true) // Показываем все папки, даже пустые
-    }
-    
     var body: some View {
         NavigationView {
             mainContent
@@ -43,36 +33,30 @@ struct HomeView: View {
                 }
                 .sheet(isPresented: $folderViewModel.showCreateFolder) { createFolderSheet }
                 .onAppear {
-                    updateSelectedDeck()
+                    deckViewModel.updateSelectedDeck(from: decks)
                 }                .onChange(of: deckViewModel.selectedLanguage){ _, _ in
-                    updateSelectedDeck()
+                    deckViewModel.updateSelectedDeck(from: decks)
                 }
                 .onChange(of: decks) { _, _ in
-                    // а здесь обновлять эти папки
-                    updateSelectedDeck()
+                    deckViewModel.updateSelectedDeck(from: decks)
                 }
         }
-    }
-    
-    //передаем правильно deck
-    private func updateSelectedDeck() {
-        deckViewModel.selectedDeck = selectedDeck
     }
     
     // Main content view
     private var mainContent: some View {
         ScrollView {
-            if let selectedDeck = selectedDeck, hasAvailableFolders {
+            if let selectedDeck = deckViewModel.selectedDeck, deckViewModel.hasAvailableFolders() {
                 HomeFolderList(deck: selectedDeck)
                     .environmentObject(deckViewModel)
                     .environmentObject(folderViewModel)
                     .environmentObject(flashcardViewModel)
                     .environmentObject(studySessionViewModel)
             } else {
-                EmptyFoldersPlaceholder(deck: selectedDeck)
+                EmptyFoldersPlaceholder(deck: deckViewModel.selectedDeck)
             }
             Spacer()
-                .disabled(!hasAvailableFolders)
+                .disabled(!deckViewModel.hasAvailableFolders())
                 .padding(.bottom, 30)
         }
     }
@@ -97,19 +81,13 @@ struct HomeView: View {
     
     // Create folder sheet view
     private var createFolderSheet: some View {
-        CreateFolderHomeView(
-            deck: deckViewModel.selectedDeck ?? Deck(
-                id: UUID(),
-                folders: [],
-                createdAt: Date(),
-                targetLanguage: .english,
-                sourceLanguage: .english
-            ), showCreateFolder: $folderViewModel.showCreateFolder
-        )
-        .presentationDragIndicator(.visible)
-        .withRootToast()
-    }
-    
+            CreateFolderHomeView(
+                deck: deckViewModel.getDeckForCreateFolder()
+            )
+            .presentationDragIndicator(.visible)
+            .withRootToast()
+        }
+
     @ToolbarContentBuilder
     private func toolbarContent() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
@@ -136,7 +114,7 @@ struct HomeView: View {
     }
     
     private func principalToolbarButton() -> some View {
-        let hasSelectedDeck = selectedDeck != nil
+        let hasSelectedDeck = deckViewModel.selectedDeck != nil
         
         return Button(action: {
             deckViewModel.newDeckSheetIsPresented = true
@@ -160,17 +138,6 @@ struct HomeView: View {
                     .foregroundStyle(.black.opacity(0.6))
             }
         }
-    }
-    
-    private func startStudySession() {
-        guard let selectedDeck = selectedDeck,
-              let folderWithCards = selectedDeck.folders.first(where: { !$0.flashcards.isEmpty }) else {
-            ToastManager.shared.show(
-                Toast(style: .warning, message: "No flashcards available for this deck. Create some!")
-            )
-            return
-        }
-        studySessionViewModel.startStudySession(with: folderWithCards)
     }
 }
 

@@ -22,7 +22,21 @@ class StudySessionViewModel: ObservableObject {
     
     init(speechService: SpeechServiceProtocol = SpeechServiceImplementation()) {
         self.speechService = speechService
-//        self.folderViewModel = folderViewModel
+        //        self.folderViewModel = folderViewModel
+    }
+    
+    // MARK: -Business Logic moved from HomeView
+    
+    /// Starts study session from HomeView - finds first folder with cards
+    func startStudySessionFromHome(deck: Deck?) {
+        guard let selectedDeck = deck,
+              let folderWithCards = selectedDeck.folders.first(where: { !$0.flashcards.isEmpty }) else {
+            ToastManager.shared.show(
+                Toast(style: .warning, message: "No flashcards available for this deck. Create some!")
+            )
+            return
+        }
+        startStudySession(with: folderWithCards)
     }
     
     //MARK: StudySession Start ----------------

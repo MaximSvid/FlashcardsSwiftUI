@@ -24,15 +24,7 @@ class Flashcard {
     var nextReviewDate: Date? // für wiederholungLogic
     
     var reviewCount: Int = 0 // für statistic
-    // --- falsh
-//    var lastStudiedDate: Date?
-//    var studyCount: Int = 0
-//    var easyCount: Int = 0
-//    var normalCount: Int = 0
-//    var hardCount: Int = 0
-//    var lastDidiculty: String?,
-//    var nextReviewDate: Date?
-    // --- falsh
+
     
     init(id: UUID = UUID(), question: String, answer: String, isFavorite: Bool = false, creationDate: Date = Date(), folder: Folder? = nil) {
         self.id = id

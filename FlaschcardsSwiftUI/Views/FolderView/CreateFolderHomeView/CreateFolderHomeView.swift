@@ -12,7 +12,6 @@ struct CreateFolderHomeView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     var deck: Deck
-    @Binding var showCreateFolder: Bool
     
     var body: some View {
         NavigationView {
@@ -60,7 +59,7 @@ struct CreateFolderHomeView: View {
                     MainButton(action: {
                         if !folderViewModel.folderName.isEmpty {
                             folderViewModel.createNewFolder(in: deck, context: modelContext) // работает неправильно
-                            showCreateFolder = false
+                            folderViewModel.showCreateFolder = false
                             ToastManager.shared.show(Toast(style: .info, message: "Folder created successfully!"))
 
                         } else {
