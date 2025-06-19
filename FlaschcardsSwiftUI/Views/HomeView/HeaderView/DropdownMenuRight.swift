@@ -9,7 +9,7 @@ import SwiftUI
 struct DropdownMenuRight: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
     @EnvironmentObject private var folderViewModel: FolderViewModel
-//    @Binding var isPresented: Bool
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -18,6 +18,7 @@ struct DropdownMenuRight: View {
                     ToastManager.shared.show(Toast(style: .info, message: "Create a deck first"))
                 } else {
                     folderViewModel.showCreateFolder = true
+                    folderViewModel.showingDropDown = false
                 }
             }) {
                 HStack {
@@ -35,14 +36,14 @@ struct DropdownMenuRight: View {
                 .padding(.vertical, 12)
                 .contentShape(Rectangle())
             }
-
             
-//            Divider()
-//                .padding(.horizontal, 16)
-//            
-//            DropdownItem(title: "Settings", icon: "gear") {
-//                isPresented = false
-//            }
+            
+            //            Divider()
+            //                .padding(.horizontal, 16)
+            //
+            //            DropdownItem(title: "Settings", icon: "gear") {
+            //                isPresented = false
+            //            }
         }
         .background(
             RoundedRectangle(cornerRadius: 12)
