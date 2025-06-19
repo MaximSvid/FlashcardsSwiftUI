@@ -8,8 +8,8 @@ import SwiftUI
 
 struct DropdownMenuRight: View {
     @EnvironmentObject private var deckViewModel: DeckViewModel
-    @Binding var isPresented: Bool
-    @Binding var showCreateFolder: Bool
+    @EnvironmentObject private var folderViewModel: FolderViewModel
+//    @Binding var isPresented: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -17,10 +17,7 @@ struct DropdownMenuRight: View {
                 if deckViewModel.selectedDeck == nil {
                     ToastManager.shared.show(Toast(style: .info, message: "Create a deck first"))
                 } else {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        isPresented = false
-                    }
-                        showCreateFolder = true
+                    folderViewModel.showCreateFolder = true
                 }
             }) {
                 HStack {

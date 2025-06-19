@@ -11,7 +11,7 @@ struct EmptyFoldersPlaceholder: View {
     let deck: Deck?
     @EnvironmentObject private var folderViewModel: FolderViewModel
     @State private var showCreateFolderSheet: Bool = false
-    @Binding var showCreateFolder: Bool
+//    @Binding var showCreateFolder: Bool
     @EnvironmentObject private var deckViewModel: DeckViewModel
 
     
@@ -39,7 +39,7 @@ struct EmptyFoldersPlaceholder: View {
                 }, title: "Create a deck")
             } else {
                 Button(action: {
-                    showCreateFolder = true
+                    folderViewModel.showCreateFolder = true
                 }) {
                     Text("Crate a folder")
                         .padding()

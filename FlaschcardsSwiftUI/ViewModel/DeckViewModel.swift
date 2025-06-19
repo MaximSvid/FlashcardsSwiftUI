@@ -124,6 +124,7 @@ class DeckViewModel: ObservableObject {
             }
         }
     
+    //теперь при создании выбирается сразу созданная папка
     func createNewDeck(context: ModelContext) -> Deck? {
         do {
             let newDeck = try deckRepository.createDeck(

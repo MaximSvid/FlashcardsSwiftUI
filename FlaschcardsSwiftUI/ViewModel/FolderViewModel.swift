@@ -14,6 +14,9 @@ class FolderViewModel: ObservableObject {
     @Published var showAlertUpdateFolder: Bool = false
     @Published var showAlerDeleteFolder: Bool = false
     
+    @Published var showingDropDown: Bool = false
+    @Published var showCreateFolder: Bool = false
+    
     @Published var selectedFolder: Folder?
     @Published var selectedDeck: Deck?
     

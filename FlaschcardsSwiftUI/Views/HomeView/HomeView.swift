@@ -14,9 +14,7 @@ struct HomeView: View {
     @EnvironmentObject private var folderViewModel: FolderViewModel
     @EnvironmentObject private var flashcardViewModel: FlashcardViewModel
     @Query(sort: \Deck.createdAt, order: .reverse) private var decks: [Deck]
-    @State private var showingDropdown: Bool = false
-    @State private var showCreateFolder: Bool = false
-    
+        
     
     // Computed property for selected deck
     private var selectedDeck: Deck? {
@@ -43,7 +41,7 @@ struct HomeView: View {
                         .presentationDragIndicator(.visible)
                         .withRootToast()
                 }
-                .sheet(isPresented: $showCreateFolder) { createFolderSheet }
+                .sheet(isPresented: $folderViewModel.showCreateFolder) { createFolderSheet }
                 .onAppear {
                     updateSelectedDeck()
                 }                .onChange(of: deckViewModel.selectedLanguage){ _, _ in
@@ -71,7 +69,7 @@ struct HomeView: View {
                     .environmentObject(flashcardViewModel)
                     .environmentObject(studySessionViewModel)
             } else {
-                EmptyFoldersPlaceholder(deck: selectedDeck, showCreateFolder: $showCreateFolder)
+                EmptyFoldersPlaceholder(deck: selectedDeck)
             }
             Spacer()
                 .disabled(!hasAvailableFolders)
@@ -82,19 +80,16 @@ struct HomeView: View {
     // Dropdown overlay view
     private var dropdownOverlay: some View {
         Group {
-            if showingDropdown {
+            if folderViewModel.showingDropDown {
                 Color.black.opacity(0.1)
                     .ignoresSafeArea(.all)
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.2)) {
-                            showingDropdown = false
+                            folderViewModel.showingDropDown = false
                         }
                     }
                     .overlay(alignment: .topTrailing) {
-                        DropdownMenuRight(
-                            isPresented: $showingDropdown,
-                            showCreateFolder: $showCreateFolder // Передаем binding
-                        )
+                        DropdownMenuRight()
                     }
             }
         }
@@ -109,7 +104,7 @@ struct HomeView: View {
                 createdAt: Date(),
                 targetLanguage: .english,
                 sourceLanguage: .english
-            ), showCreateFolder: $showCreateFolder
+            ), showCreateFolder: $folderViewModel.showCreateFolder
         )
         .presentationDragIndicator(.visible)
         .withRootToast()
@@ -129,7 +124,7 @@ struct HomeView: View {
     }
     
     private func trailingButton() -> some View {
-        Button(action: { showingDropdown.toggle() }) {
+        Button(action: { folderViewModel.showingDropDown.toggle() }) {
             Image(systemName: "ellipsis")
                 .foregroundStyle(.gray)
                 .overlay(
